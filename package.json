@@ -21,7 +21,7 @@
     "node": "22.x"
   },
   "devDependencies": {
-    "wrangler": "4.125.0"
+    "wrangler": "4.136.1"
   },
   "dependencies": {
     "@anthropic-ai/claude-code": "2.1.258",
