@@ -15,6 +15,12 @@ test("same-tab refresh state retains only a valid view, optional record id and s
     tab: "discussion",
     scrollY: 0
   });
+  assert.deepEqual(normalizeRefreshState({ page: "discussion", tab: "usage", conversationId: "conversation-123", scrollY: 42 }), {
+    page: "discussion",
+    tab: "usage",
+    conversationId: "conversation-123",
+    scrollY: 42
+  });
 });
 
 test("same-tab refresh state rejects malformed or out-of-range browser data", () => {

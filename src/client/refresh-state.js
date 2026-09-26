@@ -1,7 +1,7 @@
 export const refreshStateKey = "nanoduck-page-state-v1";
 
 const pages = new Set(["discussion", "conversations", "settings"]);
-const tabs = new Set(["discussion", "outcome", "sources"]);
+const tabs = new Set(["discussion", "outcome", "sources", "usage"]);
 
 export const normalizeRefreshState = value => {
   if (!value || typeof value !== "object" || !pages.has(value.page)) return undefined;

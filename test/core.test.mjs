@@ -7,7 +7,7 @@ import { openRecoveryEnvelope, sealRecoverySnapshot } from "../src/server/recove
 import { createAuth } from "../src/server/auth.mjs";
 import { loadConfig } from "../src/server/config.mjs";
 import { createMemoryStore, createMySqlStore, defaultSettings } from "../src/server/store.mjs";
-import { hasProhibitedLanguage, parseConversationIds, parseMessage, parseSettings, safeExternalUrl } from "../src/server/validation.mjs";
+import { hasProhibitedLanguage, maximumMessageBytes, parseConversationIds, parseMessage, parseSettings, safeExternalUrl } from "../src/server/validation.mjs";
 import { testRuntimeInstructions } from "./fixtures/runtime-instructions.mjs";
 
 test("new consultations default to the current saved Codex settings", () => {
@@ -124,12 +124,44 @@ test("accepted owner messages are idempotent and a stopped run fences later agen
   assert.equal(replay.replayed, true);
   assert.equal(replay.message.id, first.message.id);
   await store.saveSettings({ ...defaultSettings, specialistCount: "3", discussionDepth: "3" });
-  assert.deepEqual((await store.run(conversation.id)).snapshot, defaultSettings);
+  assert.deepEqual((await store.run(conversation.id)).snapshot, { ...defaultSettings, requestMessageId: first.message.id });
   assert.ok(await store.appendAgentMessage(conversation.id, first.run.generation, { role: "Head Consultant", body: "First view." }));
   const stopped = await store.stop(conversation.id);
   assert.equal(stopped.status, "stopped");
   assert.equal(await store.appendAgentMessage(conversation.id, first.run.generation, { role: "Critic", body: "Late output." }), undefined);
   assert.equal((await store.events(conversation.id)).length, 2);
+});
+
+test("an older accepted request replays its original run after a later Send and local-state restart", async () => {
+  let store = createMemoryStore();
+  const conversation = await store.createConversation();
+  const firstInput = { body: "Assess the first decision.", clientRequestId: "historical-replay-request-0001" };
+  const first = await store.acceptMessage(conversation.id, firstInput, defaultSettings);
+  await store.finishRun(conversation.id, first.run.generation, "complete");
+  const second = await store.acceptMessage(conversation.id, { body: "Assess the later decision.", clientRequestId: "historical-replay-request-0002" }, defaultSettings);
+  assert.ok(second);
+  const replay = await store.acceptMessage(conversation.id, firstInput, defaultSettings);
+  assert.equal(replay.replayed, true);
+  assert.equal(replay.message.id, first.message.id);
+  assert.equal(replay.run.id, first.run.id);
+  assert.equal(replay.run.status, "complete");
+  assert.equal((await store.run(conversation.id)).id, second.run.id);
+
+  store = createMemoryStore(store.snapshotState());
+  const restoredReplay = await store.acceptMessage(conversation.id, firstInput, defaultSettings);
+  assert.equal(restoredReplay.replayed, true);
+  assert.equal(restoredReplay.run.id, first.run.id);
+  assert.equal(restoredReplay.run.status, "complete");
+  assert.equal((await store.run(conversation.id)).id, second.run.id);
+});
+
+test("all message storage paths reject bodies that exceed the encrypted column budget", async () => {
+  const store = createMemoryStore(); const conversation = await store.createConversation();
+  const oversized = "a".repeat(maximumMessageBytes + 1);
+  assert.equal(await store.acceptMessage(conversation.id, { body: oversized, clientRequestId: "oversize-store-request-0001" }, defaultSettings), undefined);
+  const accepted = await store.acceptMessage(conversation.id, { body: "Bounded request.", clientRequestId: "bounded-store-request-0001" }, defaultSettings);
+  assert.ok(accepted);
+  assert.equal(await store.appendAgentMessage(conversation.id, accepted.run.generation, { role: "Head Consultant", body: oversized, sources: [] }), undefined);
 });
 
 test("only one consultation can be active across the owner's conversations", async () => {
@@ -212,7 +244,7 @@ test("MySQL agent writes and deletion serialize through the conversation lock", 
       if (statement.startsWith("INSERT INTO nanoduck_messages")) return [{ affectedRows: 1 }];
       if (statement.startsWith("UPDATE nanoduck_conversations SET updated_at")) return [{ affectedRows: 1 }];
       if (statement.startsWith("UPDATE nanoduck_runs SET updated_at")) return [{ affectedRows: 1 }];
-      if (statement.startsWith("UPDATE nanoduck_conversations SET deleted_at") || statement.startsWith("DELETE FROM nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_messages") || statement.startsWith("DELETE FROM nanoduck_requests")) return [{ affectedRows: 1 }];
+      if (statement.startsWith("UPDATE nanoduck_conversations SET deleted_at") || statement.startsWith("DELETE FROM nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_messages") || statement.startsWith("DELETE FROM nanoduck_requests") || statement.startsWith("DELETE FROM nanoduck_usage")) return [{ affectedRows: 1 }];
       if (statement.startsWith("UPDATE nanoduck_runs SET snapshot_json")) return [{ affectedRows: 1 }];
       throw new Error(`Unexpected statement: ${statement}`);
     }
@@ -230,7 +262,8 @@ test("MySQL agent writes and deletion serialize through the conversation lock", 
   assert.match(commands[deleteIndex + 1], /^DELETE FROM nanoduck_attachments/u);
   assert.match(commands[deleteIndex + 2], /^DELETE FROM nanoduck_messages/u);
   assert.match(commands[deleteIndex + 3], /^DELETE FROM nanoduck_requests/u);
-  assert.match(commands[deleteIndex + 4], /^UPDATE nanoduck_runs SET snapshot_json/u);
+  assert.match(commands[deleteIndex + 4], /^DELETE FROM nanoduck_usage/u);
+  assert.match(commands[deleteIndex + 5], /^UPDATE nanoduck_runs SET snapshot_json/u);
 });
 
 test("MySQL recovery exports app records and restores deletion tombstones before active history", async () => {
@@ -250,9 +283,10 @@ test("MySQL recovery exports app records and restores deletion tombstones before
       ]];
       if (statement.startsWith("SELECT id,role,recipient,ciphertext,iv,tag,sequence,created_at,sources_json FROM nanoduck_messages")) return [[{ id: "recovery-message-0001", role: "Head Consultant", recipient: null, ...encrypted, sequence: 1, created_at: "2026-09-14T00:01:00.000Z", sources_json: "[]" }]];
       if (statement.startsWith("SELECT id,message_id,content_type,byte_length,ciphertext,iv,tag,created_at FROM nanoduck_attachments")) return [[]];
+      if (statement.startsWith("SELECT id,provider,model,status,started_at,finished_at,ciphertext,iv,tag FROM nanoduck_usage")) return [[]];
       if (statement.startsWith("SELECT id,deleted_at FROM nanoduck_conversations")) return [[]];
       if (["FROM nanoduck_settings", "FROM nanoduck_runtime_instructions", "FROM nanoduck_runtime_instruction_history", "FROM nanoduck_instruction_documents"].some(table => statement.includes(table))) return [[]];
-      if (statement.startsWith("INSERT INTO nanoduck_conversations") || statement.startsWith("INSERT INTO nanoduck_messages") || statement.startsWith("INSERT INTO nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_messages") || statement.startsWith("DELETE FROM nanoduck_requests") || statement.startsWith("UPDATE nanoduck_runs SET snapshot_json")) return [{ affectedRows: 1 }];
+      if (statement.startsWith("INSERT INTO nanoduck_conversations") || statement.startsWith("INSERT INTO nanoduck_messages") || statement.startsWith("INSERT INTO nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_attachments") || statement.startsWith("DELETE FROM nanoduck_messages") || statement.startsWith("DELETE FROM nanoduck_requests") || statement.startsWith("DELETE FROM nanoduck_usage") || statement.startsWith("UPDATE nanoduck_runs SET snapshot_json")) return [{ affectedRows: 1 }];
       throw new Error(`Unexpected statement: ${statement}`);
     }
   };
@@ -291,6 +325,43 @@ test("MySQL acceptance holds the owner lock before allowing an active run", asyn
   const firstLock = commands.indexOf("SELECT owner_id FROM nanoduck_owner_locks WHERE owner_id='owner' FOR UPDATE");
   const firstActiveCheck = commands.indexOf("SELECT id FROM nanoduck_runs WHERE status='active' LIMIT 1");
   assert.ok(firstLock >= 0 && firstLock < firstActiveCheck);
+});
+
+test("MySQL duplicate-request replay loads the request's bound run through its locked transaction connection", async () => {
+  const conversationId = "conversation-replay-identifier-01";
+  const messageId = "m".repeat(32); const runId = "r".repeat(32);
+  const body = "Replay this exact synthetic request."; const sealed = encryptText(body, key);
+  const snapshot = { ...defaultSettings, requestMessageId: messageId };
+  const commands = []; let poolExecutions = 0;
+  const connection = {
+    async beginTransaction() { commands.push("BEGIN"); },
+    async commit() { commands.push("COMMIT"); },
+    async rollback() { commands.push("ROLLBACK"); },
+    release() {},
+    async execute(statement, values = []) {
+      commands.push(statement);
+      if (statement.startsWith("SELECT owner_id FROM nanoduck_owner_locks")) return [[{ owner_id: "owner" }]];
+      if (statement.startsWith("SELECT id,title FROM nanoduck_conversations")) return [[{ id: conversationId, title: "Synthetic replay" }]];
+      if (statement.startsWith("SELECT message_id,run_id FROM nanoduck_requests")) return [[{ message_id: messageId, run_id: runId }]];
+      if (statement.startsWith("SELECT id,role,recipient,ciphertext")) return [[{ id: messageId, role: "owner", recipient: null, ...sealed, sequence: 1, created_at: "2026-09-27T10:00:00.000Z", sources_json: [] }]];
+      if (statement.startsWith("SELECT id,message_id,content_type")) return [[]];
+      if (statement.startsWith("SELECT id,conversation_id,status,generation")) {
+        assert.deepEqual(values, [conversationId, runId]);
+        return [[{ id: runId, conversation_id: conversationId, status: "complete", generation: 1, snapshot_json: snapshot, created_at: "2026-09-27T10:00:00.000Z", updated_at: "2026-09-27T10:00:00.000Z" }]];
+      }
+      if (statement.startsWith("SELECT m.id FROM nanoduck_messages")) return [[{ id: messageId }]];
+      throw new Error(`Unexpected statement: ${statement}`);
+    }
+  };
+  const pool = { getConnection: async () => connection, async execute() { poolExecutions += 1; throw new Error("nested_pool_read"); }, async end() {} };
+  const store = await createMySqlStore("mysql://unused", key, undefined, { createPool: () => pool });
+  const replay = await store.acceptMessage(conversationId, { body, clientRequestId: "mysql-replay-request-0001" }, snapshot);
+  assert.equal(replay.replayed, true);
+  assert.equal(replay.message.id, messageId);
+  assert.equal(replay.run.id, runId);
+  assert.equal(replay.run.status, "complete");
+  assert.equal(poolExecutions, 0);
+  assert.equal(commands.at(-1), "ROLLBACK");
 });
 
 test("MySQL image attachments are encrypted at rest and linked in the message transaction", async () => {
@@ -356,6 +427,10 @@ test("settings and message validation reject unsupported model values and malfor
   assert.equal(parseMessage({ body: "Как это работает?", clientRequestId: "language-policy-request-0001" }), undefined);
   assert.equal(parseMessage({ body: "Як гэта працуе?", clientRequestId: "language-policy-request-0002" }), undefined);
   assert.equal(parseMessage({ body: "Read https://example.su/report", clientRequestId: "url-policy-request-0003" }), undefined);
+  const maximumBody = "a".repeat(maximumMessageBytes);
+  assert.equal(parseMessage({ body: maximumBody, clientRequestId: "maximum-message-request-0001" })?.body.length, maximumMessageBytes);
+  assert.equal(parseMessage({ body: `${maximumBody}a`, clientRequestId: "oversize-message-request-0001" }), undefined);
+  assert.equal(parseMessage({ body: "ї".repeat(maximumMessageBytes / 2 + 1), clientRequestId: "oversize-message-request-0002" }), undefined, "The storage ceiling is measured in UTF-8 bytes");
   assert.deepEqual(parseConversationIds({ conversationIds: ["conversation-identifier-0001", "conversation-identifier-0002"] }), ["conversation-identifier-0001", "conversation-identifier-0002"]);
   assert.equal(parseConversationIds({ conversationIds: ["conversation-identifier-0001", "conversation-identifier-0001"] }), undefined);
 });
@@ -377,6 +452,8 @@ test("source links accept only public HTTPS destinations", () => {
   assert.equal(safeExternalUrl("https://localhost/private"), undefined);
   assert.equal(safeExternalUrl("https://[::1]/private"), undefined);
   assert.equal(safeExternalUrl("https://[fd00::1]/private"), undefined);
+  for (const blocked of ["https://[::]/private", "https://[::ffff:127.0.0.1]/private", "https://[::ffff:10.0.0.1]/private", "https://[fe90::1]/private", "https://[febf::1]/private", "https://[fc00::1]/private", "https://[fec0::1]/private", "https://[ff02::1]/private", "https://100.64.0.1/private", "https://198.18.0.1/private", "https://224.0.0.1/private"]) assert.equal(safeExternalUrl(blocked), undefined, blocked);
+  assert.equal(safeExternalUrl("https://[2606:4700:4700::1111]/public"), "https://[2606:4700:4700::1111]/public");
   assert.equal(safeExternalUrl("https://example.ru/report"), undefined);
   assert.equal(safeExternalUrl("https://example.by/report"), undefined);
   assert.equal(safeExternalUrl("https://example.su/report"), undefined);

@@ -1,7 +1,12 @@
 import { containsSecretLikeContent } from "./content-policy.mjs";
-import { createRuntimePrompts, runtimeInstructionsFor } from "./prompt-contracts.mjs";
+import { createRuntimePrompts, parseRuntimeInstructions, runtimeInstructionsFor } from "./prompt-contracts.mjs";
 import { deriveConversationTitle } from "./conversation-title.mjs";
 import { containsInternalToolTrace } from "./output-safety.mjs";
+import { hasProhibitedLanguage, hasUnsafeExternalUrl, safeExternalUrl } from "./validation.mjs";
+import { readFileSync } from "node:fs";
+import { runParallelConsultation } from "./consultation-parallel.mjs";
+
+const publicInstructions = parseRuntimeInstructions(readFileSync(new URL("../../instructions/RUNTIME_PROMPTS.md", import.meta.url), "utf8"));
 
 const roleSettings = snapshot => Object.freeze({
   head: { provider: "codex", model: snapshot.headModel, effort: snapshot.headReasoning },
@@ -13,120 +18,37 @@ const roleSettings = snapshot => Object.freeze({
 
 const providerName = provider => provider === "claude_code" ? "Claude Code" : "Codex";
 const providerFailureMessage = (code, provider) => ({
-  auth_required: `The selected ${providerName(provider)} route needs its managed sign-in renewed. Your question remains saved.`,
+  provider_idle_timeout: `The selected ${providerName(provider)} call stopped reporting progress for nine minutes. Your question and confirmed replies remain saved. Choose Retry to resume the unfinished step.`,
+  provider_timeout: `The selected ${providerName(provider)} call reached its maximum waiting time. Your question and confirmed replies remain saved. Choose Retry to resume the unfinished step.`,
+  auth_required: `The selected ${providerName(provider)} route needs its subscription sign-in renewed. Your question remains saved.`,
   quota_blocked: `The selected ${providerName(provider)} route has reached its current usage limit. Your question remains saved.`,
   incompatible: `The selected ${providerName(provider)} model and reasoning configuration is unavailable on this route. Your question remains saved.`,
+  context_too_large: `The complete saved context exceeds the ${providerName(provider)} request capacity. Nothing was shortened or lost. Your question and discussion remain saved.`,
   subscription_unavailable: `The selected ${providerName(provider)} subscription is unavailable. Your question remains saved.`,
   method_unavailable: `The selected ${providerName(provider)} runtime cannot complete a required consultation step. Your question remains saved.`,
+  team_review_contract: "The Critic review could not be read after one format repair. Your question and consultant replies remain saved. Choose Retry to resume this review.",
+  provider_contract: "An agent returned an unreadable response format. Your question and confirmed replies remain saved. Choose Retry to resume the unfinished step.",
   provider_unavailable: `The selected ${providerName(provider)} route could not complete this request. Your question remains saved.`
 }[code]);
 
-const hasSensitiveResearchContext = text => /(?:\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|\b(?:password|passcode|api[ _-]?key|secret|access[ _-]?token|iban|credit[ _-]?card|passport|medical)\b|(?:\+?\d[\d\s().-]{7,}\d)|\b(?:парол\p{L}*|ключ\p{L}*\s*api|секрет\p{L}*|токен\p{L}*|iban|картк\p{L}*|паспорт\p{L}*|медич\p{L}*)\b)/iu.test(text);
-const discussion = events => events.map(event => `${event.role}${event.recipient ? ` → ${event.recipient}` : ""}: ${event.body}`).join("\n\n").slice(-80_000);
+const discussion = events => events.map(event => {
+  const sources = (event.sources ?? []).map(source => `Source: ${source.title} — ${source.url}\nSupported claim: ${source.claim}`).join("\n");
+  const attachments = (event.attachments ?? []).map(item => `Attached image: ${item.contentType}; the text-only provider route cannot examine its pixels.`).join("\n");
+  return `${event.role}${event.recipient ? ` → ${event.recipient}` : ""}: ${event.body}${sources ? `\n${sources}` : ""}${attachments ? `\n${attachments}` : ""}`;
+}).join("\n\n");
 const responseLanguage = text => {
   if (/\b(?:answer|respond|reply|write)\s+in\s+english\b|англійськ/iu.test(text)) return "English";
   if (/\b(?:answer|respond|reply|write)\s+in\s+ukrainian\b|українськ/iu.test(text)) return "Ukrainian";
   return /[А-Яа-яІіЇїЄєҐґ]/u.test(text) ? "Ukrainian" : "English";
 };
-const taskExcerpt = (question, maximumLength = 180) => {
-  const plain = String(question ?? "").replace(/[<>]/gu, "").replace(/\s+/gu, " ").trim();
-  const clipped = plain.length > maximumLength ? `${plain.slice(0, maximumLength - 1).trimEnd()}…` : plain;
-  return clipped.replace(/[.!?]+$/u, "").trim() || "the stated decision";
-};
-const ignoredTaskTerms = new Set(["about", "after", "against", "also", "are", "been", "could", "does", "from", "have", "how", "into", "more", "next", "should", "that", "their", "there", "these", "this", "what", "when", "which", "with", "would", "your", "які", "для", "про", "так", "цей", "цією", "що", "як"]);
-const decisionTerms = question => [...new Set((String(question ?? "").match(/[\p{L}\p{N}]{3,}/gu) ?? []).filter(token => !ignoredTaskTerms.has(token.toLocaleLowerCase())))];
-const taskAnchor = question => {
-  const tokens = decisionTerms(question);
-  const uppercase = tokens.find(token => /^(?:[A-Z]{3,}|[А-ЯІЇЄҐ]{3,})$/u.test(token));
-  return uppercase ?? tokens[0] ?? "decision";
-};
-const taskDetail = (question, anchor) => decisionTerms(question).find(token => token.toLocaleLowerCase() !== anchor.toLocaleLowerCase());
-const taskFallbackFocus = Object.freeze({
-  English: Object.freeze({
-    "Strategy Consultant": "Separate the actual options and name the condition that should choose among them.",
-    "Finance Consultant": "Identify the exposure, affordability or loss-limit condition that rules an option in or out.",
-    "Operations Consultant": "Identify the delivery or capacity constraint that changes the viable option.",
-    "Sales Consultant": "Identify the buyer evidence or objection that changes the viable option.",
-    "Marketing Consultant": "Identify the audience or demand evidence that changes the viable option.",
-    "Product Consultant": "Identify the user-value evidence or product constraint that changes the viable option.",
-    "Spiritual Consultant": "Apply the stated doctrine to the concrete decision and identify the material spiritual consideration.",
-    Psychotherapist: "Use an appropriate non-clinical lens to identify the material pattern and grounded next step.",
-    "Risk Consultant": "Identify the downside that changes the viable option and the evidence needed to bound it."
-  }),
-  Ukrainian: Object.freeze({
-    "Strategy Consultant": "Розмежуй реальні варіанти й назви умову, що має визначити вибір між ними.",
-    "Finance Consultant": "Визнач умову щодо експозиції, спроможності або ліміту втрати, яка виключає чи допускає варіант.",
-    "Operations Consultant": "Визнач обмеження виконання або потужності, яке змінює життєздатний варіант.",
-    "Sales Consultant": "Визнач доказ від покупця або заперечення, яке змінює життєздатний варіант.",
-    "Marketing Consultant": "Визнач доказ щодо аудиторії чи попиту, який змінює життєздатний варіант.",
-    "Product Consultant": "Визнач доказ цінності для користувача або продуктове обмеження, яке змінює життєздатний варіант.",
-    "Spiritual Consultant": "Застосуй вказане вчення до конкретного рішення й визнач суттєвий духовний аспект.",
-    Psychotherapist: "Застосуй доречний неклінічний підхід, щоб визначити суттєвий патерн і обґрунтований наступний крок.",
-    "Risk Consultant": "Визнач ризик зниження, який змінює життєздатний варіант, і докази для його обмеження."
-  })
-});
-const headTaskFallback = (specialist, question, language) => {
-  const excerpt = taskExcerpt(question);
-  const focus = taskFallbackFocus[language]?.[specialist] ?? taskFallbackFocus.English["Strategy Consultant"];
-  return language === "Ukrainian"
-    ? `Проаналізуй це рішення з позиції ${specialist}: «${excerpt}». ${focus}`
-    : `Analyze this decision as the ${specialist}: “${excerpt}”. ${focus}`;
-};
-const headTaskOutput = (body, anchor, detail) => {
-  const match = /^\s*<nanoduck-task>\s*([\s\S]*?)\s*<\/nanoduck-task>\s*$/iu.exec(body);
-  if (!match) return undefined;
-  const task = match[1].replace(/\s+/gu, " ").trim();
-  const imperative = /^(?:Assess|Analyze|Analyse|Evaluate|Define|Map|Quantify|Test|Identify|Compare|Review|Examine|Clarify|Estimate|Check|Determine|Проаналізуй|Оціни|Визнач|Перевір|Зістав|Уточни|Порахуй|Вияви|Сформулюй|Досліди|Окресли|З’ясуй|З'ясуй)(?![\p{L}])/iu;
-  const ownerFacing = /(?:\b(?:i|we|owner|user|recommend(?:ation)?|conclusion)\b|власник|користувач|рекоменд\p{L}*|виснов\p{L}*)/iu;
-  const sentences = task.split(/[.!?]+/u).filter(Boolean);
-  const caseSpecific = typeof anchor === "string" && anchor.length > 0 && task.toLocaleLowerCase().includes(anchor.toLocaleLowerCase());
-  const detailSpecific = !detail || task.toLocaleLowerCase().includes(detail.toLocaleLowerCase());
-  return task.length <= 420 && sentences.length <= 2 && imperative.test(task) && !ownerFacing.test(task) && caseSpecific && detailSpecific ? Object.freeze({ body: task }) : undefined;
-};
-const compactMessage = (body, maximumCharacters = 2_000) => {
-  const text = typeof body === "string" ? body.trim() : "";
-  if (text.length <= maximumCharacters) return text;
-  const excerpt = text.slice(0, maximumCharacters + 1);
-  const endings = [...excerpt.matchAll(/[.!?](?:\s|$)/gu)];
-  const ending = endings.at(-1);
-  return text.slice(0, ending ? (ending.index ?? 0) + 1 : maximumCharacters).trim();
-};
-const compactOutput = maximumCharacters => body => Object.freeze({ body: compactMessage(body, maximumCharacters) });
 const consolidatedOutput = body => {
   const heading = "## Consolidated advice\n\n";
   const text = body.replace(/^\s*(?:#{1,6}\s*|\*\*)?Consolidated advice(?:\*\*)?\s*:?\s*\n+/iu, "");
   if (!text.trim()) throw new Error("provider_contract");
-  return Object.freeze({ body: heading + compactMessage(text, 2_000 - heading.length) });
+  return Object.freeze({ body: heading + text.trim() });
 };
 const policyCorrection = assignment => `${assignment}\n\nA prior draft was withheld before it reached the consultation because it did not meet the language-and-source policy. Return a complete replacement now. Use only English or Ukrainian. Do not use Russian or Belarusian language, terms, sources, or URLs, including .ru, .by, .su or their Cyrillic equivalents. Remove any disallowed citation rather than mentioning it. Do not explain this correction.`;
-const specialistFor = text => {
-  const subject = text.toLocaleLowerCase();
-  const matches = pattern => pattern.test(subject);
-  if (matches(/\b(risk|legal|compliance|threat)\b|ризик|юрид|відповідн|загроз/iu)) return "Risk Consultant";
-  if (matches(/\b(cash|margin|profit|revenue|budget|cost|pricing)\b|грош|марж|прибут|дохід|бюджет|витрат|ціноутвор/iu)) return "Finance Consultant";
-  if (matches(/\b(process|operations|delivery|capacity|workflow)\b|процес|операц|постач|потужн|навантаж/iu)) return "Operations Consultant";
-  if (matches(/\b(sales|pipeline|prospect|conversion|b2b|b2c)\b|продаж|лійк|потенційн.{0,8}клієнт|конверс/iu)) return "Sales Consultant";
-  if (matches(/\b(marketing|campaign|audience|traffic|brand|advertising)\b|маркетинг|кампан|аудитор|трафік|бренд|реклам/iu)) return "Marketing Consultant";
-  if (matches(/\b(product|feature|roadmap|retention|user experience)\b|продукт|функц|роудмап|утриман|досвід користувач/iu)) return "Product Consultant";
-  if (matches(/\b(spiritual|faith|christ|christian|gospel|church|salvation|prayer|scripture|bible)\b|духов|віра|христ|євангел|спасін|молит|біблі/iu)) return "Spiritual Consultant";
-  if (matches(/\b(psychotherapy|psychotherapist|therapy|therapist|mental health|trauma|ifs|internal family systems|anxiety|depression|relationship)\b|психотерап|психолог|терапі|менталь|травм|тривог|депрес|внутрішн.{0,8}сімейн|стосунк/iu)) return "Psychotherapist";
-  return "Strategy Consultant";
-};
-const specialistCandidates = text => {
-  const primary = specialistFor(text);
-  const complements = {
-    "Strategy Consultant": ["Finance Consultant", "Operations Consultant", "Product Consultant", "Risk Consultant"],
-    "Finance Consultant": ["Strategy Consultant", "Risk Consultant", "Sales Consultant", "Operations Consultant"],
-    "Operations Consultant": ["Strategy Consultant", "Product Consultant", "Finance Consultant", "Risk Consultant"],
-    "Sales Consultant": ["Marketing Consultant", "Finance Consultant", "Strategy Consultant", "Product Consultant"],
-    "Marketing Consultant": ["Product Consultant", "Sales Consultant", "Strategy Consultant", "Finance Consultant"],
-    "Product Consultant": ["Marketing Consultant", "Operations Consultant", "Strategy Consultant", "Finance Consultant"],
-    "Spiritual Consultant": ["Psychotherapist", "Strategy Consultant", "Risk Consultant", "Product Consultant"],
-    Psychotherapist: ["Spiritual Consultant", "Strategy Consultant", "Product Consultant", "Risk Consultant"],
-    "Risk Consultant": ["Strategy Consultant", "Finance Consultant", "Operations Consultant", "Product Consultant"]
-  };
-  return [...new Set([primary, ...(complements[primary] ?? [])])];
-};
+const specialistRoles = Object.freeze(["Strategy Consultant", "Finance Consultant", "Operations Consultant", "Entrepreneurship Consultant", "Sales Consultant", "Marketing Consultant", "Product Consultant", "Data Consultant", "Risk Consultant", "Spiritual Consultant", "Psychotherapist"]);
 const legacySpecialistCount = speed => ({ fast: "1", balanced: "2", thorough: "3", ultra: "5" })[speed] ?? "2";
 const normalizedSnapshot = snapshot => Object.freeze({
   ...snapshot,
@@ -138,10 +60,27 @@ const normalizedSnapshot = snapshot => Object.freeze({
   specialistCount: snapshot.specialistCount ?? legacySpecialistCount(snapshot.speed),
   discussionDepth: snapshot.discussionDepth ?? "1"
 });
-const chosenCount = snapshot => snapshot.specialistCount === "auto" ? snapshot.resolvedSpecialistCount : Number(snapshot.specialistCount);
-const teamMarker = body => {
-  const match = /^\s*\[TEAM:\s*([1-5])\]\s*/iu.exec(body);
-  return Object.freeze({ count: match ? Number(match[1]) : 3, body: body.replace(/^\s*\[TEAM:\s*[1-5]\]\s*/iu, "").trim() });
+const teamFrom = (body, count) => {
+  const match = /^\s*\[TEAM:\s*([^\]\n]+)\]\s*$/iu.exec(body);
+  const roles = match?.[1].split(",").map(role => role.trim());
+  if (!roles || roles.length < 1 || roles.length > 5 || (count && roles.length !== count) || new Set(roles).size !== roles.length || roles.some(role => !specialistRoles.includes(role))) throw new Error("provider_contract");
+  return roles;
+};
+const reviewDecision = body => {
+  const match = /^\s*\[REVIEW:\s*(CONTINUE|CLOSE)\]\s*$/iu.exec(body);
+  if (!match) throw new Error("provider_contract");
+  return match[1].toUpperCase();
+};
+const publicQuery = body => {
+  if (typeof body !== "string" || !body.trim() || hasProhibitedLanguage(body) || hasUnsafeExternalUrl(body) || containsSecretLikeContent(body)) return undefined;
+  let unsafeUrl = false;
+  const withoutPublicUrls = body.replace(/https:\/\/[^\s)]+/gu, value => {
+    const url = safeExternalUrl(value);
+    if (!url || new URL(url).search || new URL(url).hash) unsafeUrl = true;
+    return "[public page]";
+  });
+  if (unsafeUrl || /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/iu.test(withoutPublicUrls) || /(?:\+?\d[\d\s().-]{7,}\d)/u.test(withoutPublicUrls)) return undefined;
+  return body.trim();
 };
 const consensusMarker = body => {
   const match = /\s*\[CONSILIUM:\s*(REACHED|CONTINUE)\]\s*$/iu.exec(body);
@@ -149,18 +88,43 @@ const consensusMarker = body => {
 };
 const matches = (event, step) => event?.role === step.role && (event.recipient ?? null) === (step.recipient ?? null);
 
-export function createConsultationService({ store, provider }) {
+export function createConsultationService({ store, provider: baseProvider }) {
   const controllers = new Map();
   const executions = new Map();
   let closing = false;
   const run = async (conversationId, runState) => {
     const controller = new AbortController(); controllers.set(conversationId, controller);
+    let phase = "initializing"; const startedAt = Date.now();
+    const provider = { invoke: input => {
+      phase = input.outputKind ?? "discussion";
+      const ids = new Set();
+      const participant = input.usageParticipant ?? input.role ?? (/critic|team_review/u.test(input.outputKind ?? "") ? "Critic" : /^specialist/u.test(input.outputKind ?? "") ? "Consultant" : "Head Consultant");
+      return baseProvider.invoke({ ...input, contextScope: runState.id, onUsage: attempt => {
+        ids.add(attempt.id);
+        return store.recordUsage(conversationId, { ...attempt, attribution: {
+          requestId: snapshot?.requestMessageId ?? runState.id,
+          participantId: input.usageParticipantId ?? null, participant,
+          purpose: [...ids].indexOf(attempt.id) > 0 ? "retry" : input.usagePurpose ?? (input.outputKind === "specialist_reply" ? "correction" : "initial")
+        } });
+      } });
+    } };
     const current = () => store.events(conversationId).then(events => {
       // Recovery notices stay in the saved transcript, but never count as a
       // completed consultant step or become evidence on a resumed attempt.
-      const confirmed = events.filter(event => event.role !== "System");
+      const boundRequest = snapshot?.requestMessageId ? events.find(event => event.id === snapshot.requestMessageId) : undefined;
+      if (snapshot?.requestMessageId && (!boundRequest || boundRequest.role !== "owner" || boundRequest.recipient)) throw new Error("invalid_run_state");
+      // Sequential runs created before immutable request binding was added are
+      // still recoverable, but only from the latest owner request in the chat.
+      const legacyRequest = snapshot?.requestMessageId ? undefined : [...events].reverse().find(event => event.role === "owner" && !event.recipient);
+      const boundary = (boundRequest ?? legacyRequest)?.sequence ?? 0;
+      const confirmed = events.filter(event => event.role !== "System" && event.sequence >= boundary);
       const ownerMessages = confirmed.filter(event => event.role === "owner");
-      return { events: confirmed, owner: ownerMessages.at(-1)?.body ?? "", sessionLanguage: responseLanguage(ownerMessages[0]?.body ?? ""), discussion: discussion(confirmed) };
+      const researchEntries = [...new Map([snapshot?.publicResearch, ...(snapshot?.followupResearch ?? [])].filter(item => item?.query).map(item => [item.query, item])).values()];
+      const researchContext = researchEntries.map(item => `Public research query: ${item.query}\n${item.body}\n${item.sources.map(source => `${source.title}: ${source.url}\nSupported claim: ${source.claim}`).join("\n\n")}`).join("\n\n");
+      const researchLimit = snapshot?.researchUnavailable ? snapshot.researchUnavailableReason === "unsafe_query"
+        ? "\n\nA public research attempt was withheld because no safe public query could be formed; do not claim that attempt was performed."
+        : "\n\nA public research attempt did not complete on the selected provider; do not claim that attempt was performed or invent sources." : "";
+      return { events: confirmed, owner: ownerMessages.map(event => event.body).join("\n\n"), sessionLanguage: responseLanguage(ownerMessages[0]?.body ?? ""), discussion: `${discussion(confirmed)}${snapshot?.ownerDeliverables ? `\n\nHead's requested-output ledger:\n${snapshot.ownerDeliverables}` : ""}${researchContext ? `\n\n${researchContext}` : ""}${researchLimit}` };
     });
     const isCurrent = async () => {
       const stored = await store.run(conversationId);
@@ -174,84 +138,103 @@ export function createConsultationService({ store, provider }) {
     };
     const invokeProvider = async step => {
       const evidence = await current();
-      const documentText = (step.runtimeInstructions?.documents ?? []).map(d => d.markdown).join("\n");
-      const sensitive = hasSensitiveResearchContext(evidence.owner + "\n" + evidence.discussion) || containsSecretLikeContent(documentText) || /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu.test(documentText);
-      const input = { provider: step.provider, assignment: step.assignment, model: step.model, effort: step.effort, evidence, research: step.provider !== "claude_code" && !sensitive && step.research, outputKind: step.outputKind, maximumCharacters: step.maximumCharacters, runtimeInstructions: step.runtimeInstructions, signal: controller.signal };
+      const input = { provider: step.provider, role: step.role, recipient: step.recipient, assignment: step.assignment, model: step.model, effort: step.effort, evidence, research: step.provider !== "claude_code" && step.research, outputKind: step.outputKind, runtimeInstructions: step.runtimeInstructions, signal: controller.signal };
       failedProvider = input.provider ?? "codex";
       let result = await provider.invoke(input);
-      if (!result.ok && result.code === "language_policy" && await isCurrent()) result = await provider.invoke({ ...input, assignment: policyCorrection(step.assignment), evidence: await current() });
+      if (!result.ok && (result.code === "language_policy" || result.code === "output_policy") && await isCurrent()) result = await provider.invoke({ ...input, usagePurpose: "retry", assignment: policyCorrection(step.assignment), evidence: await current() });
       return result;
     };
-    const invoke = async (step, transform = undefined, fallback = undefined) => {
+    const invoke = async (step, transform = undefined) => {
       if (!await isCurrent()) return undefined;
       const result = await invokeProvider(step);
       if (!result.ok) throw new Error(result.code ?? "provider_unavailable");
       if (containsInternalToolTrace(result.body)) throw new Error("provider_contract");
-      const output = (transform ?? compactOutput(step.maximumCharacters))(result.body) ?? (fallback ? { body: fallback() } : undefined);
+      const output = (transform ?? (body => ({ body })))(result.body);
       if (!output?.body) throw new Error("provider_contract");
       const committed = await store.appendAgentMessage(conversationId, runState.generation, { role: step.role, recipient: step.recipient, body: output.body, sources: output.sources ?? result.sources });
       if (!committed) throw new Error("invalid_run_state");
       return output;
     };
-    const invokeHeadTask = async (step, { question, language }) => {
-      const request = async assignment => {
-        if (!await isCurrent()) return undefined;
-        const result = await invokeProvider({ ...step, assignment });
-        if (!result.ok) throw new Error(result.code ?? "provider_unavailable");
-        if (containsInternalToolTrace(result.body)) throw new Error("provider_contract");
-        return result;
-      };
-      let result = await request(step.assignment);
-      if (!result) return undefined;
-      let output = headTaskOutput(result.body, step.caseAnchor, step.caseDetail);
-      if (!output) {
-        const detailInstruction = step.caseDetail ? ` and the exact decision detail “${step.caseDetail}”` : "";
-        result = await request(`${step.assignment}\n\nYour prior output could not be committed. Return a replacement that follows the wrapper exactly and includes the exact case anchor “${step.caseAnchor}”${detailInstruction}. Do not write any other text.`);
-        if (!result) return undefined;
-        output = headTaskOutput(result.body, step.caseAnchor, step.caseDetail);
-      }
-      const committedOutput = output ?? Object.freeze({ body: headTaskFallback(step.recipient, question, language) });
-      const committed = await store.appendAgentMessage(conversationId, runState.generation, { role: step.role, recipient: step.recipient, body: committedOutput.body, sources: output?.sources ?? result.sources });
-      if (!committed) throw new Error("invalid_run_state");
-      return committedOutput;
-    };
     try {
       if (!await isCurrent()) return;
+      if (snapshot.contractVersion === "parallel-v1") {
+        await runParallelConsultation({ store, provider, conversationId, runState, signal: controller.signal, onProvider: (value, stage) => { failedProvider = value; phase = stage; } });
+        return;
+      }
       const first = await current();
-      const settings = roleSettings(snapshot); const instructions = Object.freeze({ ...runtimeInstructionsFor(snapshot), documents: snapshot.instructionDocuments ?? [] }); const prompts = createRuntimePrompts(instructions); const research = !hasSensitiveResearchContext(first.owner + "\n" + first.discussion); const language = first.sessionLanguage;
+      const settings = roleSettings(snapshot); const instructions = Object.freeze({ ...runtimeInstructionsFor(snapshot), documents: snapshot.instructionDocuments ?? [] }); const prompts = createRuntimePrompts(instructions); const language = first.sessionLanguage;
       const ownerIndex = first.events.map(event => event.role).lastIndexOf("owner");
       if (ownerIndex < 0) throw new Error("invalid_run_state");
       let confirmed = first.events.slice(ownerIndex + 1);
-      const candidates = specialistCandidates(first.owner);
-      const selectAutomaticTeam = async () => {
+      if (!snapshot.ownerDeliverables) {
+        const ledger = await invokeProvider({ provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: false, outputKind: "owner_deliverables", runtimeInstructions: instructions, assignment: "You are Head Consultant. Read every owner message and correction in order. List each distinct requested deliverable and its acceptance condition as a numbered checklist, retaining the owner's concrete details. Include requested source links or factual verification. Do not answer the request yet. Do not invent requirements." });
+        if (!ledger.ok) throw new Error(ledger.code ?? "provider_unavailable");
+        if (containsInternalToolTrace(ledger.body)) throw new Error("provider_contract");
+        await persistSnapshot({ ownerDeliverables: ledger.body });
+      }
+      const committedTaskRoles = [];
+      for (const event of confirmed) {
+        if (event.role !== "Head Consultant" || !specialistRoles.includes(event.recipient)) break;
+        committedTaskRoles.push(event.recipient);
+      }
+      const savedCount = snapshot.specialistCount === "auto" ? snapshot.resolvedSpecialistCount : Number(snapshot.specialistCount);
+      if (new Set(committedTaskRoles).size !== committedTaskRoles.length || committedTaskRoles.length > 5 || (savedCount && committedTaskRoles.length > savedCount)) throw new Error("invalid_run_state");
+      const selectTeam = async prefix => {
         if (!await isCurrent()) return undefined;
         const result = await provider.invoke({
           provider: settings.head.provider,
-          assignment: prompts.autoTeam({ candidates, language }),
+          assignment: `${prompts.autoTeam({ candidates: specialistRoles, language, count: snapshot.specialistCount })}${prefix.length ? `\nResume the already confirmed roster prefix exactly in this order: ${prefix.join(", ")}. Select only the remaining roles; do not repeat or replace a committed task.` : ""}`,
           model: settings.head.model,
           effort: settings.head.effort,
           evidence: await current(),
           research: false,
           outputKind: "auto_team",
-          maximumCharacters: 32,
           runtimeInstructions: instructions,
           signal: controller.signal
         });
         failedProvider = settings.head.provider;
         if (!result.ok) throw new Error(result.code ?? "provider_unavailable");
-        return teamMarker(result.body).count;
+        const roles = teamFrom(result.body, savedCount);
+        if (prefix.some((role, index) => roles[index] !== role)) throw new Error("invalid_run_state");
+        return roles;
       };
-      let selected = chosenCount(snapshot);
-      if (!selected) {
-        const selectedByHead = await selectAutomaticTeam();
-        if (!selectedByHead) return;
-        selected = selectedByHead;
-        await persistSnapshot({ resolvedSpecialistCount: selected });
-        confirmed = (await current()).events.slice(ownerIndex + 1);
+      let team = snapshot.resolvedTeam;
+      if (!team) {
+        team = savedCount && committedTaskRoles.length === savedCount ? committedTaskRoles : await selectTeam(committedTaskRoles);
+        if (!team) return;
+        await persistSnapshot({ resolvedTeam: team, resolvedSpecialistCount: team.length });
       }
-      const team = candidates.slice(0, selected);
-      const caseAnchor = taskAnchor(first.owner);
-      const caseDetail = taskDetail(first.owner, caseAnchor) ?? caseAnchor;
+      const researchStep = async (followupRound = undefined) => {
+        const queryResult = await invokeProvider({ provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: false, outputKind: "research_query", runtimeInstructions: instructions, assignment: `You are Head Consultant. ${followupRound === undefined ? "Decide whether the owner's requested outputs require current public facts or direct external sources." : "Review the Critic's specific evidence gap after this team round and decide whether a new public source is needed for the next review."} If not, return [RESEARCH: NONE]. Otherwise return only a minimal English or Ukrainian public web query that can find the needed source. Do not include private contacts, personal identifiers, credentials, private business details or the full owner request. Public article URLs without query parameters may be included.` });
+        if (!queryResult.ok && queryResult.code === "cancelled") throw new Error("cancelled");
+        if (queryResult.ok && containsInternalToolTrace(queryResult.body)) throw new Error("provider_contract");
+        const noResearch = queryResult.ok && queryResult.body.trim() === "[RESEARCH: NONE]";
+        const query = queryResult.ok && !noResearch ? publicQuery(queryResult.body) : undefined;
+        let item = !queryResult.ok
+          ? { status: "unavailable", reason: queryResult.code ?? "provider_unavailable" }
+          : { status: noResearch ? "none" : "unsafe" };
+        if (query) {
+          const prior = [snapshot.publicResearch, ...(snapshot.followupResearch ?? [])].find(entry => entry?.query === query);
+          if (prior) item = prior;
+          else {
+            const publicResult = await provider.invoke({ provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: true, outputKind: "public_research", runtimeInstructions: publicInstructions, assignment: "Research this public topic using live web search. Report concrete findings with direct source URLs and dates when available. If you cannot verify a claim, say so. Do not infer private owner context.", evidence: { owner: query, discussion: "" }, signal: controller.signal });
+            if (!publicResult.ok && publicResult.code === "cancelled") throw new Error("cancelled");
+            if (!publicResult.ok) item = { status: "unavailable", reason: publicResult.code ?? "provider_unavailable" };
+            else {
+              if (containsInternalToolTrace(publicResult.body)) throw new Error("provider_contract");
+              item = { query, body: publicResult.body, sources: publicResult.sources ?? [] };
+            }
+          }
+        }
+        const unavailable = item.status === "unsafe" || item.status === "unavailable";
+        const limitation = unavailable ? { researchUnavailableReason: item.status === "unsafe" ? "unsafe_query" : item.reason } : {};
+        if (followupRound === undefined) await persistSnapshot({ researchAttempted: true, ...(item.query ? { publicResearch: item } : { researchUnavailable: unavailable, ...limitation }) });
+        else {
+          const followupResearch = [...(snapshot.followupResearch ?? [])];
+          followupResearch[followupRound - 1] = item;
+          await persistSnapshot({ followupResearch, researchUnavailable: snapshot.researchUnavailable || unavailable, ...limitation });
+        }
+      };
       const headTasks = team.map(specialist => ({
           role: "Head Consultant",
           recipient: specialist,
@@ -260,17 +243,18 @@ export function createConsultationService({ store, provider }) {
           effort: settings.head.effort,
           research: false,
           outputKind: "head_task",
-          maximumCharacters: 420,
-          caseAnchor,
-          caseDetail,
           runtimeInstructions: instructions,
-          assignment: prompts.headTask({ specialist, caseAnchor, caseDetail, language })
+          assignment: prompts.headTask({ specialist, caseAnchor: "the complete owner request above", caseDetail: "every requested output and correction", language })
         }));
       for (let index = 0; index < headTasks.length; index += 1) {
         const existing = confirmed[index];
         if (existing) { if (!matches(existing, headTasks[index])) throw new Error("invalid_run_state"); }
-        else await invokeHeadTask(headTasks[index], { question: first.owner, language: first.sessionLanguage });
+        else await invoke(headTasks[index], body => ({ body, ...(index === 0 && snapshot.publicResearch?.sources?.length ? { sources: snapshot.publicResearch.sources } : {}) }));
       }
+      // Head assignments are useful owner-visible progress. A slow or failed
+      // public search must not hide them or end the consultation.
+      if (!await isCurrent()) return;
+      if (!snapshot.researchAttempted) await researchStep();
       confirmed = (await current()).events.slice(ownerIndex + 1);
       const positions = team.map((specialist, index) => {
         const assignedTask = confirmed[index]?.body;
@@ -281,9 +265,8 @@ export function createConsultationService({ store, provider }) {
           provider: settings.consultant.provider,
           model: settings.consultant.model,
           effort: settings.consultant.effort,
-          research,
+          research: false,
           outputKind: "specialist_position",
-          maximumCharacters: 1_400,
           runtimeInstructions: instructions,
           assignment: prompts.specialistPosition({ specialist, assignedBrief: assignedTask, language })
         };
@@ -293,57 +276,49 @@ export function createConsultationService({ store, provider }) {
         const positionIndex = headTasks.length + index;
         const existing = confirmed[positionIndex];
         if (existing) { if (!matches(existing, positions[index])) throw new Error("invalid_run_state"); }
-        else await invoke(positions[index]);
+        else await invoke(positions[index], body => ({ body, ...(index === 0 && !confirmed[0]?.sources?.length && snapshot.publicResearch?.sources?.length ? { sources: snapshot.publicResearch.sources } : {}) }));
       }
       confirmed = (await current()).events.slice(ownerIndex + 1);
       let cursor = initial.length;
-      const automaticDepth = snapshot.discussionDepth === "auto";
-      const maximumDepth = automaticDepth ? 10 : Number(snapshot.discussionDepth);
-      // A depth step reviews the whole team. Legacy global consensus cannot
-      // stand in for a missing specialist's challenge and response.
-      const agreements = [...(snapshot.criticReview?.agreements ?? [])];
-      const closingReviews = [...(snapshot.consolidationReviews ?? [])];
+      const maximumDepth = snapshot.discussionDepth === "auto" ? 10 : Number(snapshot.discussionDepth);
       let reviewStatus = "unconfirmed";
       for (let exchange = 1; exchange <= maximumDepth; exchange += 1) {
-        let consensusReached = true;
-        for (const [index, specialist] of team.entries()) {
+        for (const [specialistIndex, specialist] of team.entries()) {
           if (!await isCurrent()) return;
-          const challenge = { role: "Critic", recipient: specialist, provider: settings.critic.provider, model: settings.critic.model, effort: settings.critic.effort, research, outputKind: "critic_challenge", maximumCharacters: 1_000, runtimeInstructions: instructions, assignment: prompts.criticChallenge({ specialist, exchange, language }) };
-          const reply = { role: specialist, recipient: "Critic", provider: settings.consultant.provider, model: settings.consultant.model, effort: settings.consultant.effort, research, outputKind: "specialist_reply", maximumCharacters: 1_200, runtimeInstructions: instructions, assignment: prompts.specialistReply({ specialist, language, automaticDepth }) };
+          const challenge = { role: "Critic", recipient: specialist, provider: settings.critic.provider, model: settings.critic.model, effort: settings.critic.effort, research: false, outputKind: "critic_challenge", runtimeInstructions: instructions, assignment: prompts.criticChallenge({ specialist, exchange, language }) };
+          const reply = { role: specialist, recipient: "Critic", provider: settings.consultant.provider, model: settings.consultant.model, effort: settings.consultant.effort, research: false, outputKind: "specialist_reply", runtimeInstructions: instructions, assignment: prompts.specialistReply({ specialist, language }) };
           const existingChallenge = confirmed[cursor];
           if (existingChallenge) { if (!matches(existingChallenge, challenge)) throw new Error("invalid_run_state"); }
-          else await invoke(challenge);
+          else await invoke(challenge, body => ({ body, ...(specialistIndex === 0 && exchange > 1 && snapshot.followupResearch?.[exchange - 2]?.sources?.length ? { sources: snapshot.followupResearch[exchange - 2].sources } : {}) }));
           cursor += 1;
-          let replyOutcome;
           const existingReply = confirmed[cursor];
           if (existingReply) { if (!matches(existingReply, reply)) throw new Error("invalid_run_state"); }
-          else replyOutcome = await invoke(reply, automaticDepth ? body => {
-            const marked = consensusMarker(body);
-            return Object.freeze({ ...marked, body: compactMessage(marked.body, reply.maximumCharacters) });
-          } : compactOutput(reply.maximumCharacters));
+          else await invoke(reply);
           cursor += 1;
-          if (automaticDepth) {
-            const reviewIndex = (exchange - 1) * team.length + index;
-            if (replyOutcome) {
-              agreements[reviewIndex] = replyOutcome.reached;
-              await persistSnapshot({ criticReview: { agreements: [...agreements] } });
-            }
-            // A crash between message commit and metadata save leaves agreement
-            // unknown. Continue conservatively; never replay the saved message.
-            consensusReached &&= agreements[reviewIndex] === true;
-          }
         }
-        if (automaticDepth) {
-          await persistSnapshot({ autoDepthCompleted: exchange, consiliumReached: false });
-        }
-        // Closing positions are distinct, confirmed messages, never inferred
-        // from a previous reply or a saved global agreement flag.
         confirmed = (await current()).events.slice(ownerIndex + 1);
         const closingStarted = confirmed[cursor]?.recipient === "Head Consultant";
-        if (exchange === maximumDepth || (automaticDepth && (consensusReached || closingStarted))) {
+        let decision = snapshot.headReviewDecisions?.[exchange - 1];
+        const nextRoundStarted = confirmed[cursor]?.role === "Critic" && team.includes(confirmed[cursor]?.recipient);
+        if (!decision && nextRoundStarted) decision = "CONTINUE";
+        if (!decision && !closingStarted) {
+          if (!await isCurrent()) return;
+          const result = await invokeProvider({ provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: false, outputKind: "head_review", runtimeInstructions: instructions, assignment: prompts.headReview({ exchange, maximumDepth, language }) });
+          if (!result.ok) throw new Error(result.code ?? "provider_unavailable");
+          if (containsInternalToolTrace(result.body)) throw new Error("provider_contract");
+          decision = reviewDecision(result.body);
+          const decisions = [...(snapshot.headReviewDecisions ?? [])];
+          decisions[exchange - 1] = decision;
+          await persistSnapshot({ headReviewDecisions: decisions, autoDepthCompleted: exchange });
+        }
+        if (decision === "CONTINUE" && exchange < maximumDepth && !closingStarted) {
+          if (!nextRoundStarted && !snapshot.followupResearch?.[exchange - 1]) await researchStep(exchange);
+          continue;
+        }
+        {
           const closingSteps = [
-            ...team.map(specialist => ({ role: specialist, recipient: "Head Consultant", provider: settings.consultant.provider, model: settings.consultant.model, effort: settings.consultant.effort, research, outputKind: "specialist_final", maximumCharacters: 1_200, runtimeInstructions: instructions, assignment: prompts.specialistFinal({ specialist, language }) })),
-            { role: "Critic", recipient: "Head Consultant", provider: settings.critic.provider, model: settings.critic.model, effort: settings.critic.effort, research, outputKind: "critic_final", maximumCharacters: 1_600, runtimeInstructions: instructions, assignment: prompts.criticFinal(language) }
+            ...team.map(specialist => ({ role: specialist, recipient: "Head Consultant", provider: settings.consultant.provider, model: settings.consultant.model, effort: settings.consultant.effort, research: false, outputKind: "specialist_final", runtimeInstructions: instructions, assignment: prompts.specialistFinal({ specialist, language }) })),
+            { role: "Critic", recipient: "Head Consultant", provider: settings.critic.provider, model: settings.critic.model, effort: settings.critic.effort, research: false, outputKind: "critic_final", runtimeInstructions: instructions, assignment: prompts.criticFinal(language) }
           ];
           for (const step of closingSteps) {
             if (!await isCurrent()) return;
@@ -352,42 +327,57 @@ export function createConsultationService({ store, provider }) {
             else {
               const output = await invoke(step, step.outputKind === "critic_final" ? body => {
                 const marked = consensusMarker(body);
-                return Object.freeze({ ...marked, body: compactMessage(marked.body, step.maximumCharacters) });
+                return Object.freeze({ ...marked, body: marked.body });
               } : undefined);
               if (step.outputKind === "critic_final") {
-                closingReviews[exchange - 1] = { reached: output.reached };
-                await persistSnapshot({ consolidationReviews: [...closingReviews] });
+                await persistSnapshot({ closingReviewReached: output.reached });
               }
             }
             cursor += 1;
           }
-          const reached = closingReviews[exchange - 1]?.reached === true;
+          const reached = snapshot.closingReviewReached === true;
           reviewStatus = reached ? "supported by the specialists and Critic" : "unresolved or unconfirmed";
           await persistSnapshot({ consiliumReached: reached });
-          if (!automaticDepth || reached || exchange === maximumDepth) break;
+          break;
         }
       }
       if (!await isCurrent()) return;
       confirmed = (await current()).events.slice(ownerIndex + 1);
       if (confirmed.length < cursor) throw new Error("invalid_run_state");
-      const conclusion = { role: "Head Consultant", recipient: null, provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: false, outputKind: "head_final", maximumCharacters: 2_000, runtimeInstructions: instructions, assignment: prompts.conclusion(language, reviewStatus) };
+      const conclusion = { role: "Head Consultant", recipient: null, provider: settings.head.provider, model: settings.head.model, effort: settings.head.effort, research: false, outputKind: "head_final", runtimeInstructions: instructions, assignment: prompts.conclusion(language, reviewStatus) };
       if (confirmed[cursor]) {
         if (!matches(confirmed[cursor], conclusion) || confirmed.length !== cursor + 1) throw new Error("invalid_run_state");
       } else await invoke(conclusion, consolidatedOutput);
       await store.finishRun(conversationId, runState.generation, "complete", deriveConversationTitle(first.owner));
     } catch (error) {
       if (!controller.signal.aborted) {
-        const body = providerFailureMessage(error.message, failedProvider) ?? (error.message === "language_policy" ? "A response did not meet the English/Ukrainian language policy. Your question remains saved." : "The consultation paused before a confirmed response. Your saved discussion remains available.");
+        const code = ["provider_timeout", "provider_idle_timeout", "provider_contract", "team_review_contract", "auth_required", "quota_blocked", "incompatible", "context_too_large", "subscription_unavailable", "method_unavailable", "provider_unavailable", "language_policy", "output_policy", "invalid_run_state", "local_state_invalid", "local_store_capacity_exceeded"].includes(error.message) ? error.message : "unexpected_failure";
+        const safePhase = ["initializing", "discussion", "head_plan", "head_assignment", "team_review", "order_assessment", "specialist_reply", "specialist_position", "critic_order_assessment", "public_research", "research_query", "head_final", "head_review_decision", "specialist_final", "critic_final", "critic_reply"].includes(phase) ? phase : "consultation_step";
+        process.stdout.write(`${JSON.stringify({ event: "nanoduck.consultation.failed", provider: failedProvider, phase: safePhase, code, durationMs: Date.now() - startedAt })}\n`);
+        const storageFailure = { local_state_invalid: "The application could not validate the completed response for storage. Confirmed answers remain saved; Retry resumes the missing step.", local_store_capacity_exceeded: "Local storage has reached its capacity. Export or remove older conversations before retrying; confirmed answers remain saved." }[error.message];
+        const body = storageFailure ?? providerFailureMessage(error.message, failedProvider) ?? (["language_policy", "output_policy"].includes(error.message) ? "This agent returned no usable answer after disallowed content was withheld and one correction attempt. Your question is saved; Retry resumes this step." : "The consultation paused before a confirmed response. Your saved discussion remains available.");
         await store.appendAgentMessage(conversationId, runState.generation, { role: "System", body, sources: [] });
         await store.finishRun(conversationId, runState.generation, "failed");
       }
-    } finally { if (controllers.get(conversationId) === controller) controllers.delete(conversationId); }
+    } finally { try { await baseProvider.releaseScope?.(runState.id); } finally { if (controllers.get(conversationId) === controller) controllers.delete(conversationId); } }
+  };
+  const queueRun = (conversationId, runState) => {
+    if (closing) return;
+    const previous = executions.get(conversationId);
+    let completion;
+    completion = Promise.resolve(previous).catch(() => {}).then(async () => {
+      if (closing) return;
+      const current = await store.run(conversationId);
+      if (!current || current.id !== runState.id || current.status !== "active" || current.generation !== runState.generation) return;
+      await run(conversationId, runState);
+    }).catch(() => {}).finally(() => {
+      if (executions.get(conversationId) === completion) executions.delete(conversationId);
+    });
+    executions.set(conversationId, completion);
   };
   return Object.freeze({
     async start(conversationId, runState) {
-      if (closing || executions.has(conversationId)) return;
-      const completion = run(conversationId, runState).catch(() => {}).finally(() => executions.delete(conversationId));
-      executions.set(conversationId, completion);
+      queueRun(conversationId, runState);
     },
     async stop(conversationId) {
       const stopped = await store.stop(conversationId);
@@ -396,7 +386,14 @@ export function createConsultationService({ store, provider }) {
       return stopped;
     },
     async continue(conversationId) {
-      if (closing || executions.has(conversationId)) return undefined;
+      if (closing) return undefined;
+      const existing = executions.get(conversationId);
+      if (existing) {
+        const current = await store.run(conversationId);
+        if (current?.status === "active") return undefined;
+        await existing;
+      }
+      if (closing) return undefined;
       const runState = await store.continueRun(conversationId);
       if (runState) await this.start(conversationId, runState);
       return runState;

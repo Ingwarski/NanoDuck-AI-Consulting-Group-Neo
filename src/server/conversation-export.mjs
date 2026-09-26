@@ -22,7 +22,20 @@ const inline = tokens => tokens.map(token => {
 }).join("");
 
 const paragraph = (content, style = "") => `\\pard\\plain\\f0\\fs22\\sa140\\sl286\\slmult1${style} ${content}\\par\n`;
+const rtfTable = block => {
+  const width = 9639; // A4 text area, in twips, matching document margins.
+  return [block.headers, ...block.rows].map((cells, rowIndex) => {
+    const borders = ["t", "l", "b", "r"].map(side => `\\clbrdr${side}\\brdrs\\brdrw10`).join("");
+    const definitions = cells.map((_, index) => `${borders}\\cellx${Math.round(width * (index + 1) / cells.length)}`).join("");
+    const content = cells.map((tokens, index) => {
+      const alignment = { left: "ql", center: "qc", right: "qr" }[block.alignments[index]];
+      return `\\pard\\plain\\intbl\\f0\\fs22\\${alignment} ${rowIndex === 0 ? `{\\b ${inline(tokens)}}` : inline(tokens)}\\cell `;
+    }).join("");
+    return `\\trowd\\trgaph100\\trleft0${rowIndex === 0 ? "\\trhdr" : ""}${definitions}\n${content}\\row\n`;
+  }).join("") + "\\pard\\plain\\par\n";
+};
 const messageBody = body => parseMarkdown(body).map(block => {
+  if (block.type === "table") return rtfTable(block);
   if (block.type === "list") return block.items.map((item, index) => paragraph(`${escapeRtf(block.ordered ? `${index + 1}.` : "•")}\\tab ${inline(item)}`, "\\li360\\fi-240\\tx360")).join("");
   if (block.type === "heading") return paragraph(`{\\b ${inline(block.content)}}`, "\\sb100\\keepn");
   if (block.type === "quote") return paragraph(inline(block.content), "\\li360\\ri180\\i");

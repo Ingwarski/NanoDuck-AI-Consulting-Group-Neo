@@ -35,7 +35,10 @@ test("the preflight inspects the managed catalog without starting a model turn",
     const report = JSON.parse(result.stdout);
     assert.equal(report.schema_version, 1);
     assert.equal(report.codex.status, "ready");
-    assert.deepEqual(report.codex.models, [{ id: "gpt-6-astra", efforts: ["xhigh", "ultra"] }]);
+    assert.deepEqual(report.codex.models, [
+      { id: "gpt-6-astra", efforts: ["xhigh", "ultra"] },
+      { id: "gpt-6-sol", efforts: ["low", "medium", "high", "xhigh", "max", "ultra"] }
+    ]);
     assert.match(report.scope, /no model turn/u);
   } finally {
     await rm(directory, { recursive: true, force: true });

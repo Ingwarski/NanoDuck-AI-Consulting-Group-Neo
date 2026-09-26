@@ -9,4 +9,5 @@ export async function initializeInstructions(store) {
   // An existing owner document always wins. Packaged Markdown is first-use seed only.
   if (!await store.runtimeInstructions()) await store.bootstrapRuntimeInstructions(await readPromptDefault());
   await store.initializeDocuments();
+  await store.migrateDefaultDocuments();
 }

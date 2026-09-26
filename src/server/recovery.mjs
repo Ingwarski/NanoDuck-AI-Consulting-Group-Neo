@@ -1,6 +1,7 @@
+import { normalizeUsageAttempt } from "./usage.mjs";
 import { normalizeConfiguration } from "./configuration-recovery.mjs";
 import { decryptText, encryptText } from "./crypto.mjs";
-import { hasProhibitedLanguage, safeExternalUrl } from "./validation.mjs";
+import { hasProhibitedLanguage, maximumMessageBytes, safeExternalUrl } from "./validation.mjs";
 
 export const maximumRecoveryBytes = 32 * 1024 * 1024;
 const schemaVersion = 1;
@@ -11,14 +12,14 @@ const text = (value, maximum) => typeof value === "string" && value.trim().lengt
 const record = value => typeof value === "object" && value !== null && !Array.isArray(value);
 
 const source = value => {
-  if (!record(value) || !text(value.title, 280) || !text(value.claim, 1_000) || !date(value.retrievedAt)) return undefined;
+  if (!record(value) || !text(value.title, 16 * 1024 * 1024) || !text(value.claim, 16 * 1024 * 1024) || !date(value.retrievedAt)) return undefined;
   const url = safeExternalUrl(value.url);
   if (!url || (value.publishedAt !== undefined && !date(value.publishedAt))) return undefined;
   return Object.freeze({ url, title: value.title.trim(), claim: value.claim.trim(), retrievedAt: value.retrievedAt, ...(value.publishedAt ? { publishedAt: value.publishedAt } : {}) });
 };
 
 const message = value => {
-  if (!record(value) || !identifier(value.id) || !text(value.role, 64) || !text(value.body, 32_000) || !Number.isInteger(value.sequence) || value.sequence < 1 || !date(value.createdAt) || (value.recipient !== null && value.recipient !== undefined && !text(value.recipient, 64)) || !Array.isArray(value.sources)) return undefined;
+  if (!record(value) || !identifier(value.id) || !text(value.role, 64) || !text(value.body, 16 * 1024 * 1024) || Buffer.byteLength(value.body.trim(), "utf8") > maximumMessageBytes || !Number.isInteger(value.sequence) || value.sequence < 1 || !date(value.createdAt) || (value.recipient !== null && value.recipient !== undefined && !text(value.recipient, 64)) || !Array.isArray(value.sources)) return undefined;
   const sources = value.sources.map(source);
   if (sources.some(item => !item)) return undefined;
   return Object.freeze({ id: value.id, role: value.role.trim(), recipient: value.recipient ? value.recipient.trim() : null, body: value.body.trim(), sequence: value.sequence, createdAt: value.createdAt, sources: Object.freeze(sources) });
@@ -40,12 +41,15 @@ const entry = value => {
   if (!record(value) || !Array.isArray(value.messages) || (value.attachments !== undefined && !Array.isArray(value.attachments))) return undefined;
   const item = conversation(value.conversation);
   if (!item) return undefined;
+  if (value.usage !== undefined && !Array.isArray(value.usage)) return undefined;
+  const usage = (value.usage ?? []).map(normalizeUsageAttempt);
+  if (usage.some(item => !item) || new Set(usage.map(item => item.id)).size !== usage.length) return undefined;
   const messages = value.messages.map(message);
   const attachments = (value.attachments ?? []).map(attachment);
   if (messages.some(item => !item) || new Set(messages.map(item => item.id)).size !== messages.length || messages.some((item, index) => item.sequence !== index + 1)) return undefined;
   if (attachments.some(item => !item) || new Set(attachments.map(item => item.id)).size !== attachments.length || attachments.some(item => !messages.some(message => message.id === item.messageId))) return undefined;
-  if (item.deletedAt && (messages.length || attachments.length)) return undefined;
-  return Object.freeze({ conversation: item, messages: Object.freeze(messages.map(message => Object.freeze({ ...message, attachments: Object.freeze(attachments.filter(item => item.messageId === message.id).map(item => Object.freeze({ id: item.id, contentType: item.contentType, byteLength: item.byteLength, createdAt: item.createdAt }))) }))), attachments: Object.freeze(attachments) });
+  if (item.deletedAt && (messages.length || attachments.length || usage.length)) return undefined;
+  return Object.freeze({ conversation: item, usage: Object.freeze(usage), messages: Object.freeze(messages.map(message => Object.freeze({ ...message, attachments: Object.freeze(attachments.filter(item => item.messageId === message.id).map(item => Object.freeze({ id: item.id, contentType: item.contentType, byteLength: item.byteLength, createdAt: item.createdAt }))) }))), attachments: Object.freeze(attachments) });
 };
 
 export function normalizeRecoverySnapshot(value) {

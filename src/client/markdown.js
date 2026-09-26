@@ -1,17 +1,21 @@
 const forbiddenHostSuffixes = Object.freeze([".ru", ".by", ".su", ".xn--p1ai", ".xn--90ais"]);
-const protectEscapedMarkdown = value => value.replace(/\\([\\`*_[\]{}()#+\-.!])/gu, "\uE000$1");
-const unescapeMarkdown = value => value.replace(/\uE000(.)/gu, "$1").replace(/\\([\\`*_[\]{}()#+\-.!])/gu, "$1");
+const protectEscapedMarkdown = value => value.replace(/\\([\\`*_[\]{}()#+\-.!|])/gu, "\uE000$1");
+const unescapeMarkdown = value => value.replace(/\uE000(.)/gu, "$1").replace(/\\([\\`*_[\]{}()#+\-.!|])/gu, "$1");
 const text = value => Object.freeze({ type: "text", value: unescapeMarkdown(value) });
 const isForbiddenHost = hostname => hostname === "ru" || hostname === "by" || hostname === "su" || hostname === "xn--p1ai" || hostname === "xn--90ais" || forbiddenHostSuffixes.some(suffix => hostname.endsWith(suffix));
+const isPrivateAddress = hostname => {
+  const ipv4 = hostname.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/u)?.slice(1).map(Number);
+  if (ipv4) return ipv4.some(part => part > 255) || ipv4[0] === 0 || ipv4[0] === 10 || ipv4[0] === 127 || (ipv4[0] === 100 && ipv4[1] >= 64 && ipv4[1] <= 127) || (ipv4[0] === 169 && ipv4[1] === 254) || (ipv4[0] === 172 && ipv4[1] >= 16 && ipv4[1] <= 31) || (ipv4[0] === 192 && ipv4[1] === 168) || (ipv4[0] === 198 && [18, 19].includes(ipv4[1])) || ipv4[0] >= 224;
+  if (!hostname.includes(":")) return false;
+  const first = Number.parseInt(hostname.split(":", 1)[0] || "0", 16);
+  return hostname.startsWith("::") || (first & 0xfe00) === 0xfc00 || (first & 0xffc0) === 0xfe80 || (first & 0xffc0) === 0xfec0 || (first & 0xff00) === 0xff00;
+};
 
 export function safeMarkdownHref(value) {
   try {
     const url = new URL(value);
     const hostname = url.hostname.toLowerCase().replace(/^\[|\]$/gu, "");
-    const ipv4 = hostname.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/u)?.slice(1).map(Number);
-    const privateIpv4 = ipv4 && (ipv4.some(part => part > 255) || ipv4[0] === 0 || ipv4[0] === 10 || ipv4[0] === 127 || (ipv4[0] === 169 && ipv4[1] === 254) || (ipv4[0] === 172 && ipv4[1] >= 16 && ipv4[1] <= 31) || (ipv4[0] === 192 && ipv4[1] === 168));
-    const privateIpv6 = hostname === "::1" || hostname.startsWith("fc") || hostname.startsWith("fd") || hostname.startsWith("fe80:");
-    if (url.protocol !== "https:" || url.username || url.password || hostname === "localhost" || hostname.endsWith(".local") || hostname.endsWith(".internal") || isForbiddenHost(hostname) || privateIpv4 || privateIpv6) return undefined;
+    if (url.protocol !== "https:" || url.username || url.password || hostname === "localhost" || hostname.endsWith(".local") || hostname.endsWith(".internal") || isForbiddenHost(hostname) || isPrivateAddress(hostname)) return undefined;
     return url.toString();
   } catch {
     return undefined;
@@ -45,11 +49,44 @@ const unorderedLine = /^\s*[-+*]\s+(.+)$/u;
 const orderedLine = /^\s*\d+[.)]\s+(.+)$/u;
 const quoteLine = /^\s*>\s?(.*)$/u;
 
+// Split only unescaped pipes; escaped pipes remain literal inline content.
+const tableCells = line => {
+  const cells = []; let cell = ""; let separators = 0;
+  for (let i = 0; i < line.length; i += 1) {
+    if (line[i] === "\\" && i + 1 < line.length) { cell += line[i] + line[++i]; continue; }
+    if (line[i] === "|") { cells.push(cell.trim()); cell = ""; separators += 1; }
+    else cell += line[i];
+  }
+  cells.push(cell.trim());
+  if (!separators) return null;
+  if (cells[0] === "") cells.shift();
+  if (cells.at(-1) === "") cells.pop();
+  return cells;
+};
+const tableStart = (lines, index) => {
+  const headers = tableCells(lines[index] ?? "");
+  const delimiters = tableCells(lines[index + 1] ?? "");
+  if (!headers?.length || headers.length !== delimiters?.length || !delimiters.every(cell => /^:?-{3,}:?$/u.test(cell))) return null;
+  return { headers, alignments: delimiters.map(cell => cell.endsWith(":") ? cell.startsWith(":") ? "center" : "right" : "left") };
+};
+
 export function parseMarkdown(value) {
   const lines = String(value ?? "").replace(/\r\n?/gu, "\n").split("\n");
   const blocks = [];
   for (let index = 0; index < lines.length;) {
     if (!lines[index].trim()) { index += 1; continue; }
+    const table = tableStart(lines, index);
+    if (table) {
+      const rows = []; index += 2;
+      while (index < lines.length && lines[index].trim()) {
+        const cells = tableCells(lines[index]);
+        // Keep malformed rows as ordinary text rather than silently dropping cells.
+        if (!cells || cells.length !== table.headers.length) break;
+        rows.push(Object.freeze(cells.map(parseInline))); index += 1;
+      }
+      blocks.push(Object.freeze({ type: "table", headers: Object.freeze(table.headers.map(parseInline)), alignments: Object.freeze(table.alignments), rows: Object.freeze(rows) }));
+      continue;
+    }
     const heading = lines[index].match(headingLine);
     if (heading) {
       blocks.push(Object.freeze({ type: "heading", level: Math.min(4, heading[1].length + 2), content: parseInline(heading[2]) }));
@@ -74,7 +111,7 @@ export function parseMarkdown(value) {
       blocks.push(Object.freeze({ type: "quote", content: inlineLines(quote) })); continue;
     }
     const paragraph = [];
-    while (index < lines.length && lines[index].trim() && !headingLine.test(lines[index]) && !unorderedLine.test(lines[index]) && !orderedLine.test(lines[index]) && !quoteLine.test(lines[index])) {
+    while (index < lines.length && lines[index].trim() && !tableStart(lines, index) && !headingLine.test(lines[index]) && !unorderedLine.test(lines[index]) && !orderedLine.test(lines[index]) && !quoteLine.test(lines[index])) {
       paragraph.push(lines[index]); index += 1;
     }
     blocks.push(Object.freeze({ type: "paragraph", content: inlineLines(paragraph) }));

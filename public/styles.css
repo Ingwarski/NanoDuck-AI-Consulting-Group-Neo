@@ -22,3 +22,105 @@
 .runtime-instruction-history{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}.runtime-instruction-history h3{margin:0;font-size:18px}.runtime-instruction-history .hint{margin-bottom:12px}.runtime-instruction-history>div{display:grid;gap:8px}.runtime-instruction-version{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.runtime-instruction-version p{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.runtime-instruction-version button{flex:none}.runtime-instruction-history .empty{padding:18px 0}.runtime-instructions-version-dialog textarea{min-height:300px;border:1px solid var(--line);border-radius:9px;background:#0b0c10;color:#dceeff;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5}.runtime-instructions-version-dialog .hint{margin:12px 0}
 
 .document-actions{display:flex;flex-wrap:wrap;gap:12px}.runtime-instruction-history select{margin-bottom:12px}
+
+/* Keep cancellation separate from the composer's Send and typing targets. */
+.topic{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}.topic>div{min-width:0}:root{--consultant-avatar-size:38px;--consultant-avatar-radius:7px}.avatar{width:var(--consultant-avatar-size);height:var(--consultant-avatar-size);border-radius:var(--consultant-avatar-radius)}.stop-consultation{position:relative;display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;flex:0 0 auto;width:88px;height:var(--consultant-avatar-size);min-height:var(--consultant-avatar-size);padding:0 14px;border:1px solid #fff;border-radius:var(--consultant-avatar-radius);background:linear-gradient(160deg,#fff,#e7e9ef);color:#171a22;box-shadow:inset 0 -2px 2px #c4c9d34d,0 3px 9px #0003;font-size:13px;font-weight:650;line-height:1;letter-spacing:-.15px;text-transform:none}.stop-consultation::before{content:"";position:absolute;left:0;top:50%;width:100%;height:44px;transform:translateY(-50%);border-radius:inherit}.stop-symbol{display:block;width:12px;height:12px;background:currentColor;border-radius:3px}.stop-consultation:hover{background:linear-gradient(160deg,#fff,#f3f4f8)}.stop-consultation:disabled{opacity:.6;cursor:wait}@media(max-width:700px){:root{--consultant-avatar-size:32px}}
+.sound-notice{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0 20px}.sound-notice .hint{margin:0}.sound-notice button{flex-shrink:0}@media(max-width:700px){.topic{gap:24px}.sound-notice{align-items:flex-start;gap:12px}.sound-notice button{max-width:140px}}
+
+.topic[data-active="true"]{position:sticky;top:96px;z-index:12;padding-top:12px;background:var(--canvas)}@media(max-width:700px){.topic[data-active="true"]{top:86px}}@media(forced-colors:active){.stop-symbol{background:ButtonText;forced-color-adjust:none}.stop-consultation{border-color:ButtonText}}
+
+/* Usage stays within the existing consultation panel and Electric type scale. */
+.usage-heading { display: flex; align-items: start; justify-content: space-between; gap: 24px; }
+.usage-heading h2 { margin-top: 8px; }
+.usage-heading label { min-width: 200px; }
+.usage-total { font-size: clamp(32px, 6vw, 52px); font-weight: 650; line-height: 1.15; margin: 24px 0 8px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.usage-coverage { margin-top: 24px; }
+.usage-model { border-top: 1px solid var(--line); padding: 24px 0; }
+.usage-model h3 { overflow-wrap: anywhere; margin: 0 0 8px; }
+.usage-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; font-variant-numeric: tabular-nums; }
+.usage-metrics dt { font-size: 13px; color: var(--muted); }
+.usage-metrics dd { margin: 8px 0 0; font-size: 22px; overflow-wrap: anywhere; }
+.usage-model summary { cursor: pointer; padding: 12px 0; }
+@media (max-width: 560px) {
+  .usage-heading { flex-direction: column; gap: 8px; }
+  .usage-heading label { width: 100%; min-width: 0; }
+  .usage-metrics { gap: 10px; }
+  .usage-metrics dd { font-size: 17px; }
+  .tabs { gap: 12px; }
+  .tabs button { font-size: 14px; min-width: 44px; }
+}
+.usage-heading select { display: block; width: 100%; min-height: 44px; margin-top: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font-size: 16px; }
+.usage-model summary:focus-visible { outline: 3px solid var(--blue-light); outline-offset: 3px; }
+
+/* Keep consultation navigation and Stop together below the main sticky menu. */
+.discussion-header { position: sticky; top: 96px; z-index: 12; padding-top: 12px; background: var(--canvas); }
+.discussion-header .topic[data-active="true"] { position: static; padding-top: 0; }
+.discussion-header .tabs { margin-bottom: 0; }
+@media (max-width: 700px) { .discussion-header { top: 86px; } }
+
+/* Shared Markdown tables remain contained on narrow screens. */
+.markdown-table-scroll{max-width:100%;overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:10px;overscroll-behavior-x:contain}
+.markdown-table-scroll:focus-visible{outline:3px solid var(--blue-light);outline-offset:3px}
+.markdown-table-scroll table{width:100%;border-collapse:collapse;line-height:1.5}
+.markdown-table-scroll th,.markdown-table-scroll td{min-width:150px;padding:12px 14px;vertical-align:top;border-bottom:1px solid var(--line);border-right:1px solid var(--line);overflow-wrap:anywhere;white-space:normal}
+.markdown-table-scroll th{background:var(--raised);font-weight:750}
+.markdown-table-scroll tr:last-child td{border-bottom:0}
+.markdown-table-scroll th:last-child,.markdown-table-scroll td:last-child{border-right:0}
+
+/* Reading mode: navigation stays beside the transcript; input occupies normal flow. */
+.discussion-content{min-width:0}
+#discussion-page .composer{position:static;margin-top:24px}
+.reading-actions{position:sticky;bottom:12px;z-index:10;display:flex;justify-content:flex-end;gap:8px;padding:12px 0;margin-top:16px;pointer-events:none}
+.reading-actions button{pointer-events:auto;box-shadow:0 4px 16px #0005}
+.view-picker{display:none}
+#outcome{scroll-margin-top:160px}
+@media(min-width:1100px){
+ #discussion-page{display:grid;grid-template-columns:174px minmax(0,1fr);gap:30px;max-width:1116px;align-items:start}
+ .discussion-header{top:96px;padding:12px 0;align-self:start;border-right:1px solid var(--line);padding-right:16px}
+ .discussion-header .topic{flex-direction:column;gap:16px}
+ .discussion-header .eyebrow{display:none}
+ .discussion-header .status{font-size:13px;margin:0}
+ .discussion-header .tabs{flex-direction:column;gap:4px;border-bottom:0;margin-top:12px}
+ .discussion-header .tabs button{text-align:left;padding:10px 12px;border-radius:9px;min-height:44px}
+ .discussion-header .tabs button[aria-selected=true]{background:var(--raised);box-shadow:inset 3px 0 var(--blue-light)}
+}
+@media(max-width:1099px){
+ .discussion-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+ .discussion-header .tabs,.discussion-header .eyebrow{display:none}
+ .discussion-header .topic{padding:0;gap:12px;align-items:center;min-width:0}
+ .discussion-header .status{font-size:12px;margin:0}
+ .view-picker{display:block;flex:0 0 130px;order:-1}
+ .view-picker select{min-height:44px;padding:8px}
+ .reading-actions button{font-size:13px;padding:8px 12px}
+}
+
+.usage-stages{margin:24px 0;border:1px solid var(--line);border-radius:10px;padding:14px}.usage-stages summary{cursor:pointer}.usage-stage{padding:12px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.usage-stage:last-child{border-bottom:0}
+
+.chat-jumps{position:fixed;inset:0;z-index:15;pointer-events:none}.chat-jumps button{pointer-events:auto;position:fixed;left:50%;transform:translateX(-50%);display:grid;place-items:center;width:44px;height:44px;min-width:44px;padding:10px;border:1.5px solid var(--muted);border-radius:50%;background:transparent;color:var(--ink)}.chat-jumps button:hover{background:transparent;border-color:var(--blue-light);color:var(--blue-light)}.chat-jumps svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#chat-start{top:calc(110px + env(safe-area-inset-top, 0px))}#chat-end{bottom:calc(16px + env(safe-area-inset-bottom, 0px))}
+
+/* U-13: provider totals and account-wide allowance retain separate scopes. */
+.usage-providers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:1rem;margin:1.2rem 0}
+.usage-provider{border:1px solid var(--line,#34363d);border-radius:1rem;padding:1.2rem;min-width:0}
+.usage-provider-total{font-size:1.8rem;font-weight:700;margin:.6rem 0}
+.usage-provider .usage-metrics dd{font-size:1.15rem;overflow-wrap:anywhere}
+#account-usage{margin:1rem 0}#account-usage meter{width:100%;max-width:28rem;height:1rem}
+.usage-repeat{padding:1rem;border-inline-start:3px solid #54d4cc;line-height:1.6}
+.usage-stage{overflow-wrap:anywhere}
+#usage-content > .usage-total{font-size:1.25rem;font-weight:600;margin:.5rem 0}
+
+/* A clear centre and a locally rendered refractive edge. Controls stay native. */
+.navbar{background:rgba(16,20,28,.12);border-color:rgba(230,240,255,.22);box-shadow:0 8px 24px #0003,inset 0 1px 0 #ffffff30;-webkit-backdrop-filter:none;backdrop-filter:none;isolation:isolate}
+.navbar-lens{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;pointer-events:none;z-index:-1}
+.navbar.navbar-glass-fallback{background:var(--surface)}
+.navbar.navbar-glass-fallback .navbar-lens,.navbar.navbar-glass-fallback::before{display:none}
+.navbar::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:1px solid transparent;border-top-color:#ffffff38;border-bottom-color:#bcd6ef18}
+.navbar .brand,.navbar .desktop-nav button,.navbar .menu{text-shadow:0 1px 3px #000,0 0 8px #0009}
+.navbar .desktop-nav button,.navbar .menu{background:rgba(10,15,23,.30)}
+.navbar .desktop-nav button:hover,.navbar .menu:hover,.navbar .brand:hover{background:#ffffff18}
+.navbar .desktop-nav button[aria-current=page]{background:rgba(24,57,99,.60)}
+@media(prefers-reduced-transparency:reduce){.navbar{background:var(--surface)}.navbar-lens,.navbar::before{display:none}}
+@media(forced-colors:active){.navbar{background:Canvas;border:1px solid CanvasText;box-shadow:none}.navbar-lens,.navbar::before{display:none}.navbar button{text-shadow:none}}
+
+/* Match Discussion: content must reach beneath the curved glass ends. */
+#conversations-page,#settings-page{max-width:1116px}

@@ -7,9 +7,15 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 async function files(dir) {
   const result = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
-    if (['.git', 'node_modules', 'review-session', '.local'].includes(entry.name)) continue;
+    if (['.git', 'node_modules', 'review-session', '.local', 'output'].includes(entry.name)) continue;
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) result.push(...await files(path)); else result.push(path);
+    if (entry.isDirectory()) {
+      // A source/reference checkout may sit beside the target while a port is
+      // reviewed. It is a separate repository and must never inflate or alter
+      // this repository's artifact evidence.
+      try { await access(join(path, '.git')); continue; } catch {}
+      result.push(...await files(path));
+    } else result.push(path);
   }
   return result;
 }

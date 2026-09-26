@@ -204,10 +204,14 @@ export function loadConfig(environment = process.env) {
       : undefined,
     developmentOwnerEmail: mode === "development" ? environment.DEV_OWNER_EMAIL : undefined,
     codexCommand: environment.CODEX_APP_SERVER_COMMAND ?? "codex",
+    codexCommandArgs: Object.freeze([]),
     codexAuthPath,
     codexAuthBytes,
     readyForProvider: Boolean(codexAuthPath || codexAuthBytes),
     claudeCommand: environment.CLAUDE_CODE_COMMAND ?? resolve(process.cwd(), "node_modules", ".bin", "claude"),
+    claudeCommandArgs: Object.freeze([]),
+    claudeHome: undefined,
+    claudeConfigDirectory: undefined,
     claudeOAuthToken: optionalString(environment.CLAUDE_CODE_OAUTH_TOKEN),
     claudeModelCandidates: optionalModelCandidates(environment.CLAUDE_CODE_MODEL_CANDIDATES)
   });

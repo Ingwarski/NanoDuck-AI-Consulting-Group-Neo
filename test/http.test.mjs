@@ -83,7 +83,8 @@ test("the local HTTP flow protects data, saves settings and preserves a truthful
     assert.equal((await fetch(`${origin}/api/voice/transcribe`, { method: "POST", headers, body: "not audio" })).status, 404);
     const client = await (await fetch(`${origin}/client/app.js`)).text();
     assert.match(client, /SpeechRecognition/u);
-    assert.match(client, /audio\/wav/u);
+    const audioClient = await (await fetch(`${origin}/client/notification-audio.js`)).text();
+    assert.match(audioClient, /audio\/wav/u);
     assert.doesNotMatch(client, /View conversation/u);
     assert.match(client, /Delete selected/u);
     assert.match(client, /critic-provider/u);
@@ -269,7 +270,7 @@ test("owner image attachments validate bytes, link only on message acceptance an
   }
 });
 
-test("the authenticated discussion preserves a Critic exchange with both specialists before synthesis", async () => {
+test("the authenticated discussion shows parallel specialist answers and a targeted Critic correction before synthesis", async () => {
   const port = await reservePort();
   const directory = await mkdtemp(`${tmpdir()}/nanoduck-http-provider-`);
   const authPath = `${directory}/auth.json`;
@@ -309,26 +310,27 @@ test("the authenticated discussion preserves a Critic exchange with both special
     const detail = await waitFor(async () => {
       const response = await fetch(`${origin}/api/conversations/${conversationId}`, { headers: { cookie } });
       const value = await response.json();
+      assert.notEqual(value.run?.status, "failed", "The synthetic consultant exchange must finish successfully.");
       return value.run?.status === "complete" ? value : undefined;
     });
-    assert.deepEqual(detail.events.map(event => [event.role, event.recipient]), [
-      ["owner", null],
-      ["Head Consultant", "Strategy Consultant"], ["Head Consultant", "Finance Consultant"],
-      ["Strategy Consultant", "Critic"], ["Finance Consultant", "Critic"],
-      ["Critic", "Strategy Consultant"], ["Strategy Consultant", "Critic"],
-      ["Critic", "Finance Consultant"], ["Finance Consultant", "Critic"],
-      ["Strategy Consultant", "Head Consultant"], ["Finance Consultant", "Head Consultant"], ["Critic", "Head Consultant"],
-      ["Head Consultant", null]
+    assert.deepEqual(detail.events.slice(0, 3).map(event => [event.role, event.recipient]), [
+      ["owner", null], ["Head Consultant", "Strategy Consultant"], ["Head Consultant", "Finance Consultant"]
     ]);
-    assert.match(detail.events[5].body, /assumes those buyers will take calls/u);
-    assert.match(detail.events[6].body, /recruit calls from a defined prospect list/u);
-    assert.match(detail.events[7].body, /assumes those buyers will take calls/u);
-    assert.match(detail.events[8].body, /recruit calls from a defined prospect list/u);
+    assert.deepEqual(detail.events.slice(3, 5).map(event => event.role).sort(), ["Finance Consultant", "Strategy Consultant"]);
+    assert.deepEqual(detail.events.slice(5).map(event => [event.role, event.recipient]), [
+      ["Critic", "Head Consultant"], ["Critic", "Strategy Consultant"], ["Strategy Consultant", "Critic"],
+      ["Critic", "Head Consultant"], ["Head Consultant", null]
+    ]);
+    assert.match(detail.events[6].body, /assumes those buyers will take calls/u);
+    assert.match(detail.events[7].body, /recruit calls from a defined prospect list/u);
+    assert.match(detail.events[8].body, /resolved corrected/u);
     assert.match(detail.events.at(-1).body, /^## Consolidated advice\n\n/u);
     assert.match(detail.events.at(-1).body, /measure interview acceptance/u);
     assert.equal(detail.events.every(event => !event.body.includes("nanoduck-source")), true);
-    assert.deepEqual(detail.events[3].sources.map(source => ({ title: source.title, url: source.url, claim: source.claim, publishedAt: source.publishedAt })), [{ title: "Buyer evidence", url: "https://example.com/buyer-evidence", claim: "Buyer willingness must be measured before positioning.", publishedAt: "2026-09-01" }]);
-    assert.match(detail.events[3].sources[0].retrievedAt, /^\d{4}-\d{2}-\d{2}T/u);
+    const evidence = detail.events.flatMap(event => event.sources).find(source => source.title === "Buyer evidence");
+    assert.deepEqual({ title: evidence.title, url: evidence.url, claim: evidence.claim, publishedAt: evidence.publishedAt }, { title: "Buyer evidence", url: "https://example.com/buyer-evidence", claim: "Buyer willingness must be measured before positioning.", publishedAt: "2026-09-01" });
+    assert.match(evidence.retrievedAt, /^\d{4}-\d{2}-\d{2}T/u);
+    assert.equal("parallelWork" in detail.run.snapshot, false);
     assert.equal(detail.events.some(event => event.role === "System"), false);
     assert.equal((await fetch(`${origin}/api/conversations/${conversationId}/export`)).status, 401);
     const exported = await fetch(`${origin}/api/conversations/${conversationId}/export?timeZone=Europe%2FKyiv`, { headers: { cookie } });
