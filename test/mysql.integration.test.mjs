@@ -120,7 +120,7 @@ test("real MySQL: isolation, long sources, encrypted usage, restart, deletion an
     assert.equal(JSON.stringify(docs).includes(selected.markdown), false);
     assert.deepEqual((await source.run(conversation.id)).snapshot, { ...snapshot, requestMessageId: first.message.id });
     const codex = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/fake-codex.mjs", import.meta.url))] });
-    const providerResponse = await codex.invoke({ assignment: "Exercise MySQL source persistence", model: "gpt-6-sol", effort: "high", evidence: { owner: message.body, discussion: "" }, research: false, outputKind: "specialist_position", runtimeInstructions: testRuntimeInstructions, contextScope: first.run.id });
+    const providerResponse = await codex.invoke({ assignment: "Exercise long source persistence", model: "gpt-6-sol", effort: "high", evidence: { owner: message.body, discussion: "" }, research: false, outputKind: "specialist_position", runtimeInstructions: testRuntimeInstructions, contextScope: first.run.id });
     assert.equal(providerResponse.ok, true);
     assert.ok(providerResponse.sources[0].title.length > 280 && providerResponse.sources[0].claim.length > 1_000);
     const agentMessage = await source.appendAgentMessage(conversation.id, first.run.generation, { role: "Head Consultant", body: providerResponse.body, sources: providerResponse.sources });
