@@ -1,0 +1,10 @@
+revision=96e8827925107667163ebbd212d291a9d5b6d1c9
+command=TABLE_SCREENSHOT=forge/runs/combined-updates-port-20260927/evidence/tables/table.png GLASS_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/glass BROWSER_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/app npm run test:browsers
+exit_code=0
+engines=chromium,firefox,webkit
+app_screenshots=27
+glass_screenshots=3
+table_screenshots=3
+png_decode_check=passed
+visual_spot_check=passed (chromium discussion glass, isolated refraction, and table)
+result=passed

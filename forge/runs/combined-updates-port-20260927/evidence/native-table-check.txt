@@ -1,0 +1,1 @@
+PASS: macOS textutil converted the synthetic RTF to HTML with a native table, Unicode text, escaped braces and source URL.

@@ -1,0 +1,27 @@
+
+> nanoduck-ai-consulting-group-neo@0.1.0 test:browsers
+> npm run test:browsers:tables && npm run test:browsers:glass && npm run test:browsers:app
+
+
+> nanoduck-ai-consulting-group-neo@0.1.0 test:browsers:tables
+> node scripts/browser-markdown-tables.mjs
+
+chromium: tables passed at 320, 390, 1280px
+firefox: tables passed at 320, 390, 1280px
+webkit: tables passed at 320, 390, 1280px
+
+> nanoduck-ai-consulting-group-neo@0.1.0 test:browsers:glass
+> node scripts/browser-navbar-glass.mjs
+
+chromium: painted lens, live update, controls, mobile reflow, synchronous clearing passed
+firefox: painted lens, live update, controls, mobile reflow, synchronous clearing passed
+webkit: painted lens, live update, controls, mobile reflow, synchronous clearing passed
+Glass screenshots: forge/runs/combined-updates-port-20260927/evidence/glass
+
+> nanoduck-ai-consulting-group-neo@0.1.0 test:browsers:app
+> node scripts/browser-check.mjs
+
+chromium: Neo reading, active Stop/Continue, poll recovery, serialized usage, retry, hosted auth, privacy clear, and integrated glass passed
+firefox: Neo reading, active Stop/Continue, poll recovery, serialized usage, retry, hosted auth, privacy clear, and integrated glass passed
+webkit: Neo reading, active Stop/Continue, poll recovery, serialized usage, retry, hosted auth, privacy clear, and integrated glass passed
+Screenshots: forge/runs/combined-updates-port-20260927/evidence/app/output/playwright

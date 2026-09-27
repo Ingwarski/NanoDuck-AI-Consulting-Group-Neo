@@ -1,0 +1,210 @@
+{
+  "evidence_version": 1,
+  "recorded_at": "2026-09-27T03:08:48+03:00",
+  "implementation_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9",
+  "checker": {
+    "source": "installed to-sdd-pipeline skill",
+    "logical_path": "<installed-to-sdd-pipeline>/scripts/sdd_check.py",
+    "sha256": "185e6d91ae162bc8aba621e078397051484d1813f8dd5609ff74e91e170faf96",
+    "python_version": "3.12.14",
+    "contract_version": 1
+  },
+  "commands": {
+    "before": "python3 <installed-to-sdd-pipeline>/scripts/sdd_check.py --project . --before NODE",
+    "after": "python3 <installed-to-sdd-pipeline>/scripts/sdd_check.py --project . --after NODE",
+    "audit": "python3 <installed-to-sdd-pipeline>/scripts/sdd_check.py --project . --audit"
+  },
+  "owner_sequence": [
+    {
+      "node": "product-idea",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/01-product-idea-before.json",
+        "sha256": "61a9874cfba15b0bdf9cc61b5ef239e2c2a7f5d66d7ffde5231801734b31b225",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/01-product-idea-after.json",
+        "sha256": "75f1c429bfbd7980001f9b2bcbe9294d563ed813cb8f56c19a63fc72687213ed",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "prd",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/02-prd-before.json",
+        "sha256": "4815bb6a63825aa750b10ef23c7c61314f6dd2607a9e3316e15f163373d0f2cc",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/02-prd-after.json",
+        "sha256": "c0f88dee625deb0ff640b887ccc0292cb5979d13a762af2d79781d891399b5d1",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "project-context-bundle",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/03-project-context-bundle-before.json",
+        "sha256": "b72fb0e39fa0ae69314daf692b5602f11e71f319d5726574303b5b6221a50d95",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/03-project-context-bundle-after.json",
+        "sha256": "4dc4373c4d1e2cce01875487e75e094e56fcbada20c74084f3115135dfa177ee",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "guardrails",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/04-guardrails-before.json",
+        "sha256": "9ffb715f1dc4f75829c8cc6f3885e1a39d8a536170235851866a4d73fab39c7d",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/04-guardrails-after.json",
+        "sha256": "1754a5d5a80cc0292bde0a2b7f7c8922a18119b47116a0a131817fd7184f13f7",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "user-journey",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/05-user-journey-before.json",
+        "sha256": "b440064eb865aba6998bb17fbb6daeeb17fd028979da723195106f61d8df052e",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/05-user-journey-after.json",
+        "sha256": "62af903b470d971f0333146105a50848a3b127772fd25b6c842a6f17159ef994",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "screen-map",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/06-screen-map-before.json",
+        "sha256": "4bef84888f859dcd43724dc46579f3035b85afdb94a28178f981cdb6d15ac04b",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/06-screen-map-after.json",
+        "sha256": "48dee094a7ce2f3d6877beaf1abeacad60cc4ef9a84596f3a226d9c6f35217a5",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "wireframes",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/07-wireframes-before.json",
+        "sha256": "9e907b699885fc1681f573f563ddc1ec16b3753764a4b2ea344e9b0ef94d8688",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/07-wireframes-after.json",
+        "sha256": "a926c80e0b57e54ae191e51864dcd0d32641154be11782d9f472c4d5dce8b525",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "design-brief",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/08-design-brief-before.json",
+        "sha256": "8c8e3e14742f8845f0d8c8250a347d9575100f0ce21c5f609b57cd795134b62c",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/08-design-brief-after.json",
+        "sha256": "891d085b17839031cd83450457086c5724d2f4e7fb35164ed68885d549719b2d",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "architecture-approved",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/09-architecture-approved-before.json",
+        "sha256": "05510d2ae13f3fcd9ae9dfb25570d5b7fee99a4b1ee6ee19343431f77d27bf15",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/09-architecture-approved-after.json",
+        "sha256": "45eb7c0d5b833d5288e8e24a4e3d1ac3553afa87642f0662b2b2a466dd04f656",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "dod-evals-approved",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/10-dod-evals-approved-before.json",
+        "sha256": "85d5e6bd879e1e4944b0f1e7aec07b2d8e208d42bb48bb04374b7528a762a891",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/10-dod-evals-approved-after.json",
+        "sha256": "f63ce262e51658376d7238ac94f255f212e6ab288ecc33953b4bee95732c2c49",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "qa-checklist-approved",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/11-qa-checklist-approved-before.json",
+        "sha256": "6ea515e0c71b190e1f045655870a289cc461f748c22fe03f21adacacedf986fb",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/11-qa-checklist-approved-after.json",
+        "sha256": "7dae5f73440b1fdd4f91198885ed9d01957eab7b371ebfcb74d668e32fa525b9",
+        "result": "passed"
+      }
+    },
+    {
+      "node": "development-plan",
+      "before": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/12-development-plan-before.json",
+        "sha256": "7eefca5e1c9e2238c38670228936c6bd8d7af9d1e137434f3f8d4332ffc7933e",
+        "result": "passed"
+      },
+      "after": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/12-development-plan-after.json",
+        "sha256": "7e9b7eb00d928b34f45c326f0585fcc56c650a87733cbb436fbab3671029d204",
+        "result": "passed"
+      }
+    }
+  ],
+  "document_hashes": {
+    "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
+    "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
+    "docs/project-context.md": "239aafdfbc5d27e8b9deae10ea15528810f5cd77b1be4b916606770846e52c44",
+    "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
+    "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
+    "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
+    "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
+    "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
+    "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
+    "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+    "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+    "docs/qa-checklist.md": "130bf76f777bf309822bb6f9171fc43984e78463f9df671a2e40c9f297003f09",
+    "docs/development-plan.md": "231a32d0e6e1a4f322a090cbf29b740e51df43d55523914452590d7bbbe2f6f6"
+  },
+  "authorization_binding": {
+    "development_plan_hash": "231a32d0e6e1a4f322a090cbf29b740e51df43d55523914452590d7bbbe2f6f6",
+    "implementation_prompt_path": "forge/runs/combined-updates-port-20260927/implementation-prompt.json",
+    "implementation_prompt_sha256": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+    "approved_baseline_id": "nanoduck-electric-a-v8-20260914",
+    "product_scope_hash": "4fc3dfb32ddea9a879bbcda9b069505a6c48fb5b8e3176af2c6fd8f28aa31abc"
+  },
+  "final_checks": {
+    "implementation_before": {
+      "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/13-implementation-before.json",
+      "sha256": "2f644544caed99de87ed22b4e3403ecf15699c1e0f3e4c824698cb6a2052a215",
+      "result": "passed"
+    },
+    "audit": {
+      "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/14-audit.json",
+      "sha256": "f0405688296e343ea0b161a7fd8a753d36f6ba617cd5d8007c237932c923bd4d",
+      "result": "passed"
+    }
+  },
+  "scope_limit": "The checker validates declared metadata, integrity, ordering, traceability and evidence references. It does not turn prepared QA definitions into executed checks or establish release readiness."
+}

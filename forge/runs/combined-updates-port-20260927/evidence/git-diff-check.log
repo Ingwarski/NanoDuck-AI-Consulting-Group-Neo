@@ -1,0 +1,5 @@
+revision=96e8827925107667163ebbd212d291a9d5b6d1c9
+command=git diff --check
+exit_code=0
+output=(none)
+result=passed

@@ -1,0 +1,344 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-27T01:17:28+03:00",
+  "run_id": "combined-updates-port-20260927",
+  "scope": "Restore the missing review-fixes prerequisites and port every cumulative update through the final liquid-glass corrections into the Neo sister repository without changing its deployment topology or touching its running state.",
+  "sdd": {
+    "status": "validated",
+    "checker_contract_version": 1,
+    "owner_sequence": [
+      "product-idea",
+      "prd",
+      "project-context-bundle",
+      "guardrails",
+      "user-journey",
+      "screen-map",
+      "wireframes",
+      "design-brief",
+      "architecture-approved",
+      "dod-evals-approved",
+      "qa-checklist-approved",
+      "development-plan"
+    ],
+    "owner_checks": {
+      "before": 12,
+      "after": 12,
+      "result": "passed"
+    },
+    "implementation_gate_check": "passed",
+    "audit": "passed",
+    "evidence": {
+      "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checker-evidence.json",
+      "sha256": "6946b9262810f110ed6048c4dcc21315dccadb4bc27c85ad7357a43c28824051"
+    },
+    "finalized_at": "2026-09-27T03:08:48+03:00",
+    "limit": "Document and manifest validation is separate from formal QA execution and release readiness."
+  },
+  "repository": {
+    "target": "Ingwarski/NanoDuck-AI-Consulting-Group-Neo",
+    "branch": "codex/combined-updates-port",
+    "base_revision": "a6f5d47303a7fa785a588e036ad39636b99a5dff",
+    "worktree_scope": "This repository only",
+    "runtime_operation": "No deployment, restart, provider probe, secret change or consultation interruption was performed.",
+    "implementation_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9"
+  },
+  "source": {
+    "input_receipt": "forge/runs/combined-updates-port-20260927/source-input.json",
+    "logical_input_name": "combined-updates-after-review-port.md",
+    "reference_repository": "Ingwarski/NanoDuck-AI-Consulting",
+    "reference_final_commit": "2c50cd6",
+    "reference_update_range": "0198d84..2c50cd6",
+    "mapping_rule": "Reference behavior was adapted to Neo filenames, contracts and infrastructure; the reference repository was not copied as infrastructure."
+  },
+  "baseline_verification": {
+    "claimed_last_update": "review-fixes-port.md",
+    "result": "missing_prerequisites_restored",
+    "finding": "The Neo target did not contain the claimed review-fixes baseline in full. The missing parallel consultation, request isolation, source persistence, recovery, usage and supporting test prerequisites were restored before the cumulative A-F updates were integrated.",
+    "restored_contracts": [
+      "Head-planned parallel specialist execution with immutable Critic corrections and one final synthesis",
+      "accepted-request binding by internal message identity with legacy compatibility",
+      "request-scoped provider context and private provider workspaces",
+      "durable source and usage persistence",
+      "bounded recovery and cancellation behavior"
+    ]
+  },
+  "implementation_map": [
+    {
+      "category": "Runtime instructions and migration",
+      "behavior": "Port the final prompt and instruction defaults while preserving owner-edited database revisions through exact-default migrations.",
+      "paths": [
+        "instructions/RUNTIME_PROMPTS.md",
+        "instructions/AGENTS.md",
+        "instructions/CONSILIUM.md",
+        "src/server/instruction-bootstrap.mjs",
+        "src/server/instruction-documents.mjs",
+        "src/server/prompt-contracts.mjs",
+        "src/server/recovery.mjs",
+        "src/server/validation.mjs"
+      ]
+    },
+    {
+      "category": "Parallel consultation and request isolation",
+      "behavior": "Run independent Head assignments concurrently, preserve request identity, commit consultation work transactionally and retain safe stop/continue behavior.",
+      "paths": [
+        "src/server/consultation.mjs",
+        "src/server/consultation-parallel.mjs",
+        "src/server/parallel-contract.mjs",
+        "src/server/provider-context.mjs",
+        "src/server/turn-deadline.mjs",
+        "src/server/providers.mjs",
+        "src/server/store.mjs",
+        "src/server/schema.sql"
+      ]
+    },
+    {
+      "category": "Provider execution and private local state",
+      "behavior": "Use bounded child processes, ephemeral provider sessions and private files without replacing the existing provider or authentication connections.",
+      "paths": [
+        "src/server/child-process.mjs",
+        "src/server/claude-runtime.mjs",
+        "src/server/claude-provider.mjs",
+        "src/server/codex-provider.mjs",
+        "src/server/local-state.mjs",
+        "src/server/private-files.mjs",
+        "src/server/config.mjs"
+      ]
+    },
+    {
+      "category": "Research evidence and complete accounting",
+      "behavior": "Reuse evidence for repeated gaps, persist attributable source records and expose complete per-response and account-level usage without fabricating unavailable provider fields.",
+      "paths": [
+        "src/server/research-evidence.mjs",
+        "src/server/usage.mjs",
+        "src/server/account-usage.mjs",
+        "src/server/index.mjs",
+        "scripts/benchmark-research.mjs",
+        "scripts/benchmark-critic-cache.mjs",
+        "scripts/measure-consultation-workload.mjs"
+      ]
+    },
+    {
+      "category": "Tables, native RTF, reading controls and Usage UI",
+      "behavior": "Render safe Markdown tables, export real RTF tables, add current-panel reading controls and present privacy-safe attributed Usage details.",
+      "paths": [
+        "src/server/conversation-export.mjs",
+        "src/client/app.js",
+        "src/client/markdown.js",
+        "src/client/refresh-state.js",
+        "src/client/notification-audio.js",
+        "public/index.html",
+        "public/styles.css"
+      ]
+    },
+    {
+      "category": "Final liquid-glass navigation",
+      "behavior": "Apply the final curved-edge refraction fixes with stable content visibility, native-control exclusions, privacy-clear behavior and licensed fallback handling.",
+      "paths": [
+        "src/client/navbar-glass.js",
+        "src/client/navbar-glass.LICENSE.txt",
+        "public/styles.css",
+        "THIRD_PARTY_NOTICES.md"
+      ]
+    },
+    {
+      "category": "Verification and regression coverage",
+      "behavior": "Cover baseline restoration, isolation, research, accounting, tables, recovery, browser integration and glass behavior with deterministic fixtures.",
+      "paths": [
+        "scripts/check-artifacts.mjs",
+        "scripts/browser-check.mjs",
+        "scripts/browser-markdown-tables.mjs",
+        "scripts/browser-navbar-glass.mjs",
+        "test/review-fixes.test.mjs",
+        "test/parallel-consultation.test.mjs",
+        "test/context-economy.test.mjs",
+        "test/research-evidence.test.mjs",
+        "test/usage.test.mjs",
+        "test/account-usage.test.mjs",
+        "test/source-persistence.test.mjs",
+        "test/markdown-table-export.test.mjs",
+        "test/neo-backend-port.test.mjs",
+        "test/mysql.integration.test.mjs"
+      ]
+    },
+    {
+      "category": "SDD reconciliation and provenance",
+      "behavior": "Bind the cumulative implementation and Neo-specific activation boundary to the repository-owned SDD chain.",
+      "paths": [
+        "docs/product-idea.md",
+        "docs/prd.md",
+        "docs/project-context.md",
+        "docs/canonical-terms.md",
+        "docs/guardrails.md",
+        "docs/user-journey.md",
+        "docs/screen-map.md",
+        "docs/wireframes.md",
+        "docs/design-brief.md",
+        "docs/architecture.md",
+        "docs/dod-evals.md",
+        "docs/qa-checklist.md",
+        "docs/development-plan.md",
+        "forge/sdd-manifest.json"
+      ]
+    }
+  ],
+  "preserved_topology": {
+    "hosting": "Existing Northflank Sandbox application service",
+    "database": "Existing private Northflank MySQL service with encrypted persisted private data",
+    "authentication": "Existing Google owner authentication and session behavior",
+    "edge": "Dedicated Cloudflare Worker nanoduck-neo with its existing shared-origin-key contract",
+    "providers": "Existing Codex and Claude provider connections and saved model/settings contract",
+    "active_consultations": "Untouched; no runtime action was taken during this implementation run"
+  },
+  "verification": {
+    "automated_tests": {
+      "command": "npm run check",
+      "result": "passed",
+      "total": 224,
+      "passed": 220,
+      "failed": 0,
+      "skipped": 4,
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/npm-check.log",
+        "sha256": "2426ff04b7287b39e797c4b8d2bb287e76936d3400830253c85d59b219ee5eed"
+      },
+      "skip_reason": "The four real-MySQL integration cases require an isolated disposable MySQL runtime, which was not present locally. They remain not_run at that seam; no named CI execution is claimed."
+    },
+    "browser_matrix": {
+      "command": "npm run test:browsers",
+      "result": "passed",
+      "engines": [
+        "Chromium",
+        "Firefox",
+        "WebKit"
+      ],
+      "suites": [
+        "safe Markdown tables at desktop and narrow widths",
+        "final liquid-glass geometry, fallback, no-flicker and privacy-clear behavior",
+        "integrated Neo reading, retry, Usage, authentication and privacy flows"
+      ],
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/browser-status.log",
+        "sha256": "de8a82a3f3f9e5a6f7635c1fac8323eb23e6b266c88f9af9e30067b5f50b04c1"
+      },
+      "screenshots": {
+        "inventory_path": "forge/runs/combined-updates-port-20260927/evidence/screenshot-inventory.log",
+        "inventory_sha256": "9c8ccff16e8b2484e11622f0a1aa35b5dc8313bba24176b1f7cafafe14243d30",
+        "count": 33
+      }
+    },
+    "artifact_checker": {
+      "command": "node scripts/check-artifacts.mjs (through npm run check)",
+      "result": "passed",
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/npm-check.log",
+        "sha256": "2426ff04b7287b39e797c4b8d2bb287e76936d3400830253c85d59b219ee5eed"
+      }
+    },
+    "diff_check": {
+      "command": "git diff --check against the exact implementation revision",
+      "result": "passed",
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/git-diff-check.log",
+        "sha256": "830546aa3060ae4269dc61d36a1dc816a9b1f43cc6f21897954f7ba0952e5977"
+      }
+    },
+    "workload_measurement": {
+      "command": "node scripts/measure-consultation-workload.mjs",
+      "result": "passed",
+      "shared_evidence_prompt_bytes": 97835,
+      "repeated_gap_research_calls": 1,
+      "repeated_gap_query_calls": 1,
+      "token_measurement": "unavailable_in_synthetic_provider",
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/consultation-workload.json",
+        "sha256": "f0b9771ee10923819ca4edc0ae186e614e34ef5586e92d0a3116d82f3dd4ff0d"
+      },
+      "interpretation": "The synthetic shared-evidence case stayed bounded. The repeated-gap fixture reused existing evidence after one research call and one query-planning call; this is not a live-provider cost guarantee."
+    },
+    "native_rtf": {
+      "result": "passed",
+      "methods": [
+        "macOS textutil conversion"
+      ],
+      "observed": "The synthetic exported document converted to an HTML table with Unicode text, escaped punctuation and source references; Word, LibreOffice and GUI-reader inspection were unavailable.",
+      "evidence": [
+        {
+          "path": "forge/runs/combined-updates-port-20260927/evidence/native-table.rtf",
+          "sha256": "3edbe9aa145556906fb78c30e4a65dcb863bc472b1616bef93e37d4efd5e11ee"
+        },
+        {
+          "path": "forge/runs/combined-updates-port-20260927/evidence/native-table.html",
+          "sha256": "8627c5c5afb76599f408192dc88728c6eea8027cd799f0076bf1723579cc8a68"
+        },
+        {
+          "path": "forge/runs/combined-updates-port-20260927/evidence/native-table-check.txt",
+          "sha256": "89e878a58ea98f65befa2ce13b8960bee2284cabbd7e80cf7ebcd3e3ea9b18aa"
+        }
+      ]
+    },
+    "license_attribution": {
+      "result": "passed",
+      "license": "MIT",
+      "paths": [
+        "THIRD_PARTY_NOTICES.md",
+        "src/client/navbar-glass.LICENSE.txt"
+      ],
+      "scope": "The notice preserves MIT attribution for adapted source portions without applying that license to unrelated Neo files; the glass component also keeps an adjacent notice."
+    },
+    "repository_hygiene": {
+      "result": "passed",
+      "checks": [
+        "No machine-specific absolute path was added to committed code, tests or documentation.",
+        "No provider grant, credential, shared origin key, private conversation, owner identifier or private record was added.",
+        "The reference input location is omitted; only repository-neutral provenance and its digest are retained."
+      ],
+      "evaluated_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9",
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/repository-hygiene.log",
+        "sha256": "cbf05986a0c9dee32426e6c4e6bf24eaf1a51fd21b480574c9c3514f8ffca67c"
+      }
+    },
+    "dependency_audit": {
+      "command": "npm audit --omit=dev --json",
+      "result": "passed",
+      "vulnerabilities": 0,
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/npm-audit.json",
+        "sha256": "18899248361b721262c48600093576e137012e76295c177bec909e390f4d6b9a"
+      }
+    },
+    "revision_binding": {
+      "result": "passed",
+      "path": "forge/runs/combined-updates-port-20260927/evidence/revision-context.log",
+      "sha256": "3de3564291448a1fe44563856d4ffdd675e575f11d80d59197dee2d3524772c6"
+    }
+  },
+  "limits": [
+    "No live Codex or Claude benchmark or subscription probe was run.",
+    "No native Safari or physical-device verification is claimed; WebKit coverage is recorded separately.",
+    "No disposable local MySQL runtime was available, so the four authored real-MySQL cases remained skipped.",
+    "No Northflank or Cloudflare deployment, scale action, restart or hosted health check was performed.",
+    "Formal release readiness remains not_evaluated until formal QA, deployment activation and hosted continuity checks are complete."
+  ],
+  "release_readiness": "not_evaluated",
+  "activation": {
+    "needed": true,
+    "performed": false,
+    "reason": "The repository changes do not become active on the existing Northflank service until the owner chooses a safe runtime activation window.",
+    "required_sequence": [
+      "Confirm there are zero active or recoverable consultation runs that would be interrupted.",
+      "Take and verify a current private-MySQL backup or provider snapshot.",
+      "Scale the existing Northflank application service to zero and confirm all containers have stopped.",
+      "Select or deploy the approved repository build while the service remains at zero, without replacing the database, Google authentication, provider grants or nanoduck-neo Worker topology.",
+      "Start exactly one application instance; src/server/start.mjs runs the repeat-safe schema and instruction-default migration before HTTP startup.",
+      "Verify health, private-MySQL TLS connectivity, Google owner authentication, Cloudflare origin-key enforcement, saved settings/conversations and rollback.",
+      "Verify one isolated non-private smoke flow, then return to the intended service scale only after the checks pass."
+    ]
+  },
+  "implementation_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9",
+  "execution": {
+    "executor": "Codex implementation runner",
+    "environment": "Local macOS checkout; synthetic isolated application storage; Playwright Chromium, Firefox and WebKit; no live provider or hosted-runtime operation",
+    "evaluated_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9"
+  }
+}

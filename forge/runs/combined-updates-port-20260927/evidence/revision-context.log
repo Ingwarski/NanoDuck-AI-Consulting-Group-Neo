@@ -1,0 +1,9 @@
+repository=Ingwarski/NanoDuck-AI-Consulting-Group-Neo
+origin=https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo.git
+branch=codex/combined-updates-port
+revision=96e8827925107667163ebbd212d291a9d5b6d1c9
+expected_revision=96e8827925107667163ebbd212d291a9d5b6d1c9
+implementation_diff_files_vs_revision=0
+implementation_scope=THIRD_PARTY_NOTICES.md,instructions,package manifests,public,scripts,src,test,Dockerfile,cloudflare,wrangler.toml
+note=uncommitted SDD reconciliation and evidence files are outside the executed implementation scope
+result=passed
