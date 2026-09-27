@@ -1,5 +1,5 @@
-revision=96e8827925107667163ebbd212d291a9d5b6d1c9
-command=TABLE_SCREENSHOT=forge/runs/combined-updates-port-20260927/evidence/tables/table.png GLASS_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/glass BROWSER_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/app npm run test:browsers
+revision=7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+command=BROWSER_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/app TABLE_SCREENSHOT=forge/runs/combined-updates-port-20260927/evidence/tables/table.png GLASS_OUTPUT_DIR=forge/runs/combined-updates-port-20260927/evidence/glass npm run test:browsers
 exit_code=0
 engines=chromium,firefox,webkit
 app_screenshots=27

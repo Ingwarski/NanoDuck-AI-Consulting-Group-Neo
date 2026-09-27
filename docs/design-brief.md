@@ -15,7 +15,7 @@ The owner rejected the prior green editorial candidate and requested a modern, b
 | MAT-05 | `docs/user-journey.md` · SHA-256 `1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7` | true | Current specification; resolved filesystem read |
 | MAT-06 | `docs/screen-map.md` · SHA-256 `a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b` | true | Current specification; resolved filesystem read |
 | MAT-07 | `docs/wireframes.md` · SHA-256 `ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91` | true | Current specification; resolved filesystem read |
-| MAT-08 | `docs/product-idea.md` · SHA-256 `6cb3678dc4abd51b5c4ecba927c0193b3b93583c738c03767637c7691cf8bdd0` | true | Current specification; resolved filesystem read |
+| MAT-08 | `docs/product-idea.md` · SHA-256 `b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5` | true | Current specification; resolved filesystem read |
 | MAT-09 | `prototype/index.html` · SHA-256 `e26bba619844fa83597abbf5b8e8aec21b9c96082488d100a39d99df589be6b5` | false | Rejected visual/copy evidence; resolved filesystem read |
 | MAT-10 | `prototype/styles.css` · SHA-256 `ebe099d7a6e793ab68f6debcbbe322a5a4f35cc34f1927b6b607b1c0ab185925` | false | Rejected visual/copy evidence; resolved filesystem read |
 | MAT-11 | `prototype/app.js` · SHA-256 `b6c35932375f6bf05b9a5ddbed22d9a9279b2c18a2692001ed49af978fcb8a54` | false | Rejected visual/copy evidence; resolved filesystem read |

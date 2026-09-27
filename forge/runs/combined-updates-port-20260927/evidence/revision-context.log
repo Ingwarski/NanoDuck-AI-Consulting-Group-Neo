@@ -1,9 +1,12 @@
 repository=Ingwarski/NanoDuck-AI-Consulting-Group-Neo
 origin=https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo.git
 branch=codex/combined-updates-port
-revision=96e8827925107667163ebbd212d291a9d5b6d1c9
-expected_revision=96e8827925107667163ebbd212d291a9d5b6d1c9
-implementation_diff_files_vs_revision=0
+base_revision=a6f5d47303a7fa785a588e036ad39636b99a5dff
+target_revision=7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+head_revision=7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+exact_range=a6f5d47303a7fa785a588e036ad39636b99a5dff..7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+target_is_head=true
+runtime_diff_files_from_target=0
 implementation_scope=THIRD_PARTY_NOTICES.md,instructions,package manifests,public,scripts,src,test,Dockerfile,cloudflare,wrangler.toml
-note=uncommitted SDD reconciliation and evidence files are outside the executed implementation scope
+note=SDD reconciliation and refreshed evidence are outside the executed implementation scope
 result=passed

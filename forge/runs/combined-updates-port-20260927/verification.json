@@ -1,6 +1,6 @@
 {
   "receipt_version": 1,
-  "recorded_at": "2026-09-27T01:17:28+03:00",
+  "recorded_at": "2026-09-27T03:34:07+03:00",
   "run_id": "combined-updates-port-20260927",
   "scope": "Restore the missing review-fixes prerequisites and port every cumulative update through the final liquid-glass corrections into the Neo sister repository without changing its deployment topology or touching its running state.",
   "sdd": {
@@ -25,22 +25,40 @@
       "after": 12,
       "result": "passed"
     },
+    "final_binding_tail": {
+      "order": [
+        "architecture-approved",
+        "dod-evals-approved",
+        "qa-checklist-approved",
+        "development-plan"
+      ],
+      "before": 4,
+      "after": 4,
+      "result": "passed",
+      "owner_invocation_ids": [
+        "revision-7b3b454-final-tail-architecture-2026-09-27T03:36:36+03:00",
+        "revision-7b3b454-final-tail-dod-2026-09-27T03:36:37+03:00",
+        "revision-7b3b454-final-tail-qa-2026-09-27T03:36:38+03:00",
+        "revision-7b3b454-final-tail-development-plan-2026-09-27T03:36:39+03:00"
+      ],
+      "evidence_directory": "forge/runs/combined-updates-port-20260927/evidence/sdd-checks/revision-7b3b454/final-tail"
+    },
     "implementation_gate_check": "passed",
     "audit": "passed",
     "evidence": {
       "path": "forge/runs/combined-updates-port-20260927/evidence/sdd-checker-evidence.json",
-      "sha256": "6946b9262810f110ed6048c4dcc21315dccadb4bc27c85ad7357a43c28824051"
+      "sha256": "3fc4a9bdd0688e266106e7c23515d32e1df6eb196c0e22820a0b343e48c1e6a1"
     },
-    "finalized_at": "2026-09-27T03:08:48+03:00",
-    "limit": "Document and manifest validation is separate from formal QA execution and release readiness."
+    "finalized_at": "2026-09-27T03:36:35+03:00",
+    "limit": "Document and manifest validation is separate from formal per-QA execution, hosted continuity and release readiness."
   },
   "repository": {
     "target": "Ingwarski/NanoDuck-AI-Consulting-Group-Neo",
     "branch": "codex/combined-updates-port",
     "base_revision": "a6f5d47303a7fa785a588e036ad39636b99a5dff",
     "worktree_scope": "This repository only",
-    "runtime_operation": "No deployment, restart, provider probe, secret change or consultation interruption was performed.",
-    "implementation_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9"
+    "runtime_operation": "No deployment, restart, live provider probe, secret change or consultation interruption was performed.",
+    "implementation_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3"
   },
   "source": {
     "input_receipt": "forge/runs/combined-updates-port-20260927/source-input.json",
@@ -194,14 +212,25 @@
       "command": "npm run check",
       "result": "passed",
       "total": 224,
-      "passed": 220,
+      "passed": 224,
       "failed": 0,
-      "skipped": 4,
-      "evidence": {
-        "path": "forge/runs/combined-updates-port-20260927/evidence/npm-check.log",
-        "sha256": "2426ff04b7287b39e797c4b8d2bb287e76936d3400830253c85d59b219ee5eed"
+      "skipped": 0,
+      "environment": "GitHub Actions ubuntu-latest with disposable MySQL 8.4",
+      "workflow_run_id": "36282318357",
+      "workflow_url": "https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo/actions/runs/36282318357",
+      "job_id": "108516389873",
+      "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
+      "real_mysql_cases": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "Disposable CI MySQL integration; not the existing private Northflank database."
       },
-      "skip_reason": "The four real-MySQL integration cases require an isolated disposable MySQL runtime, which was not present locally. They remain not_run at that seam; no named CI execution is claimed."
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/ci-mysql-summary.log",
+        "sha256": "5d32a41ffc16e8159680cb18c0a0d6784d6b48e9cb504b803417fd2af7d6dc18"
+      }
     },
     "browser_matrix": {
       "command": "npm run test:browsers",
@@ -218,11 +247,11 @@
       ],
       "evidence": {
         "path": "forge/runs/combined-updates-port-20260927/evidence/browser-status.log",
-        "sha256": "de8a82a3f3f9e5a6f7635c1fac8323eb23e6b266c88f9af9e30067b5f50b04c1"
+        "sha256": "755305282359cd0bd10733de9fe70c6a94f385c9546ab61516af07baf233481a"
       },
       "screenshots": {
         "inventory_path": "forge/runs/combined-updates-port-20260927/evidence/screenshot-inventory.log",
-        "inventory_sha256": "9c8ccff16e8b2484e11622f0a1aa35b5dc8313bba24176b1f7cafafe14243d30",
+        "inventory_sha256": "207e9cd489514a980b3283b63c47d3dd2fc0119ccd91600c37cfae1fcbed5415",
         "count": 33
       }
     },
@@ -231,15 +260,16 @@
       "result": "passed",
       "evidence": {
         "path": "forge/runs/combined-updates-port-20260927/evidence/npm-check.log",
-        "sha256": "2426ff04b7287b39e797c4b8d2bb287e76936d3400830253c85d59b219ee5eed"
+        "sha256": "8094bd16158569a61dd76fabdcfe1d68abccd5c9f9087f1ede98e41e016fcab3"
       }
     },
     "diff_check": {
-      "command": "git diff --check against the exact implementation revision",
+      "command": "git diff --check a6f5d47303a7fa785a588e036ad39636b99a5dff 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
       "result": "passed",
+      "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
       "evidence": {
         "path": "forge/runs/combined-updates-port-20260927/evidence/git-diff-check.log",
-        "sha256": "830546aa3060ae4269dc61d36a1dc816a9b1f43cc6f21897954f7ba0952e5977"
+        "sha256": "6836c54dfede5b0484bbf0df257f101757a69ea33afd7a9b69d1be69e863bd73"
       }
     },
     "workload_measurement": {
@@ -292,10 +322,10 @@
         "No provider grant, credential, shared origin key, private conversation, owner identifier or private record was added.",
         "The reference input location is omitted; only repository-neutral provenance and its digest are retained."
       ],
-      "evaluated_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9",
+      "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
       "evidence": {
         "path": "forge/runs/combined-updates-port-20260927/evidence/repository-hygiene.log",
-        "sha256": "cbf05986a0c9dee32426e6c4e6bf24eaf1a51fd21b480574c9c3514f8ffca67c"
+        "sha256": "d8ab6bb74bff6bf82f06eb7b133fa4be0259febf1eb3e1515856e0aeb58822ed"
       }
     },
     "dependency_audit": {
@@ -310,15 +340,59 @@
     "revision_binding": {
       "result": "passed",
       "path": "forge/runs/combined-updates-port-20260927/evidence/revision-context.log",
-      "sha256": "3de3564291448a1fe44563856d4ffdd675e575f11d80d59197dee2d3524772c6"
+      "sha256": "83b943c663ce903bcd62e4b7d8514f09a665580ce490b969376cbaa14b9e0cd6"
+    },
+    "local_automated_tests": {
+      "command": "npm run check",
+      "result": "passed_with_environmental_skips",
+      "total": 224,
+      "passed": 220,
+      "failed": 0,
+      "skipped": 4,
+      "environment": "Local macOS checkout without NANODUCK_MYSQL_TEST_URL",
+      "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
+      "skip_reason": "The four authored real-MySQL cases require a disposable MySQL service. Exact-revision named CI ran and passed all four.",
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/npm-check.log",
+        "sha256": "8094bd16158569a61dd76fabdcfe1d68abccd5c9f9087f1ede98e41e016fcab3"
+      }
+    },
+    "named_ci": {
+      "provider": "GitHub Actions",
+      "workflow": "Application checks",
+      "run_id": "36282318357",
+      "url": "https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo/actions/runs/36282318357",
+      "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
+      "result": "passed",
+      "checks_job": {
+        "job_id": "108516389873",
+        "result": "passed",
+        "command": "npm run check",
+        "tests": 224,
+        "passed": 224,
+        "failed": 0,
+        "skipped": 0,
+        "mysql_service": "mysql:8.4",
+        "real_mysql_cases_passed": 4
+      },
+      "container_job": {
+        "job_id": "108516389813",
+        "result": "passed",
+        "commands": "docker build and non-root runtime dependency verification",
+        "scope": "Image build, non-root identity, writable /tmp, packaged runtime instructions and pinned Codex/Claude executables; not a Northflank start."
+      },
+      "evidence": {
+        "path": "forge/runs/combined-updates-port-20260927/evidence/ci-mysql-summary.log",
+        "sha256": "5d32a41ffc16e8159680cb18c0a0d6784d6b48e9cb504b803417fd2af7d6dc18"
+      }
     }
   },
   "limits": [
     "No live Codex or Claude benchmark or subscription probe was run.",
     "No native Safari or physical-device verification is claimed; WebKit coverage is recorded separately.",
-    "No disposable local MySQL runtime was available, so the four authored real-MySQL cases remained skipped.",
-    "No Northflank or Cloudflare deployment, scale action, restart or hosted health check was performed.",
-    "Formal release readiness remains not_evaluated until formal QA, deployment activation and hosted continuity checks are complete."
+    "Named exact-revision CI passed all four authored cases against disposable MySQL 8.4, but the existing private Northflank MySQL TLS connection and backup/restore path were not exercised.",
+    "The container job passed image and non-root runtime/tooling checks, but no Northflank or Cloudflare deployment, scale action, restart or hosted health check was performed.",
+    "Formal per-QA executions remain not_run and release readiness remains not_evaluated until the applicable human, native-device, live-provider, hosted continuity and activation checks are complete."
   ],
   "release_readiness": "not_evaluated",
   "activation": {
@@ -335,10 +409,13 @@
       "Verify one isolated non-private smoke flow, then return to the intended service scale only after the checks pass."
     ]
   },
-  "implementation_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9",
+  "implementation_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
   "execution": {
-    "executor": "Codex implementation runner",
-    "environment": "Local macOS checkout; synthetic isolated application storage; Playwright Chromium, Firefox and WebKit; no live provider or hosted-runtime operation",
-    "evaluated_revision": "96e8827925107667163ebbd212d291a9d5b6d1c9"
+    "executor": "Codex local implementation runner and GitHub Actions workflow Application checks",
+    "environment": "Local macOS deterministic/browser evidence plus GitHub Actions ubuntu-latest, disposable MySQL 8.4 and container build/runtime jobs; no live provider or hosted-runtime operation",
+    "evaluated_revision": "7b3b4545e2b8c18f488ac667973a0c3ddf661ff3",
+    "ci_run_id": "36282318357",
+    "ci_checks_job_id": "108516389873",
+    "ci_container_job_id": "108516389813"
   }
 }

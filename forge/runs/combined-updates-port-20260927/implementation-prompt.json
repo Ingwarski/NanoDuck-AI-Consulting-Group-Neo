@@ -6,7 +6,7 @@
   "prompt_id": "impl-combined-updates-port-20260927",
   "received_at": "2026-09-27T00:09:50+03:00",
   "message": "Fully update this Neo-sister repository using the attached combined-updates-after-review-port.md.\n\nOur last applied update was review-fixes-port.md. Verify that baseline, then implement every missing update in the attached document, including the final liquid-glass fixes.\n\nWork only in this Neo-sister repository. Preserve its hosting, database, authentication, provider connections, private data and active consultations. Adapt the reference filenames to this repository; do not replace its infrastructure with the local application's infrastructure.\n\nThe attachment's location is only an input location. Never embed machine-specific absolute paths in committed code, tests or documentation.\n\nFollow the complete implementation and verification requirements in the attachment. Reconcile affected SDD documents, run appropriate tests and browser checks, inspect the final diff, then commit and push. Report any remaining gaps and whether runtime activation is still needed. Do not interrupt active consultations.",
-  "development_plan_hash": "231a32d0e6e1a4f322a090cbf29b740e51df43d55523914452590d7bbbe2f6f6",
+  "development_plan_hash": "dcf0f9a7b548c36026a708954c8052b6dcb63d3fc2df61874f40abd7b7ab53c1",
   "approved_baseline_id": "nanoduck-electric-a-v8-20260914",
   "product_scope_hash": "4fc3dfb32ddea9a879bbcda9b069505a6c48fb5b8e3176af2c6fd8f28aa31abc",
   "baseline_verification": "The target does not contain the claimed review-fixes-port baseline in full. This authorization therefore covers restoring its missing prerequisites before applying the cumulative update, as required by the supplied port document.",

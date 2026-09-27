@@ -8,13 +8,13 @@
     "product-idea": {
       "path": "docs/product-idea.md",
       "owner_skill": "to-product-idea",
-      "owner_invocation_id": "combined-updates-no-action-cap-product-idea-2026-09-27T03:08:16+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-product-idea-2026-09-27T03:34:45+03:00",
       "declared_output_set": [
         "docs/product-idea.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-product-idea-2026-09-27T03:08:16+03:00",
+      "source_version": "revision-7b3b454-full-product-idea-2026-09-27T03:34:45+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "full",
@@ -26,7 +26,7 @@
       },
       "source_hashes": {
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
@@ -38,10 +38,10 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:16+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:45+03:00",
         "executor": "Codex to-product-idea owner",
-        "scope": "Reconcile product intent for cumulative tables, reading navigation, request isolation, parallel Critic fulfillment, scoped evidence, truthful Usage and the authorized final liquid-glass override while preserving Electric A v8, Neo infrastructure and release readiness not_evaluated."
+        "scope": "Reconcile product intent for cumulative tables, reading navigation, request isolation, parallel Critic fulfillment, scoped evidence, truthful Usage and the authorized final liquid-glass override while preserving Electric A v8, Neo infrastructure and release readiness not_evaluated. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
       "traceability": {
@@ -103,18 +103,18 @@
         ],
         "links": []
       },
-      "supersedes": "combined-updates-final-product-idea-2026-09-27T03:02:27+03:00"
+      "supersedes": "combined-updates-no-action-cap-product-idea-2026-09-27T03:08:16+03:00"
     },
     "prd": {
       "path": "docs/prd.md",
       "owner_skill": "to-sdd-prd",
-      "owner_invocation_id": "combined-updates-no-action-cap-prd-2026-09-27T03:08:17+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-prd-2026-09-27T03:34:46+03:00",
       "declared_output_set": [
         "docs/prd.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-prd-2026-09-27T03:08:17+03:00",
+      "source_version": "revision-7b3b454-full-prd-2026-09-27T03:34:46+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/product-idea.md": "full",
@@ -141,7 +141,7 @@
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "package-lock.json": "4738e92534b6ee80d2958941dfc6aef7d5754024ae23eb4122f4d17ecd2eb74b",
@@ -164,10 +164,10 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:17+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:46+03:00",
         "executor": "Codex to-sdd-prd owner",
-        "scope": "Specify A-F requirements, security and acceptance for request isolation, parallel Critic fulfillment, scoped evidence, truthful accounting, semantic table/export and the scoped final-glass override while preserving exact Neo topology, settings and not_evaluated release state."
+        "scope": "Specify A-F requirements, security and acceptance for request isolation, parallel Critic fulfillment, scoped evidence, truthful accounting, semantic table/export and the scoped final-glass override while preserving exact Neo topology, settings and not_evaluated release state. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
       "traceability": {
@@ -2553,19 +2553,19 @@
           "reviewed_at": "2026-09-14T20:13:37+03:00"
         }
       },
-      "supersedes": "combined-updates-final-prd-2026-09-27T03:02:28+03:00"
+      "supersedes": "combined-updates-no-action-cap-prd-2026-09-27T03:08:17+03:00"
     },
     "project-context": {
       "path": "docs/project-context.md",
       "owner_skill": "to-project-context",
-      "owner_invocation_id": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "declared_output_set": [
         "docs/project-context.md",
         "docs/canonical-terms.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "source_version": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/product-idea.md": "full",
@@ -2586,7 +2586,7 @@
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/server/provider-context.mjs": "e330b379fda22422cc0e3c255a695d0f2fa0dcd842c4ede1d55503a7262275fe",
         "src/server/usage.mjs": "2364ef288973c396390804eef31198690b9dbe2ef6ef474ce0c40424c2bd442b",
@@ -2602,25 +2602,25 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:18+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:47+03:00",
         "executor": "Codex to-project-context owner",
-        "scope": "Reconcile the coupled project-context and canonical-terms bundle for accepted-request isolation, Head-authored parallel work, Critic fulfillment, scoped evidence, truthful accounting, reading/table behavior and the scoped glass override within the preserved Neo topology."
+        "scope": "Reconcile the coupled project-context and canonical-terms bundle for accepted-request isolation, Head-authored parallel work, Critic fulfillment, scoped evidence, truthful accounting, reading/table behavior and the scoped glass override within the preserved Neo topology. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-project-context-2026-09-27T03:02:29+03:00"
+      "supersedes": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00"
     },
     "canonical-terms": {
       "path": "docs/canonical-terms.md",
       "owner_skill": "to-project-context",
-      "owner_invocation_id": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "declared_output_set": [
         "docs/project-context.md",
         "docs/canonical-terms.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "source_version": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/product-idea.md": "full",
@@ -2641,7 +2641,7 @@
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/server/provider-context.mjs": "e330b379fda22422cc0e3c255a695d0f2fa0dcd842c4ede1d55503a7262275fe",
         "src/server/usage.mjs": "2364ef288973c396390804eef31198690b9dbe2ef6ef474ce0c40424c2bd442b",
@@ -2657,24 +2657,24 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:18+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:47+03:00",
         "executor": "Codex to-project-context owner",
-        "scope": "Reconcile the coupled project-context and canonical-terms bundle for accepted-request isolation, Head-authored parallel work, Critic fulfillment, scoped evidence, truthful accounting, reading/table behavior and the scoped glass override within the preserved Neo topology."
+        "scope": "Reconcile the coupled project-context and canonical-terms bundle for accepted-request isolation, Head-authored parallel work, Critic fulfillment, scoped evidence, truthful accounting, reading/table behavior and the scoped glass override within the preserved Neo topology. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-project-context-2026-09-27T03:02:29+03:00"
+      "supersedes": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00"
     },
     "guardrails": {
       "path": "docs/guardrails.md",
       "owner_skill": "to-guardrails",
-      "owner_invocation_id": "combined-updates-no-action-cap-guardrails-2026-09-27T03:08:19+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-guardrails-2026-09-27T03:34:48+03:00",
       "declared_output_set": [
         "docs/guardrails.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-guardrails-2026-09-27T03:08:19+03:00",
+      "source_version": "revision-7b3b454-full-guardrails-2026-09-27T03:34:48+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/product-idea.md": "full",
@@ -2694,7 +2694,7 @@
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "dependencies": [
@@ -2706,24 +2706,24 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:19+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:48+03:00",
         "executor": "Codex to-guardrails owner",
-        "scope": "Enforce request isolation, immutable binding, Head-authored work, scoped provider/research/evidence handling, truthful accounting, safe table/reading/glass behavior and the zero-active-run Neo activation boundary."
+        "scope": "Enforce request isolation, immutable binding, Head-authored work, scoped provider/research/evidence handling, truthful accounting, safe table/reading/glass behavior and the zero-active-run Neo activation boundary. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-guardrails-2026-09-27T03:02:30+03:00"
+      "supersedes": "combined-updates-no-action-cap-guardrails-2026-09-27T03:08:19+03:00"
     },
     "user-journey": {
       "path": "docs/user-journey.md",
       "owner_skill": "to-user-journey",
-      "owner_invocation_id": "combined-updates-no-action-cap-user-journey-2026-09-27T03:08:20+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-user-journey-2026-09-27T03:34:49+03:00",
       "declared_output_set": [
         "docs/user-journey.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-user-journey-2026-09-27T03:08:20+03:00",
+      "source_version": "revision-7b3b454-full-user-journey-2026-09-27T03:34:49+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/prd.md": "full",
@@ -2739,7 +2739,7 @@
         "docs/project-context.md": "239aafdfbc5d27e8b9deae10ea15528810f5cd77b1be4b916606770846e52c44",
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "dependencies": [
@@ -2752,24 +2752,24 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:20+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:49+03:00",
         "executor": "Codex to-user-journey owner",
-        "scope": "Reconcile the owner journey for independent Send, bound continuation, parallel Critic work, scoped evidence, semantic tables, reading controls, truthful Usage, privacy-safe glass and separate Neo activation."
+        "scope": "Reconcile the owner journey for independent Send, bound continuation, parallel Critic work, scoped evidence, semantic tables, reading controls, truthful Usage, privacy-safe glass and separate Neo activation. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-user-journey-2026-09-27T03:02:31+03:00"
+      "supersedes": "combined-updates-no-action-cap-user-journey-2026-09-27T03:08:20+03:00"
     },
     "screen-map": {
       "path": "docs/screen-map.md",
       "owner_skill": "to-screen-map",
-      "owner_invocation_id": "combined-updates-no-action-cap-screen-map-2026-09-27T03:08:21+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-screen-map-2026-09-27T03:34:50+03:00",
       "declared_output_set": [
         "docs/screen-map.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-screen-map-2026-09-27T03:08:21+03:00",
+      "source_version": "revision-7b3b454-full-screen-map-2026-09-27T03:34:50+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/prd.md": "full",
@@ -2787,7 +2787,7 @@
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "dependencies": [
@@ -2801,10 +2801,10 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:21+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:50+03:00",
         "executor": "Codex to-screen-map owner",
-        "scope": "Reconcile existing surfaces and states for four-view reading navigation, request-bound controls, evidence and Usage states, semantic/native tables, wide content and privacy-safe final glass without adding screens."
+        "scope": "Reconcile existing surfaces and states for four-view reading navigation, request-bound controls, evidence and Usage states, semantic/native tables, wide content and privacy-safe final glass without adding screens. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
       "traceability": {
@@ -3812,18 +3812,18 @@
           }
         ]
       },
-      "supersedes": "combined-updates-final-screen-map-2026-09-27T03:02:32+03:00"
+      "supersedes": "combined-updates-no-action-cap-screen-map-2026-09-27T03:08:21+03:00"
     },
     "wireframes": {
       "path": "docs/wireframes.md",
       "owner_skill": "to-wireframes",
-      "owner_invocation_id": "combined-updates-no-action-cap-wireframes-2026-09-27T03:08:22+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-wireframes-2026-09-27T03:34:51+03:00",
       "declared_output_set": [
         "docs/wireframes.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-wireframes-2026-09-27T03:08:22+03:00",
+      "source_version": "revision-7b3b454-full-wireframes-2026-09-27T03:34:51+03:00",
       "source_usage": {
         "AGENTS.md": "full",
         "docs/prd.md": "full",
@@ -3843,7 +3843,7 @@
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "dependencies": [
@@ -3858,24 +3858,24 @@
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:22+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:51+03:00",
         "executor": "Codex to-wireframes owner",
-        "scope": "Reconcile responsive low-fidelity layout for four-view navigation, current-panel controls, composer and Stop continuity, semantic tables, truthful Usage and the wide privacy-safe final-glass override."
+        "scope": "Reconcile responsive low-fidelity layout for four-view navigation, current-panel controls, composer and Stop continuity, semantic tables, truthful Usage and the wide privacy-safe final-glass override. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-wireframes-2026-09-27T03:02:33+03:00"
+      "supersedes": "combined-updates-no-action-cap-wireframes-2026-09-27T03:08:22+03:00"
     },
     "design-brief": {
       "path": "docs/design-brief.md",
       "owner_skill": "to-design-brief",
-      "owner_invocation_id": "combined-updates-no-action-cap-design-brief-2026-09-27T03:08:23+03:00",
+      "owner_invocation_id": "revision-7b3b454-full-design-brief-2026-09-27T03:34:52+03:00",
       "declared_output_set": [
         "docs/design-brief.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-no-action-cap-design-brief-2026-09-27T03:08:23+03:00",
+      "source_version": "revision-7b3b454-full-design-brief-2026-09-27T03:34:52+03:00",
       "source_usage": {
         "docs/prd.md": "full",
         "docs/project-context.md": "full",
@@ -3990,7 +3990,7 @@
         "forge/design/candidates/c/v5/nanoduck.svg": "dc48e0cadefa0d8fe79cccebe6fbcc19f948bb4b92bbc4366603b575ce38e7fb",
         "forge/design/evidence/electric-v8-approval-20260914.json": "d1bf320c0b5631fd3a0fb77f48c858ad609eee05fc59b8d5bb6fc9a358595ee2",
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/client/navbar-glass.js": "835803504452ae8382b621c4f8ffac6d19d76b3c540aef48c945a3ea1f9f3c6e",
         "public/styles.css": "8679edef6f16ee66ade649119fc236067a8e0bfaf1642e5551748c131a2f7120",
@@ -4005,28 +4005,28 @@
         "screen-map",
         "wireframes"
       ],
-      "content_hash": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
+      "content_hash": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-final-no-action-cap-reconciliation",
-        "reviewed_at": "2026-09-27T03:08:23+03:00",
+        "kind": "revision-7b3b454-sdd-reconciliation",
+        "reviewed_at": "2026-09-27T03:34:52+03:00",
         "executor": "Codex to-design-brief owner",
-        "scope": "Record the authorized final liquid-glass optics, geometry, refresh and privacy override plus four-view reading/table/Usage refinements without changing frozen Electric A v8 artifacts or approval evidence."
+        "scope": "Record the authorized final liquid-glass optics, geometry, refresh and privacy override plus four-view reading/table/Usage refinements without changing frozen Electric A v8 artifacts or approval evidence. Bind exact implementation/test revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and named GitHub Actions run 36282318357 without promoting formal QA or hosted release readiness."
       },
       "open_questions": [],
-      "supersedes": "combined-updates-final-design-brief-2026-09-27T03:02:34+03:00"
+      "supersedes": "combined-updates-no-action-cap-design-brief-2026-09-27T03:08:23+03:00"
     },
     "architecture": {
       "path": "docs/architecture.md",
       "owner_skill": "to-architecture",
-      "owner_invocation_id": "combined-updates-evidence-tail-architecture-2026-09-27T03:11:11+03:00",
+      "owner_invocation_id": "revision-7b3b454-final-tail-architecture-2026-09-27T03:36:36+03:00",
       "declared_output_set": [
         "docs/architecture.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-evidence-tail-architecture-2026-09-27T03:11:11+03:00",
+      "source_version": "revision-7b3b454-final-tail-architecture-2026-09-27T03:36:36+03:00",
       "source_usage": {
         "docs/prd.md": "full",
         "docs/project-context.md": "full",
@@ -4099,7 +4099,7 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
         "src/server/config.mjs": "be38a5bc82283c31f6d1771876cd22ca3f1ad5f4f9993a22e531f22bf3865c38",
         "src/server/database-tls.mjs": "60510e511385ef7fd732d5b9ba9d2aa31aceea2e3a9a516c736e44c51a8f3f73",
         ".env.example": "411c11692a9fe21a67f70ca6078ad527af7b69cac1b2fdbd137666b44c4f552b",
@@ -4110,9 +4110,9 @@
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/deployment-boundary.md": "73f70514d184f3e166f85b52c65161334ba6dfde6032d61eeb935cec428e819e",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "package-lock.json": "4738e92534b6ee80d2958941dfc6aef7d5754024ae23eb4122f4d17ecd2eb74b",
         "Dockerfile": "9076bee0cee654d9b95889c31dd0aef73e6dad27a95860a6999ed6194583d10a",
@@ -4144,7 +4144,7 @@
         "src/client/navbar-glass.js": "835803504452ae8382b621c4f8ffac6d19d76b3c540aef48c945a3ea1f9f3c6e",
         "public/index.html": "46d7b10433a3632254cb1c3bb896bf92e20158c12ca7e4328cd7121ff8369ba5",
         "public/styles.css": "8679edef6f16ee66ade649119fc236067a8e0bfaf1642e5551748c131a2f7120",
-        "test/mysql.integration.test.mjs": "f1a7ad47ea407447ac5f58f9be452a7a03df9a4bd80a5b009c0bcf2e5194b2e3",
+        "test/mysql.integration.test.mjs": "c72539ccccbe9e2cb8e43852dd67ca0ebb2e10cdba90097c3789302f9c2298f8",
         "test/parallel-consultation.test.mjs": "0b9a3bec6312824c7bda2b02442bd3e6d41a15d8dbce1f14babf82fa9325ff7a",
         "test/context-economy.test.mjs": "fcdcbe012e5333312dbf6d2eb7009cee39ad68455e0b26206a6aa39da81536d5",
         "test/research-evidence.test.mjs": "14737b0e9e12e52d740bd0eb89b18817fbb3a2689a522c04efabe4d8f13ca8f8",
@@ -4165,14 +4165,14 @@
         "wireframes",
         "design-brief"
       ],
-      "content_hash": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+      "content_hash": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-sdd-evidence-binding",
-        "reviewed_at": "2026-09-27T03:11:11+03:00",
+        "kind": "revision-7b3b454-final-evidence-binding",
+        "reviewed_at": "2026-09-27T03:36:36+03:00",
         "executor": "Codex to-architecture owner",
-        "scope": "Define the implemented Neo topology and contracts for immutable request ledgers, parallel Critic work, scoped providers/evidence, truthful accounting, client tables/reading/glass privacy, repeat-safe migration and zero-active-run activation."
+        "scope": "Define the implemented Neo topology and contracts for immutable request ledgers, parallel Critic work, scoped providers/evidence, truthful accounting, client tables/reading/glass privacy, repeat-safe migration and zero-active-run activation. Superseding final binding for exact revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and frozen named-CI/SDD evidence."
       },
       "open_questions": [],
       "security_coverage": {
@@ -4245,20 +4245,20 @@
           "heading": "## Security enforcement map"
         }
       },
-      "supersedes": "combined-updates-evidence-tail-architecture-2026-09-27T03:08:53+03:00",
+      "supersedes": "revision-7b3b454-full-architecture-2026-09-27T03:34:53+03:00",
       "validated_baseline_id": "nanoduck-electric-a-v8-20260914",
       "consumed_source_fragments": {}
     },
     "dod-evals": {
       "path": "docs/dod-evals.md",
       "owner_skill": "to-dod-evals",
-      "owner_invocation_id": "combined-updates-evidence-tail-dod-evals-2026-09-27T03:11:12+03:00",
+      "owner_invocation_id": "revision-7b3b454-final-tail-dod-2026-09-27T03:36:37+03:00",
       "declared_output_set": [
         "docs/dod-evals.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-evidence-tail-dod-evals-2026-09-27T03:11:12+03:00",
+      "source_version": "revision-7b3b454-final-tail-dod-2026-09-27T03:36:37+03:00",
       "source_usage": {
         "docs/prd.md": "full",
         "docs/project-context.md": "full",
@@ -4295,8 +4295,8 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
         "README.md": "4b2d2ee52bee0ccd0ac63797f5142aa4de8781c324ed8a4a1a4cf0af2a4c65c7",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
@@ -4310,9 +4310,9 @@
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a"
       },
       "dependencies": [
@@ -4326,14 +4326,14 @@
         "design-brief",
         "architecture"
       ],
-      "content_hash": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+      "content_hash": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-sdd-evidence-binding",
-        "reviewed_at": "2026-09-27T03:11:12+03:00",
+        "kind": "revision-7b3b454-final-evidence-binding",
+        "reviewed_at": "2026-09-27T03:36:37+03:00",
         "executor": "Codex to-dod-evals owner",
-        "scope": "Define repository, security, visual, human, continuity, integrity and separate activation gates for the restored baseline and A-F update while classifying target evidence without overstating MySQL, Safari, document-reader, provider or hosted coverage."
+        "scope": "Define repository, security, visual, human, continuity, integrity and separate activation gates for the restored baseline and A-F update while classifying target evidence without overstating MySQL, Safari, document-reader, provider or hosted coverage. Superseding final binding for exact revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and frozen named-CI/SDD evidence."
       },
       "open_questions": [],
       "security_coverage": {
@@ -4406,20 +4406,20 @@
           "heading": "### Product security membership"
         }
       },
-      "supersedes": "combined-updates-evidence-tail-dod-evals-2026-09-27T03:08:54+03:00",
+      "supersedes": "revision-7b3b454-full-dod-2026-09-27T03:34:54+03:00",
       "validated_baseline_id": "nanoduck-electric-a-v8-20260914",
       "consumed_source_fragments": {}
     },
     "qa-checklist": {
       "path": "docs/qa-checklist.md",
       "owner_skill": "to-qa-checklist",
-      "owner_invocation_id": "combined-updates-evidence-tail-qa-checklist-2026-09-27T03:11:13+03:00",
+      "owner_invocation_id": "revision-7b3b454-final-tail-qa-2026-09-27T03:36:38+03:00",
       "declared_output_set": [
         "docs/qa-checklist.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-evidence-tail-qa-checklist-2026-09-27T03:11:13+03:00",
+      "source_version": "revision-7b3b454-final-tail-qa-2026-09-27T03:36:38+03:00",
       "source_usage": {
         "docs/prd.md": "full",
         "docs/project-context.md": "full",
@@ -4505,9 +4505,9 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
-        "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
+        "docs/dod-evals.md": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
         "forge/design/evidence/heuristic-review.json": "f1bc387aba24fc70dd0d17bf9f117f9b5b5cfe39a5e8e45f0aec76b1456b6150",
         "forge/design/evidence/a-v1-visual-qa.json": "98c26b5caf95efbd556c3533184bfc7e79b96ba221b4eb389195ff754bee1322",
         "forge/design/evidence/b-v1-visual-qa.json": "6222ca43aada1038ee6b0cd9b5481f13fa1874976bf98d0a5e60e29e04ce0437",
@@ -4566,9 +4566,9 @@
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a"
       },
       "dependencies": [
@@ -4583,14 +4583,14 @@
         "architecture",
         "dod-evals"
       ],
-      "content_hash": "130bf76f777bf309822bb6f9171fc43984e78463f9df671a2e40c9f297003f09",
+      "content_hash": "ad194312265aa1bea4b922c6409b9e92a1795422eb2dd3fffd061e90058b7ac1",
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-sdd-evidence-binding",
-        "reviewed_at": "2026-09-27T03:11:13+03:00",
+        "kind": "revision-7b3b454-final-evidence-binding",
+        "reviewed_at": "2026-09-27T03:36:38+03:00",
         "executor": "Codex to-qa-checklist owner",
-        "scope": "Add QA-R61 through QA-R67 and reconcile affected checks for request isolation, parallel Critic fulfillment, scoped evidence, truthful accounting, semantic/native tables, reading controls and final glass while preserving evidence boundaries and not_evaluated release state."
+        "scope": "Add QA-R61 through QA-R67 and reconcile affected checks for request isolation, parallel Critic fulfillment, scoped evidence, truthful accounting, semantic/native tables, reading controls and final glass while preserving evidence boundaries and not_evaluated release state. Superseding final binding for exact revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and frozen named-CI/SDD evidence."
       },
       "open_questions": [],
       "traceability": {
@@ -6613,20 +6613,20 @@
           "heading": "## Product acceptance"
         }
       },
-      "supersedes": "combined-updates-evidence-tail-qa-checklist-2026-09-27T03:08:55+03:00",
+      "supersedes": "revision-7b3b454-full-qa-2026-09-27T03:34:55+03:00",
       "validated_baseline_id": "nanoduck-electric-a-v8-20260914",
       "consumed_source_fragments": {}
     },
     "development-plan": {
       "path": "docs/development-plan.md",
       "owner_skill": "to-development-plan",
-      "owner_invocation_id": "combined-updates-evidence-tail-development-plan-2026-09-27T03:11:14+03:00",
+      "owner_invocation_id": "revision-7b3b454-final-tail-development-plan-2026-09-27T03:36:39+03:00",
       "declared_output_set": [
         "docs/development-plan.md"
       ],
       "status": "validated",
       "mission_control_status": "Done",
-      "source_version": "combined-updates-evidence-tail-development-plan-2026-09-27T03:11:14+03:00",
+      "source_version": "revision-7b3b454-final-tail-development-plan-2026-09-27T03:36:39+03:00",
       "source_usage": {
         ".env.example": "full",
         "AGENTS.md": "full",
@@ -6784,17 +6784,17 @@
         "Dockerfile": "9076bee0cee654d9b95889c31dd0aef73e6dad27a95860a6999ed6194583d10a",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a",
         "cloudflare/northflank-proxy.mjs": "a8fd6e371777d853fc2c64fa90fdb6a28f147404c4ca9f01d3aedb744c7bfda6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/dod-evals.md": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/project-context.md": "239aafdfbc5d27e8b9deae10ea15528810f5cd77b1be4b916606770846e52c44",
-        "docs/qa-checklist.md": "130bf76f777bf309822bb6f9171fc43984e78463f9df671a2e40c9f297003f09",
+        "docs/qa-checklist.md": "ad194312265aa1bea4b922c6409b9e92a1795422eb2dd3fffd061e90058b7ac1",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
@@ -6810,9 +6810,9 @@
         "forge/exploration/message-sound-table-250ms-v5/source.json": "6f700507f98b6ec595c4ef356e5ce2a5a6a3e8b516cfc4b246a75bd87ea7976b",
         "forge/runs/U-03/r19-quick-knock-20260918/audio-source.json": "0f40d3875708b27d5f5535d1ffa5cde92c12af813d4c0bd655bab9a3baaa811e",
         "forge/runs/U-03/r23-accepted-knock-20260918/owner-acceptance.json": "867ed009230b2a3b15407fb88182caa720663af4df338e9cb6dfdc2abbb9fa22",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "instructions/AGENTS.md": "9e5cd883fcf88d7c1dfa0f24510f1b0f6a9d5152fdb42bcce55fbeb2c907adbf",
         "instructions/CONSILIUM.md": "3db326b9650cd84c7849440e9444b1766698a7846a2ffad6c32f9dbabf581f28",
         "instructions/CONSULTING_PLAYBOOK.md": "ceab28f86e6f5fd30e00cd0d191c3ae182323805adbd63bbb89bcb8032818e8e",
@@ -6910,7 +6910,7 @@
         "test/http.test.mjs": "6a2fcffa167ea52c137ffb0a72e92df691ee59d285bf84751d86d493970c3ad0",
         "test/markdown-table-export.test.mjs": "a0132f7322958ecf1f3f52f494607e25efceeb2c71fc5e396f3859a7fc1cd06e",
         "test/markdown.test.mjs": "2cdca77cd23750696e6e0eaa42396842dab29969dab66647833f35a5a5c99ee9",
-        "test/mysql.integration.test.mjs": "f1a7ad47ea407447ac5f58f9be452a7a03df9a4bd80a5b009c0bcf2e5194b2e3",
+        "test/mysql.integration.test.mjs": "c72539ccccbe9e2cb8e43852dd67ca0ebb2e10cdba90097c3789302f9c2298f8",
         "test/neo-backend-port.test.mjs": "898b0fdb6421bb89a8ce1409f1bb1befdb30ade94e4b294a6951c5aca69d2a7b",
         "test/notification-audio.test.mjs": "c05d85dba03ba292890c363c3f2221834e38ca2c85d1eb80145bb180147234d9",
         "test/parallel-consultation.test.mjs": "0b9a3bec6312824c7bda2b02442bd3e6d41a15d8dbce1f14babf82fa9325ff7a",
@@ -6939,16 +6939,16 @@
         "dod-evals",
         "qa-checklist"
       ],
-      "content_hash": "231a32d0e6e1a4f322a090cbf29b740e51df43d55523914452590d7bbbe2f6f6",
+      "content_hash": "dcf0f9a7b548c36026a708954c8052b6dcb63d3fc2df61874f40abd7b7ab53c1",
       "validation": {
         "result": "passed",
         "working_language": "en",
-        "kind": "combined-updates-port-sdd-evidence-binding",
-        "reviewed_at": "2026-09-27T03:11:14+03:00",
+        "kind": "revision-7b3b454-final-evidence-binding",
+        "reviewed_at": "2026-09-27T03:36:39+03:00",
         "executor": "Codex to-development-plan owner",
-        "scope": "Reconcile U-09 through U-17 for request isolation, parallel review, evidence, accounting, semantic tables, reading controls, final glass, exact-target closure and separately authorized Neo activation while preserving U-01 through U-08 and release evidence boundaries."
+        "scope": "Reconcile U-09 through U-17 for request isolation, parallel review, evidence, accounting, semantic tables, reading controls, final glass, exact-target closure and separately authorized Neo activation while preserving U-01 through U-08 and release evidence boundaries. Superseding final binding for exact revision 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3 and frozen named-CI/SDD evidence."
       },
-      "supersedes": "combined-updates-evidence-tail-development-plan-2026-09-27T03:08:56+03:00",
+      "supersedes": "revision-7b3b454-full-development-plan-2026-09-27T03:34:56+03:00",
       "validated_baseline_id": "nanoduck-electric-a-v8-20260914",
       "traceability": {
         "definitions": [
@@ -10380,7 +10380,7 @@
   ],
   "implementation_gate": {
     "state": "authorized_for_phase3",
-    "development_plan_hash": "231a32d0e6e1a4f322a090cbf29b740e51df43d55523914452590d7bbbe2f6f6",
+    "development_plan_hash": "dcf0f9a7b548c36026a708954c8052b6dcb63d3fc2df61874f40abd7b7ab53c1",
     "approved_baseline_id": "nanoduck-electric-a-v8-20260914",
     "awaiting_at": "2026-09-14T20:13:37+03:00",
     "prompt_id": "impl-combined-updates-port-20260927",
@@ -10389,7 +10389,7 @@
     "product_scope_hash": "4fc3dfb32ddea9a879bbcda9b069505a6c48fb5b8e3176af2c6fd8f28aa31abc",
     "prompt_receipt": {
       "path": "forge/runs/combined-updates-port-20260927/implementation-prompt.json",
-      "content_hash": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4"
+      "content_hash": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03"
     },
     "reason": "Implement and verify the missing review-fixes prerequisites and cumulative combined update in this Neo repository, including the final liquid-glass corrections, while preserving its existing Northflank, MySQL, Google authentication, Cloudflare proxy, provider and private-data boundaries. Commit and push are authorized; deployment, restart and live subscription probes are excluded while consultations may be active."
   },
@@ -11511,13 +11511,13 @@
   ],
   "dispatches": {
     "product-idea": {
-      "invocation_id": "combined-updates-no-action-cap-product-idea-2026-09-27T03:08:16+03:00",
+      "invocation_id": "revision-7b3b454-full-product-idea-2026-09-27T03:34:45+03:00",
       "outputs": [
         "docs/product-idea.md"
       ],
       "source_hashes": {
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
@@ -11527,7 +11527,7 @@
       "consumed_source_fragments": {}
     },
     "prd": {
-      "invocation_id": "combined-updates-no-action-cap-prd-2026-09-27T03:08:17+03:00",
+      "invocation_id": "revision-7b3b454-full-prd-2026-09-27T03:34:46+03:00",
       "outputs": [
         "docs/prd.md"
       ],
@@ -11536,7 +11536,7 @@
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "package-lock.json": "4738e92534b6ee80d2958941dfc6aef7d5754024ae23eb4122f4d17ecd2eb74b",
@@ -11555,7 +11555,7 @@
       "consumed_source_fragments": {}
     },
     "project-context": {
-      "invocation_id": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "invocation_id": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "outputs": [
         "docs/project-context.md",
         "docs/canonical-terms.md"
@@ -11566,7 +11566,7 @@
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/server/provider-context.mjs": "e330b379fda22422cc0e3c255a695d0f2fa0dcd842c4ede1d55503a7262275fe",
         "src/server/usage.mjs": "2364ef288973c396390804eef31198690b9dbe2ef6ef474ce0c40424c2bd442b",
@@ -11577,7 +11577,7 @@
       "consumed_source_fragments": {}
     },
     "canonical-terms": {
-      "invocation_id": "combined-updates-no-action-cap-project-context-2026-09-27T03:08:18+03:00",
+      "invocation_id": "revision-7b3b454-full-project-context-2026-09-27T03:34:47+03:00",
       "outputs": [
         "docs/project-context.md",
         "docs/canonical-terms.md"
@@ -11588,7 +11588,7 @@
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/server/provider-context.mjs": "e330b379fda22422cc0e3c255a695d0f2fa0dcd842c4ede1d55503a7262275fe",
         "src/server/usage.mjs": "2364ef288973c396390804eef31198690b9dbe2ef6ef474ce0c40424c2bd442b",
@@ -11599,7 +11599,7 @@
       "consumed_source_fragments": {}
     },
     "guardrails": {
-      "invocation_id": "combined-updates-no-action-cap-guardrails-2026-09-27T03:08:19+03:00",
+      "invocation_id": "revision-7b3b454-full-guardrails-2026-09-27T03:34:48+03:00",
       "outputs": [
         "docs/guardrails.md"
       ],
@@ -11611,13 +11611,13 @@
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "consumed_source_fragments": {}
     },
     "user-journey": {
-      "invocation_id": "combined-updates-no-action-cap-user-journey-2026-09-27T03:08:20+03:00",
+      "invocation_id": "revision-7b3b454-full-user-journey-2026-09-27T03:34:49+03:00",
       "outputs": [
         "docs/user-journey.md"
       ],
@@ -11627,13 +11627,13 @@
         "docs/project-context.md": "239aafdfbc5d27e8b9deae10ea15528810f5cd77b1be4b916606770846e52c44",
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "consumed_source_fragments": {}
     },
     "screen-map": {
-      "invocation_id": "combined-updates-no-action-cap-screen-map-2026-09-27T03:08:21+03:00",
+      "invocation_id": "revision-7b3b454-full-screen-map-2026-09-27T03:34:50+03:00",
       "outputs": [
         "docs/screen-map.md"
       ],
@@ -11644,13 +11644,13 @@
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "consumed_source_fragments": {}
     },
     "wireframes": {
-      "invocation_id": "combined-updates-no-action-cap-wireframes-2026-09-27T03:08:22+03:00",
+      "invocation_id": "revision-7b3b454-full-wireframes-2026-09-27T03:34:51+03:00",
       "outputs": [
         "docs/wireframes.md"
       ],
@@ -11662,13 +11662,13 @@
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340"
       },
       "consumed_source_fragments": {}
     },
     "design-brief": {
-      "invocation_id": "combined-updates-no-action-cap-design-brief-2026-09-27T03:08:23+03:00",
+      "invocation_id": "revision-7b3b454-full-design-brief-2026-09-27T03:34:52+03:00",
       "outputs": [
         "docs/design-brief.md"
       ],
@@ -11726,7 +11726,7 @@
         "forge/design/candidates/c/v5/nanoduck.svg": "dc48e0cadefa0d8fe79cccebe6fbcc19f948bb4b92bbc4366603b575ce38e7fb",
         "forge/design/evidence/electric-v8-approval-20260914.json": "d1bf320c0b5631fd3a0fb77f48c858ad609eee05fc59b8d5bb6fc9a358595ee2",
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
         "src/client/navbar-glass.js": "835803504452ae8382b621c4f8ffac6d19d76b3c540aef48c945a3ea1f9f3c6e",
         "public/styles.css": "8679edef6f16ee66ade649119fc236067a8e0bfaf1642e5551748c131a2f7120",
@@ -11735,7 +11735,7 @@
       "consumed_source_fragments": {}
     },
     "architecture": {
-      "invocation_id": "combined-updates-evidence-tail-architecture-2026-09-27T03:11:11+03:00",
+      "invocation_id": "revision-7b3b454-final-tail-architecture-2026-09-27T03:36:36+03:00",
       "outputs": [
         "docs/architecture.md"
       ],
@@ -11747,7 +11747,7 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
         "src/server/config.mjs": "be38a5bc82283c31f6d1771876cd22ca3f1ad5f4f9993a22e531f22bf3865c38",
         "src/server/database-tls.mjs": "60510e511385ef7fd732d5b9ba9d2aa31aceea2e3a9a516c736e44c51a8f3f73",
         ".env.example": "411c11692a9fe21a67f70ca6078ad527af7b69cac1b2fdbd137666b44c4f552b",
@@ -11758,9 +11758,9 @@
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/deployment-boundary.md": "73f70514d184f3e166f85b52c65161334ba6dfde6032d61eeb935cec428e819e",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "package-lock.json": "4738e92534b6ee80d2958941dfc6aef7d5754024ae23eb4122f4d17ecd2eb74b",
         "Dockerfile": "9076bee0cee654d9b95889c31dd0aef73e6dad27a95860a6999ed6194583d10a",
@@ -11792,7 +11792,7 @@
         "src/client/navbar-glass.js": "835803504452ae8382b621c4f8ffac6d19d76b3c540aef48c945a3ea1f9f3c6e",
         "public/index.html": "46d7b10433a3632254cb1c3bb896bf92e20158c12ca7e4328cd7121ff8369ba5",
         "public/styles.css": "8679edef6f16ee66ade649119fc236067a8e0bfaf1642e5551748c131a2f7120",
-        "test/mysql.integration.test.mjs": "f1a7ad47ea407447ac5f58f9be452a7a03df9a4bd80a5b009c0bcf2e5194b2e3",
+        "test/mysql.integration.test.mjs": "c72539ccccbe9e2cb8e43852dd67ca0ebb2e10cdba90097c3789302f9c2298f8",
         "test/parallel-consultation.test.mjs": "0b9a3bec6312824c7bda2b02442bd3e6d41a15d8dbce1f14babf82fa9325ff7a",
         "test/context-economy.test.mjs": "fcdcbe012e5333312dbf6d2eb7009cee39ad68455e0b26206a6aa39da81536d5",
         "test/research-evidence.test.mjs": "14737b0e9e12e52d740bd0eb89b18817fbb3a2689a522c04efabe4d8f13ca8f8",
@@ -11806,7 +11806,7 @@
       "consumed_source_fragments": {}
     },
     "dod-evals": {
-      "invocation_id": "combined-updates-evidence-tail-dod-evals-2026-09-27T03:11:12+03:00",
+      "invocation_id": "revision-7b3b454-final-tail-dod-2026-09-27T03:36:37+03:00",
       "outputs": [
         "docs/dod-evals.md"
       ],
@@ -11818,8 +11818,8 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
         "README.md": "4b2d2ee52bee0ccd0ac63797f5142aa4de8781c324ed8a4a1a4cf0af2a4c65c7",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
@@ -11833,15 +11833,15 @@
         "package.json": "23d05fadcd9a9a4026792e1b5645838c21694c2370ceabf94ec060a4f9df858d",
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a"
       },
       "consumed_source_fragments": {}
     },
     "qa-checklist": {
-      "invocation_id": "combined-updates-evidence-tail-qa-checklist-2026-09-27T03:11:13+03:00",
+      "invocation_id": "revision-7b3b454-final-tail-qa-2026-09-27T03:36:38+03:00",
       "outputs": [
         "docs/qa-checklist.md"
       ],
@@ -11853,9 +11853,9 @@
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
-        "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
+        "docs/dod-evals.md": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
         "forge/design/evidence/heuristic-review.json": "f1bc387aba24fc70dd0d17bf9f117f9b5b5cfe39a5e8e45f0aec76b1456b6150",
         "forge/design/evidence/a-v1-visual-qa.json": "98c26b5caf95efbd556c3533184bfc7e79b96ba221b4eb389195ff754bee1322",
         "forge/design/evidence/b-v1-visual-qa.json": "6222ca43aada1038ee6b0cd9b5481f13fa1874976bf98d0a5e60e29e04ce0437",
@@ -11914,15 +11914,15 @@
         "AGENTS.md": "aee5aa67dde5d2b0be46d614a89e6c64fc76d7e69f5819d5a19d2e00983ef1b4",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a"
       },
       "consumed_source_fragments": {}
     },
     "development-plan": {
-      "invocation_id": "combined-updates-evidence-tail-development-plan-2026-09-27T03:11:14+03:00",
+      "invocation_id": "revision-7b3b454-final-tail-development-plan-2026-09-27T03:36:39+03:00",
       "outputs": [
         "docs/development-plan.md"
       ],
@@ -11932,17 +11932,17 @@
         "Dockerfile": "9076bee0cee654d9b95889c31dd0aef73e6dad27a95860a6999ed6194583d10a",
         "THIRD_PARTY_NOTICES.md": "172de3c44a142f3f584fefe98098549513fcebba878f679f1dadd972724e586a",
         "cloudflare/northflank-proxy.mjs": "a8fd6e371777d853fc2c64fa90fdb6a28f147404c4ca9f01d3aedb744c7bfda6",
-        "docs/architecture.md": "c81a6330a02ab61d22722b57bbd0329caa6be7f20a28d9ae8b0da55bd1ea2767",
+        "docs/architecture.md": "9f7711afac54442fc47bb4c72a5d1c35ebd1e91d5b44283adb1146d1cab60953",
         "docs/canonical-terms.md": "4311a658b643bf9a78c6aec23f43ead633295a864837442430e08ed80cdf7dff",
-        "docs/design-brief.md": "f82680bc00d0006282c359c5c0fc16e5539d22532a995b355e5e8246112237e6",
-        "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
+        "docs/design-brief.md": "67d8698646247b31e9650ffda277273c35d4c45e9d0dd5b5aa51e59078473da0",
+        "docs/dod-evals.md": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
         "docs/guardrails.md": "62c81b90359c05a43e779e9abd31a3f1fa3ad9102903d04a3feb04a63a8e751d",
         "docs/model-settings.md": "04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc",
         "docs/northflank-deployment.md": "218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1",
         "docs/prd.md": "b0ced0cbd750b0da8140f6fcdb1a73359809fe1f345dece5f543d7bff0e5806f",
         "docs/product-idea.md": "b7fd0e6ef45ef33058142406cc936ab94e60734ea88212be43389d49d3fc59e5",
         "docs/project-context.md": "239aafdfbc5d27e8b9deae10ea15528810f5cd77b1be4b916606770846e52c44",
-        "docs/qa-checklist.md": "130bf76f777bf309822bb6f9171fc43984e78463f9df671a2e40c9f297003f09",
+        "docs/qa-checklist.md": "ad194312265aa1bea4b922c6409b9e92a1795422eb2dd3fffd061e90058b7ac1",
         "docs/screen-map.md": "a82efbf92c011348f43334652163499d8d8f4923bc4c97d29e0fbac500055d3b",
         "docs/user-journey.md": "1544a18c8fd1caa33950c92a61ca92fddac31527cb26ab52af45ec868e60b7a7",
         "docs/wireframes.md": "ebb999ecd2b89078782c37927e4ad793609746372b970af25c3388de44523c91",
@@ -11958,9 +11958,9 @@
         "forge/exploration/message-sound-table-250ms-v5/source.json": "6f700507f98b6ec595c4ef356e5ce2a5a6a3e8b516cfc4b246a75bd87ea7976b",
         "forge/runs/U-03/r19-quick-knock-20260918/audio-source.json": "0f40d3875708b27d5f5535d1ffa5cde92c12af813d4c0bd655bab9a3baaa811e",
         "forge/runs/U-03/r23-accepted-knock-20260918/owner-acceptance.json": "867ed009230b2a3b15407fb88182caa720663af4df338e9cb6dfdc2abbb9fa22",
-        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "64c0ab9823ab712cfa5b06fe316f18750b7c312630dca2cdd6305aa1417399a4",
+        "forge/runs/combined-updates-port-20260927/implementation-prompt.json": "b87c07abb04ddab1e25c0ff45dd51c1e9a0aaac76281947b825de37cb2df8f03",
         "forge/runs/combined-updates-port-20260927/source-input.json": "c2830896ce80e56e971c0c4f0013d31a5580e525f9e1739ed9506ea7f054a340",
-        "forge/runs/combined-updates-port-20260927/verification.json": "74a67f4066ab08c6cc925adb724d6cdc32ab24da2c6f4aeb60a35e27c2d34669",
+        "forge/runs/combined-updates-port-20260927/verification.json": "cfdc24fb704c4ea9b8e9fcb64316629737b212f2d1a57a86e395010784d0c3d2",
         "instructions/AGENTS.md": "9e5cd883fcf88d7c1dfa0f24510f1b0f6a9d5152fdb42bcce55fbeb2c907adbf",
         "instructions/CONSILIUM.md": "3db326b9650cd84c7849440e9444b1766698a7846a2ffad6c32f9dbabf581f28",
         "instructions/CONSULTING_PLAYBOOK.md": "ceab28f86e6f5fd30e00cd0d191c3ae182323805adbd63bbb89bcb8032818e8e",
@@ -12058,7 +12058,7 @@
         "test/http.test.mjs": "6a2fcffa167ea52c137ffb0a72e92df691ee59d285bf84751d86d493970c3ad0",
         "test/markdown-table-export.test.mjs": "a0132f7322958ecf1f3f52f494607e25efceeb2c71fc5e396f3859a7fc1cd06e",
         "test/markdown.test.mjs": "2cdca77cd23750696e6e0eaa42396842dab29969dab66647833f35a5a5c99ee9",
-        "test/mysql.integration.test.mjs": "f1a7ad47ea407447ac5f58f9be452a7a03df9a4bd80a5b009c0bcf2e5194b2e3",
+        "test/mysql.integration.test.mjs": "c72539ccccbe9e2cb8e43852dd67ca0ebb2e10cdba90097c3789302f9c2298f8",
         "test/neo-backend-port.test.mjs": "898b0fdb6421bb89a8ce1409f1bb1befdb30ade94e4b294a6951c5aca69d2a7b",
         "test/notification-audio.test.mjs": "c05d85dba03ba292890c363c3f2221834e38ca2c85d1eb80145bb180147234d9",
         "test/parallel-consultation.test.mjs": "0b9a3bec6312824c7bda2b02442bd3e6d41a15d8dbce1f14babf82fa9325ff7a",
@@ -70817,8 +70817,8 @@
     "definition_status": "prepared",
     "release_readiness": "not_evaluated",
     "source_hashes": {
-      "docs/dod-evals.md": "13d2cdeeae6bb8a9a578ac4570c2f77c4e9854fa71dd8b7135f2594772e38ee9",
-      "docs/qa-checklist.md": "130bf76f777bf309822bb6f9171fc43984e78463f9df671a2e40c9f297003f09"
+      "docs/dod-evals.md": "f5f851f3f468d8724c2d32d64308a058d1037795c94ac68e39b40c51b38d4587",
+      "docs/qa-checklist.md": "ad194312265aa1bea4b922c6409b9e92a1795422eb2dd3fffd061e90058b7ac1"
     },
     "gates": [
       {

@@ -1,13 +1,14 @@
-revision=96e8827925107667163ebbd212d291a9d5b6d1c9
+revision=7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
 scope=all text blobs tracked by the exact commit
 excluded_untracked_path=NanoDuck AI Consulting/
+excluded_self_referential_report=forge/runs/combined-updates-port-20260927/evidence/repository-hygiene.log
 nested_path_entries_in_revision=0
-absolute_local_path_pattern=/Users/|/home/|[A-Za-z]:\\\\Users\\\\
+absolute_local_path_pattern=/Users/|/home/|[A-Za-z]:\\Users\\
 absolute_local_path_matches=0
 high_confidence_secret_matches=0
 sensitive_assignment_candidates=3
 candidate_review=all three are explicit synthetic or invalid test fixtures, not credentials
-96e8827925107667163ebbd212d291a9d5b6d1c9:test/core.test.mjs:540:  const managedDatabaseConfig = loadConfig({ ...productionEnvironment, DATABASE_URL: "", DATABASE_SSL_CA_PATH: "", DB_HOST: "mysql.internal", DB_PORT: "3306", DB_NAME: "owned", DB_USER: "owner", DB_PASSWORD: "contains:a/slash", OWNER_GOOGLE_SUBJECT: "", SETTINGS_OWNER_GOOGLE_EMAIL: "OWNER@EXAMPLE.COM" });
-96e8827925107667163ebbd212d291a9d5b6d1c9:test/http.test.mjs:32:  const edgeProxyKey = "synthetic-edge-proxy-key-that-is-long-enough";
-96e8827925107667163ebbd212d291a9d5b6d1c9:test/preview-server.test.mjs:17:    env: { NODE_ENV: "production", NANODUCK_RUNTIME_MODE: "production", NANODUCK_DEPLOYMENT_ROLE: "preview", APP_ORIGIN: "https://synthetic.preview.c35.airoapp.ai", PORT: "3000", DATABASE_URL: "invalid-database-url", DATA_ENCRYPTION_KEY: "invalid", OPENAI_API_KEY: "synthetic-forbidden-configuration", ...overrides },
+test/core.test.mjs:540:  const managedDatabaseConfig = loadConfig({ ...productionEnvironment, DATABASE_URL: "", DATABASE_SSL_CA_PATH: "", DB_HOST: "mysql.internal", DB_PORT: "3306", DB_NAME: "owned", DB_USER: "owner", DB_PASSWORD: "contains:a/slash", OWNER_GOOGLE_SUBJECT: "", SETTINGS_OWNER_GOOGLE_EMAIL: "OWNER@EXAMPLE.COM" });
+test/http.test.mjs:32:  const edgeProxyKey = "synthetic-edge-proxy-key-that-is-long-enough";
+test/preview-server.test.mjs:17:    env: { NODE_ENV: "production", NANODUCK_RUNTIME_MODE: "production", NANODUCK_DEPLOYMENT_ROLE: "preview", APP_ORIGIN: "https://synthetic.preview.c35.airoapp.ai", PORT: "3000", DATABASE_URL: "invalid-database-url", DATA_ENCRYPTION_KEY: "invalid", OPENAI_API_KEY: "synthetic-forbidden-configuration", ...overrides },
 result=passed

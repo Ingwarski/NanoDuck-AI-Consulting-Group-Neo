@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "node": "prd",
+  "mode": "before",
+  "skipped_artifacts": [],
+  "checked_artifacts": [
+    "product-idea"
+  ],
+  "affected_artifacts": [],
+  "issues": [],
+  "warnings": [],
+  "limits": "Checks declared metadata, file integrity, stages and evidence references; not semantic quality, research authenticity or runner enforcement."
+}
