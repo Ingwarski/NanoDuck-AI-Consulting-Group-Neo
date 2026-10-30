@@ -1,0 +1,64 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-18T01:17:00.589Z",
+  "unit": "U-03",
+  "scope": "Promote the exact owner-accepted v5 sound to the existing Knock choice for preview and incoming messages.",
+  "implementation_prompt": {
+    "path": "forge/runs/implementation-prompt-20260918-r23-accepted-knock.json",
+    "content_hash": "78f862682904cbb727988ecbfe0c5557ba462f18ef2321b76171abcd591aa5ac"
+  },
+  "owner_acceptance": {
+    "path": "forge/runs/U-03/r23-accepted-knock-20260918/owner-acceptance.json",
+    "content_hash": "867ed009230b2a3b15407fb88182caa720663af4df338e9cb6dfdc2abbb9fa22"
+  },
+  "implementation_files": {
+    "src/client/app.js": "4f88878672536ad884a092e39f321ecb3a5e88ffe40852899541ebf59f048e9a",
+    "test/http.test.mjs": "308793fdb20e22317df65c867f02b4ca1f558469ec22bb4b5e9f459d424d0ea5",
+    "public/sounds/table-taps-250ms-v5.wav": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4"
+  },
+  "verification": {
+    "automated": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 129,
+      "failed": 0
+    },
+    "http": {
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/http-delivery.json",
+      "content_hash": "9a01e877dbc4ee09030e7a22d9a25fa6350cb48832d02d309149ebd54c4aed57"
+    },
+    "pcm": {
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/pcm-verification.json",
+      "content_hash": "4910cd2ab33b6df5ae39e8d0be2751e9907f06a00c935ff0e8154c4a542ce6a7"
+    },
+    "browser": {
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/browser-verification.json",
+      "content_hash": "2bc090d487af994bd34c620a1dd6a3b8b36da0318e405e1486cb0611bdd3f8e2"
+    },
+    "result": "passed_scoped_sound_verification",
+    "excluded": [
+      "Hosted deployment",
+      "Live consultation",
+      "Production database",
+      "Physical-device audibility certification",
+      "New Safari run",
+      "Full release-gate evaluation"
+    ]
+  },
+  "sdd": {
+    "owner_checks": {
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/owner-checks.json",
+      "content_hash": "f5a25c7076a7a43dbbecd93009b6bb6cb89361bf87ae16903cb3650de0be3f5d"
+    },
+    "audit": {
+      "result": "passed",
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/audit.json",
+      "content_hash": "f0405688296e343ea0b161a7fd8a753d36f6ba617cd5d8007c237932c923bd4d"
+    },
+    "implementation-check": {
+      "result": "passed",
+      "path": "forge/runs/U-03/r23-accepted-knock-20260918/implementation-check.json",
+      "content_hash": "2f644544caed99de87ed22b4e3403ecf15699c1e0f3e4c824698cb6a2052a215"
+    }
+  }
+}

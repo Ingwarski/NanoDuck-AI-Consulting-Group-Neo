@@ -172,10 +172,13 @@ export function loadConfig(environment = process.env) {
     : undefined;
   const codexAuthBase64Bytes = optionalBase64urlBytes(environment.CODEX_APP_SERVER_AUTH_B64, "CODEX_APP_SERVER_AUTH_B64");
   const codexAuthGzipBytes = optionalGzipBase64urlBytes(environment.CODEX_APP_SERVER_AUTH_GZIP_B64, "CODEX_APP_SERVER_AUTH_GZIP_B64");
-  if (codexAuthBase64Bytes && codexAuthGzipBytes) {
+  if ([codexAuthPath, codexAuthBase64Bytes, codexAuthGzipBytes].filter(Boolean).length > 1) {
     throw new Error("Use only one Codex app-server auth secret.");
   }
   const codexAuthBytes = codexAuthBase64Bytes ?? codexAuthGzipBytes;
+  if (codexAuthBytes && codexAuthBytes.byteLength > 64 * 1024) {
+    throw new Error("Codex app-server auth secret cannot exceed 64 KiB after decoding.");
+  }
   if (mode === "production" && !codexAuthPath && !codexAuthBytes) {
     throw new Error("CODEX_APP_SERVER_AUTH_PATH, CODEX_APP_SERVER_AUTH_B64 or CODEX_APP_SERVER_AUTH_GZIP_B64 is required in production.");
   }

@@ -1,0 +1,17 @@
+{
+  "after": {
+    "content_hash": "c2640ddb6ffc6db7df0fd2b9cbbc4337fde31e18f6a79c3198f59fda6460a5dd",
+    "path": "forge/unit-history/activations/f1dc30d5cd5845eea34ff3d817f3c710/after.json"
+  },
+  "before": {
+    "content_hash": "8b93cfda22a78bf61ee915246c5c1a97622ed3897132666f7ad9f0f6165e97d1",
+    "path": "forge/unit-history/activations/f1dc30d5cd5845eea34ff3d817f3c710/before.json"
+  },
+  "candidate_ref": {
+    "content_hash": "0785f11b31ec4533ac771b3c825b238901b2e8607eeceb76d4bad33712d51463",
+    "path": "forge/unit-history/candidates/b907b5bf62e6480983e0ef937cbbb6a7/record.json"
+  },
+  "event": "manifest_activation",
+  "prepared_at": "2026-10-30T12:55:41.725105+00:00",
+  "version": 2
+}

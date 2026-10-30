@@ -1,0 +1,11 @@
+{
+  "event": "implementation_prompt",
+  "role": "user",
+  "intent": "start_production_implementation",
+  "repair_intent": "repair_claude_critic_context_and_hide_tool_traces",
+  "message": "The fuck is this? And check the whole exchange. The Critic does not get messages it seems.",
+  "message_sha256": "3f57b113f6ab3147a2bc9247b4b0ef43b735538796154ad999ce58b557f01217",
+  "received_at": "2026-09-18T02:42:28+03:00",
+  "base_revision": "f8226cc",
+  "scope": "Pass the Claude Critic the same owner question, confirmed discussion and role/output contract as the Codex path; prohibit direct Claude research and tools; reject internal tool invocation/transcript output before persistence; preserve current model and reasoning settings; reconcile SDD artifacts; do not deploy, migrate, reset or alter GoDaddy resources."
+}

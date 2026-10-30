@@ -1,0 +1,15 @@
+{
+  "event": "implementation_prompt",
+  "role": "user",
+  "intent": "start_production_implementation",
+  "repair_intent": "correct_existing_knock_sound_cadence",
+  "message": "Yeah, but it is played to slow. Original was like 3 quick knocks with a key on the glass.",
+  "recorded_at": "2026-09-18T00:18:41.183Z",
+  "received_at": "2026-09-18T00:18:41.183Z",
+  "time_basis": "Recorded from the active user correction during this turn; exact message delivery timestamp is not exposed.",
+  "development_plan_hash": "408d067cd0595a26e4d1b5a17eca25111cc5159ee734bd6a7aaed87dd9f2bc01",
+  "approved_baseline_id": "nanoduck-electric-a-v8-20260914",
+  "product_scope_hash": "4fc3dfb32ddea9a879bbcda9b069505a6c48fb5b8e3176af2c6fd8f28aa31abc",
+  "scope": "Existing authorized incoming-message sound refinement only; no hosting, provider or database operation.",
+  "prompt_id": "impl-r19-quick-knock-20260918"
+}

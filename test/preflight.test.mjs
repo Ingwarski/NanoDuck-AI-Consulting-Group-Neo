@@ -25,7 +25,7 @@ test("the preflight inspects the managed catalog without starting a model turn",
       cwd: process.cwd(),
       env: {
         ...globalThis.process.env,
-        NODE_ENV: "development",
+        NODE_ENV: "test",
         CODEX_APP_SERVER_AUTH_PATH: authPath,
         CODEX_APP_SERVER_COMMAND: codexCommand
       },

@@ -1,0 +1,15 @@
+# Deployment boundary
+
+Deployment observation dated 15 September 2026. This record is limited to the named app's Preview environment; later release status requires its own evidence.
+
+The authenticated GoDaddy dashboard identified **Personal AI Consulting Group**, app ID `wy2v0putg6`, published hostname `wy2v0putg6.c35.airoapp.ai`, Preview hostname `wy2v0putg6.preview.c35.airoapp.ai`, Node.js 22 and Europe region. Its GitHub integration used `Ingwarski/personal-ai-consulting-web` on `main`. Preview deployed commit `bcf43a5` and reported infrastructure and site status OK. This observation does not establish the currently published artifact.
+
+Only this named app and its verified own database are within deployment scope. The staged Preview migration created ten `nanoduck_*` tables plus one encrypted owner-instruction record. A database reset requires explicit target authorization and current ownership verification; a repository change does not authorize a hosted deletion.
+
+The GoDaddy hosted-database panel stated that Preview and Published used the same managed MySQL database. The only opened application row was the instruction record; it showed encrypted ciphertext and authentication metadata, never instruction text. The panel did not expose a database ID or owner principal, so this remains a dashboard-scoped ownership observation rather than a credential-level ownership proof.
+
+The saved active Codex model settings were read without exporting conversation content: Head/specialists and Critic both used `gpt-6-astra` / `xhigh`. The inactive Claude branch was not established by that read. Specialist count and discussion depth are independent application preferences. Before a cutover, verify the exact selected-provider settings and that grants can be recovered or reauthorized.
+
+Other GoDaddy apps, their data, shared/unidentified tables, domains and credentials are outside scope. If attachment or ownership is ambiguous, stop that deletion and ask about the exact ambiguous resource. Do not interpret an app attachment as ownership of everything in a database.
+
+Preview validated Node startup, the owned migration and encrypted bootstrap. Its hosted `NODE_ENV` selected a development sign-in path, so the deployed `bcf43a5` change gives saved `NANODUCK_RUNTIME_MODE=production` precedence. A private Chrome check reached the explicit first-use consent gate and an existing private Safari session reached the workspace, but neither was a fresh Google OAuth completion. Before publishing, validate a fresh Google callback, persistent jobs/storage, streaming or polling, provider access/preflight, a real owner consultation, voice and recovery within this app. GoDaddy injects this app's `DB_*` connection values and exposes encrypted environment secrets rather than a mounted-secret facility: NanoDuck builds the MySQL connection from those values, requires certificate verification, and receives protected Codex `auth.json` as plain or gzip/base64 secret bytes, materializing it only in the temporary owned app-server home for each provider connection. A successful build or health endpoint alone is insufficient.

@@ -1,0 +1,63 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-18T01:00:46.476Z",
+  "unit": "U-03",
+  "scope": "Refine and use the existing Knock choice. No new sound setting, model, language policy, hosting or database change.",
+  "implementation_prompt": {
+    "path": "forge/runs/implementation-prompt-20260918-r22-table-tap.json",
+    "content_hash": "5d87c0fb5d55ad4142215e8d9d75b8ae709dda19b3cce0849e98865adf69b4de"
+  },
+  "source": {
+    "path": "forge/exploration/message-sound-table-250ms-v3/source.json",
+    "content_hash": "93af5d762e68fc236d1424d93d702256264f71ed60fddab287ed277f5c4b71fc"
+  },
+  "implementation_files": {
+    "src/client/app.js": "80c8dbf5d6af9d781812e3f702b93cf7e119209cc8bc29f2503cd7330a12fe24",
+    "test/http.test.mjs": "f65da0fe5221630437267f794f286c292edace071e21c6e2b1e93ad3aa6c6ec7",
+    "public/sounds/table-taps-250ms.wav": "433bfd84f11cba34941526d970f222b10e154a68af26594e50e34e2aa1e8459c"
+  },
+  "verification": {
+    "automated": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 129
+    },
+    "pcm": {
+      "peak_intervals_ms": [
+        250,
+        250
+      ],
+      "rms_gain_vs_v2_db": 3.0324774516006627,
+      "clipped_samples": 0,
+      "silence_between_impacts": true
+    },
+    "owner_feedback": {
+      "v2": "Yes! But a bit more pronounced.",
+      "v3": "Requested refinement; new listening verdict pending."
+    },
+    "browser": "No new app-browser run. Existing shared playback logic is unchanged; HTTP regression verifies the new asset path, WAV MIME and PCM container. The candidate is supplied inline for owner listening.",
+    "excluded": [
+      "Hosted deployment",
+      "Live providers",
+      "Production database",
+      "New physical-device or cross-browser audibility claim",
+      "Full release gates"
+    ]
+  },
+  "sdd": {
+    "owner_checks": {
+      "path": "forge/runs/U-03/r22-table-tap-20260918/owner-checks.json",
+      "content_hash": "f5a25c7076a7a43dbbecd93009b6bb6cb89361bf87ae16903cb3650de0be3f5d"
+    },
+    "audit": {
+      "result": "passed",
+      "path": "forge/runs/U-03/r22-table-tap-20260918/audit.json",
+      "content_hash": "f0405688296e343ea0b161a7fd8a753d36f6ba617cd5d8007c237932c923bd4d"
+    },
+    "implementation-check": {
+      "result": "passed",
+      "path": "forge/runs/U-03/r22-table-tap-20260918/implementation-check.json",
+      "content_hash": "2f644544caed99de87ed22b4e3403ecf15699c1e0f3e4c824698cb6a2052a215"
+    }
+  }
+}

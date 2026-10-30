@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-09-18T01:17:00.589Z",
+  "asset": "public/sounds/table-taps-250ms-v5.wav",
+  "content_hash": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4",
+  "sample_rate": 48000,
+  "duration_seconds": 0.65,
+  "peak_intervals_ms": [
+    250,
+    250
+  ],
+  "clipped_samples": 0,
+  "silence_after_each_92_ms_tap": true
+}

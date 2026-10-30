@@ -1,0 +1,159 @@
+{
+  "candidate_id": "a",
+  "version": "v6",
+  "visual_target_hash": "97d31ce3ac00bbf35689d16e97196fe2eb0449ea85220e02bfb11af3f08d2ecb",
+  "prototype_tree_hash": "623805ce292fcc5db75e7f59c33f80d23e2afe81b69ed3f796b24078d9e01a93",
+  "preview_url": "http://127.0.0.1:4328/a/v6/",
+  "observed_at": "2026-09-13T20:33:52.359414+00:00",
+  "result": "passed",
+  "adapter": "cua_repl",
+  "target_reference": "forge/design/candidates/a/v6/index.html",
+  "source_capture_id": "a-v6-interactive-mockup",
+  "implementation_capture_id": "a-v6-safari-supplied-logo",
+  "environment": [
+    "Codex in-app browser",
+    "Safari"
+  ],
+  "scope": {
+    "journeys": [
+      "J-01",
+      "J-02",
+      "J-03",
+      "J-04",
+      "J-05",
+      "J-06",
+      "J-07"
+    ],
+    "screens": [
+      "S-01",
+      "S-02",
+      "S-03",
+      "S-04",
+      "S-05",
+      "S-06",
+      "S-07",
+      "S-08",
+      "S-09"
+    ],
+    "states": [
+      "ST-01",
+      "ST-02",
+      "ST-03",
+      "ST-04",
+      "ST-05",
+      "ST-06",
+      "ST-07",
+      "ST-08",
+      "ST-09",
+      "ST-10",
+      "ST-11",
+      "ST-12",
+      "ST-13",
+      "ST-14",
+      "ST-15",
+      "ST-16",
+      "ST-17",
+      "ST-18",
+      "ST-19",
+      "ST-20",
+      "ST-21",
+      "ST-22",
+      "ST-23",
+      "ST-24",
+      "ST-25",
+      "ST-26",
+      "ST-27",
+      "ST-28",
+      "ST-29",
+      "ST-30",
+      "ST-31",
+      "ST-32",
+      "ST-33",
+      "ST-34",
+      "ST-35",
+      "ST-36",
+      "ST-37",
+      "ST-38",
+      "ST-39",
+      "ST-40",
+      "ST-41",
+      "ST-42",
+      "ST-43",
+      "ST-44"
+    ],
+    "jobs": [
+      "JOB-001",
+      "JOB-002",
+      "JOB-003",
+      "JOB-004",
+      "JOB-005",
+      "JOB-006"
+    ],
+    "use_cases": [
+      "UC-001",
+      "UC-002",
+      "UC-003",
+      "UC-004",
+      "UC-005",
+      "UC-006",
+      "UC-007"
+    ],
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "working_language": "en",
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "fixture": "Fictional member-community mobile app versus better website discussion; eight full entries; W3C and MDN references; no fresh research timestamps."
+  },
+  "layout_observations": {
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "states": [
+      "ST-01",
+      "ST-10",
+      "ST-21"
+    ],
+    "count": 18,
+    "overflow": false,
+    "logo_loading": "All rendered brand images loaded with nonzero natural width."
+  },
+  "interactions_checked": [
+    "Selected sign-in, Discussion and Settings fixtures at all six widths."
+  ],
+  "visual_observations": [
+    "Light outline and yellow-to-red head details visible in Safari navigation.",
+    "Mobile sign-in screenshot inspected at 390px.",
+    "Standalone original charcoal-outline SVG inspected against white in the browser."
+  ],
+  "behaviour_delta": "app.js and styles.css are byte-identical to v5. HTML changes only the version label. Existing image references consume the replacement SVG.",
+  "source_logo": {
+    "path": "forge/design/evidence/nanoduck-supplied-logo.jpeg",
+    "content_hash": "4e4e83b85f1baaaa4bc1d680dce4a3df2c68e75e73edb8b1308dc751b8719629"
+  },
+  "prior_evidence": {
+    "path": "forge/design/evidence/a-v5-visual-qa.json",
+    "content_hash": "25dd46d3d0c59ab356f2e7fbfdfa7238aede63e4a60e7d64af6e8c99c53b31a4",
+    "scope": "Historical behavior evidence, not rerun."
+  },
+  "findings": [],
+  "limitations": [
+    "Manual vector reconstruction from the supplied 100px JPEG, not an original vector master or pixel-identical tracing.",
+    "Asset-only design revision. No backend, live authentication, recording, AI, research or deployment.",
+    "54 responsive observations cover three screens at six widths for each candidate; the full state/interaction suite was not rerun.",
+    "No representative-user or complete accessibility/security/performance claim. Screenshots inspected inline through CUA; no exported raster capture claimed."
+  ]
+}

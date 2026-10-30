@@ -99,6 +99,14 @@ test("real MySQL: isolation, long sources, encrypted usage, restart, deletion an
     const duplicateUrl = new URL(testUrl); duplicateUrl.pathname = `/${names[0]}`;
     const duplicate = await createMySqlStore(duplicateUrl.toString(), key, undefined, driver); stores.add(duplicate);
     assert.equal(await duplicate.acquireLeadership(), false, "One database has exactly one running app");
+    const grantSeed = Buffer.from(JSON.stringify({ auth_mode: "chatgpt", tokens: { access_token: "synthetic-access", refresh_token: "synthetic-initial" } }));
+    const grantRotated = Buffer.from(JSON.stringify({ auth_mode: "chatgpt", tokens: { access_token: "synthetic-access-2", refresh_token: "synthetic-rotated" } }));
+    await source.seedCodexGrant(grantSeed);
+    await source.saveCodexGrant(grantRotated, 1);
+    await source.seedCodexGrant(grantSeed);
+    const retainedGrant = await source.codexGrant();
+    assert.equal(retainedGrant.generation, 2);
+    assert.equal(JSON.parse(retainedGrant.bytes.toString()).tokens.refresh_token, "synthetic-rotated"); retainedGrant.bytes.fill(0);
     await initializeInstructions(source);
     const document = (await source.instructionDocuments()).find(d => d.name === "WORKING_CONTEXT.md");
     const contenders = await Promise.all([source.saveInstructionDocument(document.name, 1, "# Private synthetic plan\nLaunch a fictional bakery."), duplicate.saveInstructionDocument(document.name, 1, "# A conflicting plan\nAnother edit.")]);
@@ -118,6 +126,10 @@ test("real MySQL: isolation, long sources, encrypted usage, restart, deletion an
     assert.equal(JSON.stringify(runs).includes("WORKING_CONTEXT.md"), false);
     const [docs] = await admin.query("SELECT ciphertext FROM nanoduck_instruction_documents");
     assert.equal(JSON.stringify(docs).includes(selected.markdown), false);
+    const [grantRows] = await admin.query("SELECT ciphertext,seed_fingerprint,generation FROM nanoduck_provider_grants");
+    assert.equal(JSON.stringify(grantRows).includes("synthetic-initial"), false);
+    assert.equal(JSON.stringify(grantRows).includes("synthetic-rotated"), false);
+    assert.equal(Number(grantRows[0].generation), 2);
     assert.deepEqual((await source.run(conversation.id)).snapshot, { ...snapshot, requestMessageId: first.message.id });
     const codex = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/fake-codex.mjs", import.meta.url))] });
     const providerResponse = await codex.invoke({ assignment: "Exercise long source persistence", model: "gpt-6-sol", effort: "high", evidence: { owner: message.body, discussion: "" }, research: false, outputKind: "specialist_position", runtimeInstructions: testRuntimeInstructions, contextScope: first.run.id });
@@ -136,6 +148,10 @@ test("real MySQL: isolation, long sources, encrypted usage, restart, deletion an
     await source.close(); stores.delete(source);
     source = await createMySqlStore(urls[0], key, undefined, driver); stores.add(source);
     assert.equal(await source.acquireLeadership(), true, "The reopened store must reacquire its database lease");
+    const restartedGrant = await source.codexGrant();
+    assert.equal(restartedGrant.generation, 2);
+    assert.equal(JSON.parse(restartedGrant.bytes.toString()).tokens.refresh_token, "synthetic-rotated"); restartedGrant.bytes.fill(0);
+    grantSeed.fill(0); grantRotated.fill(0);
     await source.interruptUsage();
     const restartedUsage = await source.usageSummary(conversation.id);
     assert.equal(restartedUsage.total, 130);

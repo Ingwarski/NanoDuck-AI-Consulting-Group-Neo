@@ -1,0 +1,31 @@
+{
+  "candidate_id": "b",
+  "version": "v1",
+  "visual_target_hash": "31ed8e8dce5ca3967fc2283812b0cfc1fda246522c9c800113f14445e63e7791",
+  "prototype_tree_hash": "273a00720e355e96a2d7457051cd7495e7b19ac7de50062bf486962aab5ac85d",
+  "preview_url": "http://127.0.0.1:4328/b/v1/",
+  "observed_at": "2026-09-13T14:32:48.732192+00:00",
+  "observation_window": "2026-09-13, current design review; native Safari opens and screenshots followed by Settings interaction",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/b/v1/#discussion",
+    "http://127.0.0.1:4328/b/v1/#settings"
+  ],
+  "evidence": "Separate live Safari tab visibly opened, full role-labelled discussion and screenshot inspected, Settings clicked and model/reasoning selections verified in accessibility tree. Default browser was read from System Settings as Safari; no preference changed.",
+  "capture_reference": "ember-safari-discussion-current-review",
+  "capture_storage": "Inline CUA tool screenshot in the review conversation; no raster file was exported.",
+  "findings": [
+    {
+      "id": "B-VIS-01",
+      "description": "Two-line desktop hero reduced the visible discussion above the composer.",
+      "severity": "P1",
+      "release_effect": "blocking",
+      "status": "closed",
+      "resolution": "Compacted desktop topic and spacing, preserving mobile composition and decision rail; final 1280x720 observation: first message bottom 516.1640625, composer top 525.8515625; Safari screenshot confirms."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+base_revision=a6f5d47303a7fa785a588e036ad39636b99a5dff
+target_revision=7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+exact_range=a6f5d47303a7fa785a588e036ad39636b99a5dff..7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+command=git diff --check a6f5d47303a7fa785a588e036ad39636b99a5dff 7b3b4545e2b8c18f488ac667973a0c3ddf661ff3
+exit_code=0
+output=(none)
+result=passed

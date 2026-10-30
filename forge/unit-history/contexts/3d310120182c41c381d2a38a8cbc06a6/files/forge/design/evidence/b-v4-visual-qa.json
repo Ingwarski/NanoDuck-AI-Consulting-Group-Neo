@@ -1,0 +1,142 @@
+{
+  "candidate_id": "b",
+  "version": "v4",
+  "visual_target_hash": "8aef33ec6d4bfd92a83c74b51f9dfea21c4df67985bf72956217408cfb2e87fb",
+  "prototype_tree_hash": "a5ae48c17be5b6fc6c3858671b3e8b50a3f1499da45e8e0a981e411ced6f5e3c",
+  "preview_url": "http://127.0.0.1:4328/b/v4/",
+  "observed_at": "2026-09-13T20:12:56.193688+00:00",
+  "result": "passed",
+  "adapter": "cua_repl",
+  "target_reference": "forge/design/candidates/b/v4/index.html",
+  "source_capture_id": "b-v4-interactive-mockup",
+  "implementation_capture_id": "b-v4-safari-discussion-and-settings",
+  "environment": [
+    "Codex in-app browser",
+    "Native Safari"
+  ],
+  "scope": {
+    "journeys": [
+      "J-01",
+      "J-02",
+      "J-03",
+      "J-04",
+      "J-05",
+      "J-06",
+      "J-07"
+    ],
+    "screens": [
+      "S-01",
+      "S-02",
+      "S-03",
+      "S-04",
+      "S-05",
+      "S-06",
+      "S-07",
+      "S-08",
+      "S-09"
+    ],
+    "states": [
+      "ST-01",
+      "ST-02",
+      "ST-03",
+      "ST-04",
+      "ST-05",
+      "ST-06",
+      "ST-07",
+      "ST-08",
+      "ST-09",
+      "ST-10",
+      "ST-11",
+      "ST-12",
+      "ST-13",
+      "ST-14",
+      "ST-15",
+      "ST-16",
+      "ST-17",
+      "ST-18",
+      "ST-19",
+      "ST-20",
+      "ST-21",
+      "ST-22",
+      "ST-23",
+      "ST-24",
+      "ST-25",
+      "ST-26",
+      "ST-27",
+      "ST-28",
+      "ST-29",
+      "ST-30",
+      "ST-31",
+      "ST-32",
+      "ST-33",
+      "ST-34",
+      "ST-35",
+      "ST-36",
+      "ST-37",
+      "ST-38",
+      "ST-39",
+      "ST-40",
+      "ST-41",
+      "ST-42",
+      "ST-43",
+      "ST-44"
+    ],
+    "jobs": [
+      "JOB-001",
+      "JOB-002",
+      "JOB-003",
+      "JOB-004",
+      "JOB-005",
+      "JOB-006"
+    ],
+    "use_cases": [
+      "UC-001",
+      "UC-002",
+      "UC-003",
+      "UC-004",
+      "UC-005",
+      "UC-006",
+      "UC-007"
+    ],
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "working_language": "en",
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "fixture": "Fictional member-community mobile app versus better website discussion; eight full entries; W3C and MDN references; no fresh research timestamps."
+  },
+  "review_role": "unchosen comparison reference",
+  "layout_observations": {
+    "all_states": "All 44 states rendered at 320px without horizontal page overflow.",
+    "responsive": "Discussion and Settings at 320,390,430,768,1280,1440px, no page overflow. 168 final state/layout observations across the three records.",
+    "behaviour_source": "app.js byte-identical to v3; retained functionality and prior scoped observations are not relabelled as new end-to-end execution."
+  },
+  "interactions_checked": [
+    "Selected each state fixture and closed open dialogs with Escape between fixtures.",
+    "Opened this candidate in Safari and selected Settings; default models, reasoning and 24-hour session copy retained."
+  ],
+  "console_result": "No warning/error entries in final in-app walkthrough.",
+  "findings": [],
+  "limitations": [
+    "Styling-only design simulation; no production authentication, AI, research, microphone, database or deployment execution.",
+    "No representative-user task session, physical mobile keyboard, VoiceOver, full forced-colors rendering test or complete WCAG/security/performance evaluation.",
+    "All app.js files are byte-identical to v3. Prior behavioral observations retain their original scope and timestamps; the full interaction sequence was not rerun for this colour-only revision.",
+    "Screenshots were inspected inline through CUA; no raster export or production implementation capture is claimed."
+  ],
+  "prior_behaviour_evidence": {
+    "path": "forge/design/evidence/b-v3-visual-qa.json",
+    "content_hash": "f8d4315dcf1179fb7ae5583e1f74ecab9b6f78e90146d4a357b21597a69ba671",
+    "basis": {
+      "unchanged_app_js_sha256": "e0cc8f42267675184442bb05c6a208d3a0b034b0364fcd50b896e54e203db2a7"
+    },
+    "scope": "Supporting unchanged behavior only; current visual identity and layout observations are new."
+  }
+}

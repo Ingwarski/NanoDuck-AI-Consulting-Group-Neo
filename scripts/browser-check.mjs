@@ -129,7 +129,7 @@ async function verifyPrivacyLock(page, context, name) {
   assert.equal((await context.request.get(`${origin}/api/usage`)).status(), 401, `${name} usage is private after logoff`);
 }
 
-await writeFile(authPath, "{}", { mode: 0o600 });
+await writeFile(authPath, JSON.stringify({ auth_mode: "chatgpt", tokens: { access_token: "synthetic-access", refresh_token: "synthetic-refresh" } }), { mode: 0o600 });
 await chmod(fakeCodex, 0o755);
 let child;
 try {

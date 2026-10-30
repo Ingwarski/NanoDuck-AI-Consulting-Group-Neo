@@ -1,0 +1,48 @@
+{
+  "status": "owner_requested_sound_refinement",
+  "applied_to_app": true,
+  "source_page": "https://freesound.org/people/giddster/sounds/414460/",
+  "source_download": "https://cdn.freesound.org/previews/414/414460_1738686-hq.mp3",
+  "title": "Dropping ping pong ball on table",
+  "creator": "giddster",
+  "license": "CC0",
+  "source_sha256": "380fec20b4e6a289af202a5e64a9769c92ea0dcf06e471b4e610a0a82c652aa7",
+  "edit": "Keep the v2 dry, bright 40 ms impact; apply mild soft-knee compression and raise peak from 0.88 to 0.96 to make each tap more pronounced. Spacing, pitch, EQ and decay remain unchanged.",
+  "measurements": {
+    "sample_rate": 48000,
+    "channels": 1,
+    "duration_seconds": 0.59,
+    "tap_length_ms": 40,
+    "onset_interval_ms": 250,
+    "high_pass_hz": 850,
+    "treble_split_hz": 2800,
+    "treble_emphasis": "parallel high-frequency emphasis, 1.15 gain added above the split",
+    "decay_after_ms": 3.5,
+    "decay_time_constant_ms": 5.5,
+    "source_segment_seconds": [
+      0.3945,
+      0.4345
+    ],
+    "impact_emphasis": "mild tanh compression, drive 1.35; peak 0.96",
+    "peak_fraction": 0.96,
+    "clipped_samples": 0,
+    "pitch": "unchanged; no resampling"
+  },
+  "preview_sha256": "433bfd84f11cba34941526d970f222b10e154a68af26594e50e34e2aa1e8459c",
+  "script_sha256": "1990cdfdbd13bb8a3a69cdecae365f4c8e81510c0741f0e60cbfb302da70e719",
+  "owner_timbre_verdict": "V2 sound character accepted; owner requested slightly more emphasis.",
+  "pcm_verification": {
+    "peak_intervals_ms": [
+      250.0,
+      250.0
+    ],
+    "clipped_samples": 0,
+    "rms_gain_vs_v2_db": 3.0324774516006627,
+    "peak_fraction": 0.9599609375,
+    "silence_between_impacts": true
+  },
+  "supersedes_preview": "forge/exploration/message-sound-table-250ms-v2/preview.wav",
+  "owner_feedback_on_previous": "Yes! But a bit more pronounced.",
+  "application_asset": "public/sounds/table-taps-250ms.wav",
+  "deployment": "not_performed"
+}

@@ -1,0 +1,23 @@
+{
+  "event": "accepted_existing_sound_refinement",
+  "role": "user",
+  "message": "this is it.",
+  "preceding_request": "something in between with a tiny echo",
+  "recorded_at": "2026-09-18T01:13:25.320Z",
+  "time_basis": "Recorded from the active user message; original message delivery timestamp is unavailable.",
+  "scope": "Use the accepted v5 file for the existing Knock option in Settings Preview and incoming-message alerts.",
+  "candidate": {
+    "path": "forge/exploration/message-sound-table-250ms-v5/preview.wav",
+    "content_hash": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4"
+  },
+  "application_asset": {
+    "path": "public/sounds/table-taps-250ms-v5.wav",
+    "content_hash": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4"
+  },
+  "source_receipt": {
+    "path": "forge/exploration/message-sound-table-250ms-v5/source.json",
+    "content_hash": "6f700507f98b6ec595c4ef356e5ce2a5a6a3e8b516cfc4b246a75bd87ea7976b"
+  },
+  "earlier_receipts": "Exploration source.json files retain their original pre-acceptance status; this receipt records the later owner acceptance and application promotion.",
+  "hosting": "Not deployed by this correction."
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#6330e7">
+  <title>Prism · Personal AI Consulting Group · Design preview</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="navigation">
+    <button class="wordmark" data-page="discussion" aria-label="Consulting Group — Discussion"><span class="mark" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M4 24 14 4 24 24Z"/><path d="M14 4v20M4 24l15-10"/></svg></span><span>Consulting<br>Group</span></button>
+    <nav class="desktop-nav" aria-label="Main navigation"><button data-page="discussion" aria-current="page">Discussion</button><button data-page="history">Conversations</button><button data-page="settings">Settings</button><button class="nav-new" data-page="new"><span aria-hidden="true">＋</span> New</button></nav>
+    <button id="menu-button" class="menu-button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+  </header>
+  <div class="review-shell">
+    <p><strong>C / Prism</strong><span>Design preview · Fictional discussion · No live services</span></p>
+    <details class="review-details"><summary>Review states</summary><div class="review-controls"><label for="preview-state">Review state<select id="preview-state"></select></label><label for="preview-locale">Sample language<select id="preview-locale"><option value="en">English</option><option value="uk">Українська</option></select></label></div></details>
+  </div>
+  <main id="main" tabindex="-1">
+    <section id="workspace">
+      <div class="workspace-grid">
+        <aside class="topic-column">
+          <div class="eyebrow"><span class="little-square" aria-hidden="true"></span><span id="topic-kicker">Product decision</span></div>
+          <h1 id="topic-title">A better<br>mobile<br><span>experience.</span></h1>
+          <p id="topic-description">A native app or a better website?<br>One decision. Four perspectives.</p>
+          <div class="topic-rule"></div>
+          <p class="record-label" id="record-status">Complete · One assumption to test</p>
+          <div class="people" aria-label="Example participants"><span class="people-head">H</span><span>P</span><span>O</span><span class="people-critic">C</span><p>Head · Product<br>Operations · Critic</p></div>
+          <div class="topic-actions"><button data-action="replay">Replay example <span aria-hidden="true">↗</span></button><button data-action="record-options">Record actions <span aria-hidden="true">↗</span></button></div>
+          <p class="small-note">Your discussion, its evidence<br>and the decision it leads to.</p>
+        </aside>
+        <div class="reading-column">
+          <div class="view-tabs" role="tablist" aria-label="Conversation views"><button id="tab-discussion" role="tab" aria-controls="panel-discussion" aria-selected="true" data-view="discussion">Discussion <span id="message-count">8</span></button><button id="tab-outcome" role="tab" aria-controls="panel-outcome" aria-selected="false" tabindex="-1" data-view="outcome">Outcome</button><button id="tab-sources" role="tab" aria-controls="panel-sources" aria-selected="false" tabindex="-1" data-view="sources">Sources <span>2</span></button></div>
+          <div id="notice" class="notice" role="status" hidden></div>
+          <section id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion"><div id="thread"></div><div id="empty-discussion" hidden></div></section>
+          <section id="panel-outcome" role="tabpanel" aria-labelledby="tab-outcome" hidden></section>
+          <section id="panel-sources" role="tabpanel" aria-labelledby="tab-sources" hidden></section>
+          <form id="composer" class="composer">
+            <div id="run-controls" class="run-controls" hidden><span id="run-status">Playing the fictional discussion</span><button id="stop-button" type="button" data-action="stop">Stop</button><button id="continue-button" type="button" data-action="continue" hidden>Continue</button></div>
+            <label for="message" id="message-label">Add your perspective</label>
+            <textarea id="message" rows="2" placeholder="Add context, ask a question, challenge a claim…"></textarea>
+            <div id="attachments" class="attachments"></div>
+            <div class="composer-bottom"><div class="input-tools"><button type="button" class="icon-button" data-action="attach" aria-label="Attach image or PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 12 6-6a3.5 3.5 0 0 1 5 5l-8 8a5 5 0 0 1-7-7l8-8M8 12l-2 2a2 2 0 0 0 3 3l8-8"/></svg></button><button id="voice-button" type="button" class="voice-button" aria-label="Voice input"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg><span>Voice</span></button></div><button id="send-button" class="primary" type="submit">Send <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+            <p class="draft-status" id="draft-status">Sample only · Nothing is sent</p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section id="page-surface" hidden></section>
+  </main>
+  <input id="attachment-input" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" multiple hidden>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-header"><p class="eyebrow">Consulting Group</p><button class="icon-button" id="dialog-close" aria-label="Close dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><h2 id="dialog-title"></h2><div id="dialog-body"></div></dialog>
+  <dialog id="mobile-menu" aria-label="Main navigation"><div class="menu-heading"><strong>Menu</strong><button class="icon-button" data-action="close-menu" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><nav aria-label="Mobile navigation"><button data-page="discussion">Discussion <span aria-hidden="true">↗</span></button><button data-page="history">Conversations <span aria-hidden="true">↗</span></button><button data-page="settings">Settings <span aria-hidden="true">↗</span></button><button data-page="new">New conversation <span aria-hidden="true">＋</span></button></nav><p>Personal AI Consulting Group</p></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

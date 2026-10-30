@@ -1,0 +1,31 @@
+{
+  "candidate_id": "a",
+  "version": "v1",
+  "visual_target_hash": "6f4f3150b3522d9b9bc39a3117b7c1f041654a67caf7459cca4ddcff59922eaa",
+  "prototype_tree_hash": "f2fe67578b53fd6ca4ef71338e280e24e57c1e537af8c9fa3892bc94daa5355c",
+  "preview_url": "http://127.0.0.1:4328/a/v1/",
+  "observed_at": "2026-09-13T14:32:48.732192+00:00",
+  "observation_window": "2026-09-13, current design review; native Safari opens and screenshots followed by Settings interaction",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/a/v1/#discussion",
+    "http://127.0.0.1:4328/a/v1/#settings"
+  ],
+  "evidence": "Separate live Safari tab visibly opened, full role-labelled discussion and screenshot inspected, Settings clicked and model/reasoning selections verified in accessibility tree. Default browser was read from System Settings as Safari; no preference changed.",
+  "capture_reference": "cobalt-safari-discussion-current-review",
+  "capture_storage": "Inline CUA tool screenshot in the review conversation; no raster file was exported.",
+  "findings": [
+    {
+      "id": "A-VIS-01",
+      "description": "Oversized header hid the first message behind the composer at a short desktop viewport.",
+      "severity": "P1",
+      "release_effect": "blocking",
+      "status": "closed",
+      "resolution": "Compacted topic, context strip and review spacing; final 1280x720 observation: first message bottom 470.984375, composer top 521.703125; Safari screenshot shows full first message."
+    }
+  ]
+}

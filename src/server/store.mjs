@@ -8,6 +8,7 @@ import { normalizeUsageAttempt, summarizeUsage, usageWithSavedEffort } from "./u
 import { validateLocalState } from "./local-state.mjs";
 import { validateParallelTransition } from "./parallel-contract.mjs";
 import { maximumMessageBytes } from "./validation.mjs";
+import { createHash, hkdfSync } from "node:crypto";
 
 const defaults = Object.freeze({
   headModel: "gpt-6-astra",
@@ -52,6 +53,21 @@ const storedArray = (value, kind) => {
   return parsed;
 };
 
+const managedCodexGrant = value => {
+  if (!Buffer.isBuffer(value) || value.length === 0 || value.length > 64 * 1024) throw new Error("codex_grant_invalid");
+  let parsed;
+  try { parsed = JSON.parse(value.toString("utf8")); } catch { throw new Error("codex_grant_invalid"); }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed) || parsed.auth_mode !== "chatgpt" ||
+    !parsed.tokens || typeof parsed.tokens !== "object" || Array.isArray(parsed.tokens) ||
+    typeof parsed.tokens.access_token !== "string" || !parsed.tokens.access_token ||
+    typeof parsed.tokens.refresh_token !== "string" || !parsed.tokens.refresh_token) throw new Error("codex_grant_invalid");
+  return value;
+};
+const grantFingerprint = value => {
+  const { tokens } = JSON.parse(managedCodexGrant(value).toString("utf8"));
+  return createHash("sha256").update("chatgpt\0").update(tokens.refresh_token).digest("hex");
+};
+
 export function createMemoryStore(initialState = undefined) {
   const conversations = new Map();
   const usage = new Map();
@@ -64,6 +80,7 @@ export function createMemoryStore(initialState = undefined) {
   let settings = { ...defaults };
   let runtimeInstructions;
   const runtimeInstructionHistory = new Map();
+  let codexGrant;
 
   const runtimeVersion = (contract, action, restoredFromId = null) => {
     const createdAt = now();
@@ -128,6 +145,28 @@ export function createMemoryStore(initialState = undefined) {
         return { conversationId: item.id, hasMessages: owners.length > 0, activity: work ? { consultants: work.assignments.length, reviewRounds: work.rounds.length, correctionOrders: work.orders.length, partial: owners.some(owner => !work.ownerMessageIds.includes(owner.id)) } : null,
           usage: (usage.get(item.id) ?? []).map(attempt => usageWithSavedEffort(attempt, snapshot, owners)) };
       }));
+    },
+    async seedCodexGrant(bytes) {
+      if (!bytes) return false;
+      const seed = Buffer.from(bytes);
+      try {
+        managedCodexGrant(seed);
+        const fingerprint = grantFingerprint(seed);
+        if (!codexGrant || codexGrant.seedFingerprint !== fingerprint) {
+          codexGrant?.bytes.fill(0);
+          codexGrant = { bytes: seed, seedFingerprint: fingerprint, generation: (codexGrant?.generation ?? 0) + 1 };
+        } else seed.fill(0);
+        return true;
+      } catch (error) { seed.fill(0); throw error; }
+    },
+    async codexGrant() { return codexGrant ? { bytes: Buffer.from(codexGrant.bytes), generation: codexGrant.generation } : undefined; },
+    async saveCodexGrant(bytes, generation) {
+      managedCodexGrant(bytes);
+      if (!codexGrant || codexGrant.generation !== generation) throw new Error("codex_grant_conflict");
+      const next = Buffer.from(bytes);
+      codexGrant.bytes.fill(0);
+      codexGrant = { ...codexGrant, bytes: next, generation: generation + 1 };
+      return codexGrant.generation;
     },
     async createSession(input) { sessions.set(input.id, { ...input }); return { ...input }; },
     async session(id) { const item = sessions.get(id); return item ? { ...item } : undefined; },
@@ -316,6 +355,7 @@ export async function createMySqlStore(databaseUrl, dataKey, databaseSsl = { rej
   const { createPool } = driver ?? await import("mysql2/promise");
   const pool = createPool({ uri: databaseUrl, ssl: mutableDatabaseSsl, connectionLimit: 8, waitForConnections: true, queueLimit: 32, connectTimeout: 10_000 });
   const query = (statement, values = []) => pool.execute(statement, values);
+  const grantKey = Buffer.from(hkdfSync("sha256", dataKey, Buffer.alloc(0), "nanoduck/codex-grant/v1", 32));
   const runtimeDocument = row => Object.freeze({ markdown: decryptText({ iv: row.iv, ciphertext: row.ciphertext, tag: row.tag }, dataKey), revision: row.revision, contentHash: row.content_hash, updatedAt: row.updated_at });
   const runtimeHistorySummary = row => Object.freeze({ id: row.id, contentHash: row.content_hash, action: row.action, restoredFromId: row.restored_from_id, createdAt: row.created_at });
   const nextRuntimeRecord = (contract, action, restoredFromId = null) => {
@@ -371,6 +411,18 @@ export async function createMySqlStore(databaseUrl, dataKey, databaseSsl = { rej
     leadershipLost(safeDatabaseErrorCode(error), safeDatabaseErrorNumber(error));
   };
   const lockName = databaseLockName(databaseUrl);
+  const requireGrantLeadership = () => {
+    if (!leadership || leadershipFailed || closed) throw new Error("codex_grant_leadership_required");
+    return leadership;
+  };
+  const confirmGrantLeadership = async connection => {
+    if (connection !== requireGrantLeadership()) throw new Error("codex_grant_leadership_required");
+    const [rows] = await connection.execute({ sql: "SELECT IS_USED_LOCK(?) = CONNECTION_ID() AS owned", timeout: 10_000 }, [lockName]);
+    if (connection !== leadership || Number(rows[0]?.owned) !== 1) {
+      if (connection === leadership) loseLeadership(connection, { code: "LEADERSHIP_OWNERSHIP_LOST" });
+      throw new Error("codex_grant_leadership_required");
+    }
+  };
   const scheduleHeartbeat = (connection, intervalMs) => {
     if (leadership !== connection) return;
     heartbeatTimer = timers.setTimeout(() => {
@@ -464,6 +516,52 @@ export async function createMySqlStore(databaseUrl, dataKey, databaseSsl = { rej
           usage: usageRows.map(decodeUsage).map(attempt => usageWithSavedEffort(attempt, snapshot, owners)) });
       }
       return summarizeUsage(entries);
+    },
+    async seedCodexGrant(bytes) {
+      const connection = requireGrantLeadership();
+      if (!bytes) return false;
+      const seed = Buffer.from(bytes);
+      try {
+        managedCodexGrant(seed);
+        const fingerprint = grantFingerprint(seed);
+        await connection.beginTransaction();
+        await confirmGrantLeadership(connection);
+        const [rows] = await connection.execute("SELECT generation,seed_fingerprint FROM nanoduck_provider_grants WHERE provider_id='codex' FOR UPDATE");
+        if (!rows.length || rows[0].seed_fingerprint !== fingerprint) {
+          const encrypted = encryptBytes(seed, grantKey);
+          if (!rows.length) await connection.execute("INSERT INTO nanoduck_provider_grants (provider_id,ciphertext,iv,tag,seed_fingerprint,generation,updated_at) VALUES ('codex',?,?,?,?,1,?)", [encrypted.ciphertext, encrypted.iv, encrypted.tag, fingerprint, now()]);
+          else await connection.execute("UPDATE nanoduck_provider_grants SET ciphertext=?,iv=?,tag=?,seed_fingerprint=?,generation=generation+1,updated_at=? WHERE provider_id='codex'", [encrypted.ciphertext, encrypted.iv, encrypted.tag, fingerprint, now()]);
+        }
+        await connection.commit();
+        if (connection !== leadership) throw new Error("codex_grant_leadership_required");
+        return true;
+      } catch (error) { await connection?.rollback().catch(() => {}); throw error; }
+      finally { seed.fill(0); }
+    },
+    async codexGrant() {
+      const connection = requireGrantLeadership();
+      await confirmGrantLeadership(connection);
+      const [rows] = await connection.execute("SELECT ciphertext,iv,tag,generation FROM nanoduck_provider_grants WHERE provider_id='codex' LIMIT 1");
+      if (connection !== leadership) throw new Error("codex_grant_leadership_required");
+      if (!rows.length) return undefined;
+      const bytes = decryptBytes({ ciphertext: rows[0].ciphertext, iv: rows[0].iv, tag: rows[0].tag }, grantKey);
+      try {
+        managedCodexGrant(bytes);
+        const generation = Number(rows[0].generation);
+        if (!Number.isSafeInteger(generation) || generation < 1) throw new Error("codex_grant_invalid");
+        return { bytes, generation };
+      } catch (error) { bytes.fill(0); throw error; }
+    },
+    async saveCodexGrant(bytes, generation) {
+      const connection = requireGrantLeadership();
+      managedCodexGrant(bytes);
+      if (!Number.isSafeInteger(generation) || generation < 1) throw new Error("codex_grant_conflict");
+      await confirmGrantLeadership(connection);
+      const encrypted = encryptBytes(bytes, grantKey);
+      const [result] = await connection.execute("UPDATE nanoduck_provider_grants SET ciphertext=?,iv=?,tag=?,generation=generation+1,updated_at=? WHERE provider_id='codex' AND generation=?", [encrypted.ciphertext, encrypted.iv, encrypted.tag, now(), generation]);
+      if (connection !== leadership) throw new Error("codex_grant_leadership_required");
+      if (result.affectedRows !== 1) throw new Error("codex_grant_conflict");
+      return generation + 1;
     },
     async createSession(input) { await query("INSERT INTO nanoduck_sessions (id,owner_subject,csrf_token,consented_at,issued_at,expires_at) VALUES (?,?,?,?,?,?)", [input.id,input.ownerSubject,input.csrfToken,input.consentedAt ?? null,input.issuedAt,input.expiresAt]); return { ...input, revokedAt: null }; },
     async session(id) { const [rows] = await query("SELECT id,owner_subject,csrf_token,consented_at,issued_at,expires_at,revoked_at FROM nanoduck_sessions WHERE id=? LIMIT 1", [id]); return rows.length ? { id: rows[0].id, ownerSubject: rows[0].owner_subject, csrfToken: rows[0].csrf_token, consentedAt: rows[0].consented_at, issuedAt: rows[0].issued_at, expiresAt: rows[0].expires_at, revokedAt: rows[0].revoked_at } : undefined; },
@@ -826,7 +924,8 @@ export async function createMySqlStore(databaseUrl, dataKey, databaseSsl = { rej
           catch { connection.destroy(); }
         }
       }
-      await pool.end();
+      try { await pool.end(); }
+      finally { grantKey.fill(0); }
     }
   });
 }

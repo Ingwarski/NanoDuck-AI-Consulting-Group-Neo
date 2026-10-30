@@ -1,0 +1,32 @@
+{
+  "source_url": "https://space.nurdspace.nl/~buzz/maemo/Nokia_Ringtones_Opendir_mirror/N73/Message%202.aac",
+  "source_sha256": "34bd49ac7439a7a1a7caac09a5b01303e40780c308df298856b815009cc1e233",
+  "source_name": "Nokia N73 Message 2",
+  "attribution": "Nokia; recording preserved by the NURDspace ringtone archive. This is an edited recording, not a claim of an unmodified original or an open license.",
+  "decode": "macOS afconvert to 16-bit PCM at the decoded 44100 Hz rate",
+  "source_segments_seconds": [
+    [
+      0.235,
+      0.515,
+      0
+    ],
+    [
+      0.515,
+      0.795,
+      0.14
+    ],
+    [
+      0.795,
+      1.4,
+      0.28
+    ]
+  ],
+  "edit": "Trim leading silence; overlap three original recorded taps at 0, 0.14 and 0.28 seconds; 1 ms entry and 15 ms exit fades; normalize only to avoid clipping. No resampling or pitch change.",
+  "asset_path": "public/sounds/nokia-three-knocks-quick.wav",
+  "asset_sha256": "c593d959457a011f63f85cedcc2c42efe503b0b13fa1d0a44f3aab1746c9268a",
+  "channels": 2,
+  "sample_rate": 44100,
+  "duration_seconds": 0.8849886621315193,
+  "peak_fraction": 0.8999908444471572,
+  "owner_listening_verification": "pending"
+}

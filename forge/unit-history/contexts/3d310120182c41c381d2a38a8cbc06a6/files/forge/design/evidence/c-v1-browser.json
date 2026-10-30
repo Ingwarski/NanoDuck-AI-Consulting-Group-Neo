@@ -1,0 +1,39 @@
+{
+  "candidate_id": "c",
+  "version": "v1",
+  "visual_target_hash": "b6288e3626542d97d7b9cb27f67783d0d6b2d5c5ea13560553d3c228336c8c7b",
+  "prototype_tree_hash": "5f53352090e12c18d0d08d8cc9cc35aff0bae1d4628f10053827732e292c1dfc",
+  "preview_url": "http://127.0.0.1:4328/c/v1/",
+  "observed_at": "2026-09-13T14:32:48.732192+00:00",
+  "observation_window": "2026-09-13, current design review; native Safari opens and screenshots followed by Settings interaction",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/c/v1/#discussion",
+    "http://127.0.0.1:4328/c/v1/#settings"
+  ],
+  "evidence": "Separate live Safari tab visibly opened, full role-labelled discussion and screenshot inspected, Settings clicked and model/reasoning selections verified in accessibility tree. Default browser was read from System Settings as Safari; no preference changed.",
+  "capture_reference": "prism-safari-discussion-current-review",
+  "capture_storage": "Inline CUA tool screenshot in the review conversation; no raster file was exported.",
+  "findings": [
+    {
+      "id": "C-UX-01",
+      "description": "Use transcript returned focus to the microphone instead of the editable composer.",
+      "severity": "P2",
+      "release_effect": "blocking",
+      "status": "closed",
+      "resolution": "Dialog return target now points to message; browser recheck confirmed focus=message and transcript retained."
+    },
+    {
+      "id": "C-VIS-01",
+      "description": "Always-visible review selectors competed with the mobile discussion.",
+      "severity": "P3",
+      "release_effect": "advisory",
+      "status": "closed",
+      "resolution": "Moved review selectors into native collapsed Review states disclosure."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "candidate_id": "b",
+  "version": "v3",
+  "visual_target_hash": "45b25271474a50a77b27678b9db322b8ce2a67960f4dee4e6be3bc1ebb2cd411",
+  "prototype_tree_hash": "ff7c3fb17a41a6220e79b7eee09e46e761f1a52e676503ef8d817cb465324d38",
+  "preview_url": "http://127.0.0.1:4328/b/v3/",
+  "observed_at": "2026-09-13T19:18:04.641864+00:00",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/b/v3/#discussion",
+    "http://127.0.0.1:4328/b/v3/#settings"
+  ],
+  "evidence": "Reused a separate existing design tab for this v3 URL. Final Discussion and Settings screenshots inspected after the select-size correction. Role-labelled eight-entry discussion, black surfaces, workspace New, no inspection controls, visible Send and model defaults observed.",
+  "capture_reference": "solar-v3-safari-discussion-and-settings",
+  "capture_storage": "Inline CUA screenshots and accessibility observations in the current review conversation. Frozen local HTML/CSS/JS is the durable target; no raster export claimed.",
+  "findings": [
+    {
+      "id": "HYBRID-VIS-01",
+      "severity": "P2",
+      "release_effect": "blocking",
+      "status": "closed",
+      "description": "Safari native model selects ignored the intended comfortable control height.",
+      "resolution": "Retained native select semantics with explicit appearance and CSS chevrons. Final Safari Settings screenshots inspected for all three candidates; final Chromium select height 46.796875px."
+    }
+  ]
+}

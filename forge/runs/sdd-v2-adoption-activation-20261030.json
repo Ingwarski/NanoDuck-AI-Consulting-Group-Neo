@@ -1,0 +1,91 @@
+{
+  "status": "activated",
+  "journal_ref": {
+    "path": "forge/unit-history/activations/f1dc30d5cd5845eea34ff3d817f3c710/record.json",
+    "content_hash": "27e3e397d4734cf9fb5fa0e4085049effc93d4f1b5b3ebd935e8600afaca1b6e"
+  },
+  "manifest_hash": "c2640ddb6ffc6db7df0fd2b9cbbc4337fde31e18f6a79c3198f59fda6460a5dd",
+  "report": {
+    "result": "migration_ready",
+    "project_validation": {
+      "result": "blocked",
+      "node": "development-plan",
+      "mode": "after",
+      "unit_action": null,
+      "unit_id": null,
+      "skipped_artifacts": [],
+      "checked_artifacts": [
+        "architecture",
+        "canonical-terms",
+        "design-brief",
+        "development-plan",
+        "dod-evals",
+        "guardrails",
+        "prd",
+        "product-idea",
+        "project-context",
+        "qa-checklist",
+        "screen-map",
+        "user-journey",
+        "wireframes"
+      ],
+      "affected_artifacts": [
+        "development-plan",
+        "product-idea"
+      ],
+      "issues": [
+        {
+          "code": "unit_contract",
+          "target": "development-plan",
+          "detail": "'unit_plan'"
+        },
+        {
+          "code": "intake_progress",
+          "target": "product-idea",
+          "detail": "missing/changed hash: docs/product-idea.md"
+        },
+        {
+          "code": "stale_progress",
+          "target": "manifest",
+          "detail": "next_ready_nodes differs from current gates; run --progress and reconcile the projection"
+        }
+      ],
+      "warnings": [],
+      "implementation_progress": {
+        "total_units": null,
+        "accepted_complete": null,
+        "accepted_unit_ids": null,
+        "just_worked_unit": null,
+        "next_eligible_unit": null,
+        "blockers": [
+          {
+            "code": "unit_contract",
+            "target": "development-plan",
+            "detail": "'unit_plan'"
+          },
+          {
+            "code": "intake_progress",
+            "target": "product-idea",
+            "detail": "missing/changed hash: docs/product-idea.md"
+          },
+          {
+            "code": "stale_progress",
+            "target": "manifest",
+            "detail": "next_ready_nodes differs from current gates; run --progress and reconcile the projection"
+          }
+        ],
+        "blocked_units": []
+      },
+      "unit_history": {
+        "units": {}
+      },
+      "execution_authority": {
+        "status": "authorized",
+        "issues": [],
+        "scope": "current implementation prompt only; prerequisites, evidence and release gates remain separate"
+      },
+      "limits": "Checks declared metadata, file integrity, stages and evidence references; not semantic quality, research authenticity or runner enforcement."
+    },
+    "limits": "Exact format conversion only; unresolved project checks still block affected work. No product acceptance or permission granted."
+  }
+}

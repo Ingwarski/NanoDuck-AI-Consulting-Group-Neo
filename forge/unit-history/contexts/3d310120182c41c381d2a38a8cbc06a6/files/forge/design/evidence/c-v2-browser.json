@@ -1,0 +1,20 @@
+{
+  "candidate_id": "c",
+  "version": "v2",
+  "visual_target_hash": "b6288e3626542d97d7b9cb27f67783d0d6b2d5c5ea13560553d3c228336c8c7b",
+  "prototype_tree_hash": "5f53352090e12c18d0d08d8cc9cc35aff0bae1d4628f10053827732e292c1dfc",
+  "preview_url": "http://127.0.0.1:4328/c/v2/",
+  "observed_at": "2026-09-13T14:54:56.994732+00:00",
+  "result": "blocked",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": false,
+  "reason": "Mac locked; native-app tool could not inspect Safari. User was asked to unlock; no completed v2 Safari observation is claimed.",
+  "required_action": "Unlock the Mac, reuse the existing three Safari review tabs for their matching v2 URLs, inspect actual rendering, then record successful receipts.",
+  "prior_version_browser_receipt": {
+    "path": "forge/design/evidence/c-v1-browser.json",
+    "content_hash": "61d81d81b2c5940a14f61c934edb13d4b176411de9fa6c048e7fc08062f22d88",
+    "scope": "Historical v1 only; not relabelled as a v2 open."
+  }
+}

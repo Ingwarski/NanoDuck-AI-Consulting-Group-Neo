@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "logical_name": "combined-updates-after-review-port.md",
+  "sha256": "2434d398d33b73a254ad0f797e6f6e4a4c28fb1806879b3cf98e8e51b55d2625",
+  "reference_repository": "Ingwarski/NanoDuck-AI-Consulting",
+  "reference_final_commit": "2c50cd6",
+  "reference_update_range": "0198d84..2c50cd6",
+  "authority": "User-supplied implementation attachment for this run",
+  "consumed_sections": [
+    "Preamble and target-preservation constraints",
+    "A. Markdown tables and native RTF tables",
+    "B. Reading mode and boundary-aware chat arrows",
+    "C. Request isolation and context/cache economy",
+    "D. Research execution, reusable evidence and complete provider accounting",
+    "U-12 follow-up: Critic cache and complete reported usage",
+    "Upstream Codex accounting verification",
+    "E. Attributed Usage dashboard, reasoning and activity counts",
+    "Reasoning attribution follow-up",
+    "Activity counts follow-up",
+    "F. Final liquid-glass navigation, including the verified fixes",
+    "Final verification, documentation and delivery"
+  ],
+  "storage_note": "The input location is intentionally not recorded. This receipt stores only repository-neutral provenance and the supplied content digest."
+}

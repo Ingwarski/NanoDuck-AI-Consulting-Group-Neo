@@ -1,0 +1,156 @@
+{
+  "candidate_id": "a",
+  "version": "v1",
+  "visual_target_hash": "6f4f3150b3522d9b9bc39a3117b7c1f041654a67caf7459cca4ddcff59922eaa",
+  "prototype_tree_hash": "f2fe67578b53fd6ca4ef71338e280e24e57c1e537af8c9fa3892bc94daa5355c",
+  "preview_url": "http://127.0.0.1:4328/a/v1/",
+  "observed_at": "2026-09-13T14:32:48.732192+00:00",
+  "result": "passed",
+  "adapter": "cua_repl",
+  "environment": [
+    "Codex in-app browser for responsive and DOM interaction tests",
+    "Native Safari for visible desktop review"
+  ],
+  "target_reference": "forge/design/candidates/a/v1/index.html",
+  "source_capture_id": "a-v1-interactive-mockup",
+  "implementation_capture_id": "cobalt-safari-discussion-current-review",
+  "capture_storage": "Immutable local HTML/CSS/JS target plus inline browser screenshot observations; no production implementation capture.",
+  "scope": {
+    "journeys": [
+      "J-01",
+      "J-02",
+      "J-03",
+      "J-04",
+      "J-05",
+      "J-06",
+      "J-07"
+    ],
+    "screens": [
+      "S-01",
+      "S-02",
+      "S-03",
+      "S-04",
+      "S-05",
+      "S-06",
+      "S-07",
+      "S-08",
+      "S-09"
+    ],
+    "states": [
+      "ST-01",
+      "ST-02",
+      "ST-03",
+      "ST-04",
+      "ST-05",
+      "ST-06",
+      "ST-07",
+      "ST-08",
+      "ST-09",
+      "ST-10",
+      "ST-11",
+      "ST-12",
+      "ST-13",
+      "ST-14",
+      "ST-15",
+      "ST-16",
+      "ST-17",
+      "ST-18",
+      "ST-19",
+      "ST-20",
+      "ST-21",
+      "ST-22",
+      "ST-23",
+      "ST-24",
+      "ST-25",
+      "ST-26",
+      "ST-27",
+      "ST-28",
+      "ST-29",
+      "ST-30",
+      "ST-31",
+      "ST-32",
+      "ST-33",
+      "ST-34",
+      "ST-35",
+      "ST-36",
+      "ST-37",
+      "ST-38",
+      "ST-39",
+      "ST-40",
+      "ST-41",
+      "ST-42",
+      "ST-43",
+      "ST-44"
+    ],
+    "jobs": [
+      "JOB-001",
+      "JOB-002",
+      "JOB-003",
+      "JOB-004",
+      "JOB-005",
+      "JOB-006"
+    ],
+    "use_cases": [
+      "UC-001",
+      "UC-002",
+      "UC-003",
+      "UC-004",
+      "UC-005",
+      "UC-006",
+      "UC-007"
+    ],
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "working_language": "en",
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "fixture": "Fictional member-community mobile app versus better website discussion; eight full entries; W3C and MDN references; no fresh research timestamps."
+  },
+  "theme": "Cobalt",
+  "layout_observations": {
+    "all_44_states_at_320px": "No horizontal page overflow",
+    "discussion_and_settings_at_six_widths": "Measured scrollWidth equals viewport width for both states at 320,390,430,768,1280,1440",
+    "primary_send_height": "44px or greater",
+    "composer_font": "16px",
+    "desktop_compaction": "A/B first complete user message fits above composer at 1280x720; C uses a separate topic column"
+  },
+  "interactions_checked": [
+    "All 44 state-selector options resolved to their expected surfaces; dialogs closed through Escape between states",
+    "Mobile hamburger opens, Settings selected, menu closes",
+    "Initial Astra/xhigh consultant and Astra/ultra Critic selections",
+    "Changing Critic to GPT-5.5 makes unsupported ultra an empty required choice and disables Save; selecting high enables Save",
+    "Save preserves new next-sample selection; Cancel restores saved choices; active example remains Astra",
+    "Voice permission explanation, Start recording, Stop, transcribing, editable transcript, Use transcript; existing typed draft preserved and no automatic Send",
+    "Distinct offline, provider authorization, usage, research and system-error notices preserve draft",
+    "Consent initially unchecked and workspace button disabled; checking consent enables simulated entry",
+    "Source detail shows direct reference, supported claim and limit; Escape returns focus to source control",
+    "Active discussion Stop exposes Continue and retains displayed contributions",
+    "English and Ukrainian discussion fixtures rendered",
+    "Delete confirmation identifies fictional record; cancellation is available; deleted-state fixture resolves to empty history",
+    "Export-ready and export-error review states rendered; export payload generation inspected in source"
+  ],
+  "console_result": "No warning or error entries in final active-tab walkthrough across all three current candidates.",
+  "findings": [
+    {
+      "id": "A-VIS-01",
+      "description": "Oversized header hid the first message behind the composer at a short desktop viewport.",
+      "severity": "P1",
+      "release_effect": "blocking",
+      "status": "closed",
+      "resolution": "Compacted topic, context strip and review spacing; final 1280x720 observation: first message bottom 470.984375, composer top 521.703125; Safari screenshot shows full first message."
+    }
+  ],
+  "limitations": [
+    "Visual and functional observations apply to design simulations only.",
+    "No representative-user session, VoiceOver audit, physical mobile keyboard test, Firefox/Edge run, full Ukrainian interface localization, production security or performance result.",
+    "No provider execution, live research, microphone capture, auth, persistence, cross-device behavior, deployment or database operation."
+  ]
+}

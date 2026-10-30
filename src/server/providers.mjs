@@ -2,10 +2,11 @@ import { cachedAllowance } from "./account-usage.mjs";
 import { createClaudeProvider } from "./claude-provider.mjs";
 import { createCodexProvider } from "./codex-provider.mjs";
 
-export function createProviders(config) {
-  const codex = createCodexProvider(config); const claude = createClaudeProvider(config);
+export function createProviders(config, store = undefined) {
+  const codex = createCodexProvider(config, undefined, store); const claude = createClaudeProvider(config);
   const readCodexAllowance = cachedAllowance(() => codex.accountUsage());
   return Object.freeze({
+    close: () => codex.close(),
     async accountUsage() {
       return { codex: await readCodexAllowance(), claude_code: { status: "external", checkedAt: null, windows: [], url: "https://claude.ai/settings/usage" } };
     },

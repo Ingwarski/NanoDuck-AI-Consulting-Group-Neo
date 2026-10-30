@@ -1,0 +1,34 @@
+# Production values belong in the host's runtime secret store, never in Git.
+NANODUCK_RUNTIME_MODE=production
+# Use the exact public HTTPS origin assigned to the edge proxy.
+APP_ORIGIN=https://nanoduck.example.workers.dev
+# Optional shared secret required on every non-health request when an edge proxy is used.
+EDGE_PROXY_KEY=base64url-encoded-32-byte-key
+PORT=3000
+# Provide all five DB_* values below, or use the complete DATABASE_URL alternative.
+# DATABASE_URL=mysql://user:password@host:3306/nanoduck
+DB_HOST=mysql.internal
+DB_PORT=3306
+DB_NAME=nanoduck
+DB_USER=nanoduck
+DB_PASSWORD=database-password
+# Set exactly one CA source only when MySQL does not chain to the system trust store.
+# Base64url is preferred for Northflank; a mounted secret file remains supported elsewhere.
+DATABASE_SSL_CA_B64=base64url-encoded-ca-pem
+# DATABASE_SSL_CA_PATH=/run/secrets/northflank-mysql-ca.pem
+DATA_ENCRYPTION_KEY=base64url-encoded-32-byte-key
+RECOVERY_ENCRYPTION_KEY=different-base64url-encoded-32-byte-key
+SESSION_SIGNING_KEY=base64url-encoded-32-byte-key
+# Pin the owner by stable Google subject where available, or by verified email.
+OWNER_GOOGLE_SUBJECT=google-subject-id
+OWNER_GOOGLE_EMAIL=owner@example.com
+GOOGLE_CLIENT_ID=google-oauth-client-id
+GOOGLE_CLIENT_SECRET=google-oauth-client-secret
+# Northflank runtime variables avoid root-owned mounted-file permission mismatches.
+# Set exactly one Codex auth source; gzip/base64url is preferred for Northflank.
+CODEX_APP_SERVER_AUTH_GZIP_B64=base64url-encoded-gzip-codex-auth-json
+# Optional Claude Critic access. Omit both values to keep Claude disabled.
+CLAUDE_CODE_OAUTH_TOKEN=claude-oauth-token
+CLAUDE_CODE_MODEL_CANDIDATES=claude-opus-5
+SESSION_ABSOLUTE_SECONDS=86400
+MAX_ATTACHMENT_BYTES=8388608

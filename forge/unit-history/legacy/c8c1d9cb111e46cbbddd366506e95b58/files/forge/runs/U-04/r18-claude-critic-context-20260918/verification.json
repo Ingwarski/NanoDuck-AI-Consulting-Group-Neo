@@ -1,0 +1,57 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-18T02:42:28+03:00",
+  "scope": "Repair the Claude Code Critic adapter so it receives required consultation context and cannot expose an internal Claude Code tool trace as a discussion message.",
+  "implementation_prompt": {
+    "path": "forge/runs/implementation-prompt-20260918-r18-claude-critic-context.json",
+    "content_hash": "7c60fb4aeb32259c9b88ea44f5363648077a525931de6521cda3b77f30ac13ec"
+  },
+  "implementation": {
+    "claude_context": [
+      "assignment",
+      "owner question",
+      "prior confirmed discussion",
+      "role/output contract",
+      "global output policy"
+    ],
+    "direct_claude_research": "disabled by the coordinator",
+    "tool_boundary": [
+      "documented Claude Code --disallowedTools deny list",
+      "dontAsk permission mode",
+      "one maximum turn",
+      "text-only system prompt"
+    ],
+    "output_boundary": "Adapter detects invocation/transcript syntax, retries once with a text-only correction, and returns no visible output after a second trace. The coordinator also rejects a trace before appendAgentMessage.",
+    "models_and_effort": "Settings vocabulary and CLI mapping remain Opus 5 -> opus and Extra -> xhigh."
+  },
+  "verification": {
+    "automated": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 119,
+      "coverage": [
+        "Claude prompt includes owner question and prior confirmed discussion",
+        "Claude tool denial, text-only prompt and one-turn cap",
+        "first tool trace retries as natural language",
+        "second trace is rejected",
+        "coordinator never commits a provider tool trace",
+        "Claude Critic has direct research disabled"
+      ]
+    },
+    "native_claude_cli": {
+      "result": "not_run",
+      "reason": "The locally installed Claude Code package reports that its native binary is not installed. No live provider call or credentials were used for this repair."
+    },
+    "browser": {
+      "result": "not_applicable",
+      "reason": "The correction is at the provider/coordinator boundary. The local native Claude CLI is unavailable, so browser interaction cannot produce a real Claude Critic turn without a provider call."
+    },
+    "excluded": [
+      "GoDaddy Preview or Published deployment",
+      "GoDaddy database or secret changes",
+      "hosted conversation deletion or rewriting",
+      "Google OAuth verification",
+      "full release-gate execution"
+    ]
+  }
+}

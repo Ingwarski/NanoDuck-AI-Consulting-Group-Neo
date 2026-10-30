@@ -535,7 +535,9 @@ test("development cookies remain usable on localhost while production uses host-
   const compressedAuth = gzipSync(Buffer.from('{"test":"owned-auth-state"}', "utf8")).toString("base64url");
   assert.deepEqual(loadConfig({ ...productionEnvironment, CODEX_APP_SERVER_AUTH_PATH: "", CODEX_APP_SERVER_AUTH_GZIP_B64: compressedAuth }).codexAuthBytes, Buffer.from('{"test":"owned-auth-state"}'));
   assert.throws(() => loadConfig({ ...productionEnvironment, CODEX_APP_SERVER_AUTH_B64: encodedAuth, CODEX_APP_SERVER_AUTH_GZIP_B64: compressedAuth }), /only one Codex app-server auth secret/u);
+  assert.throws(() => loadConfig({ ...productionEnvironment, CODEX_APP_SERVER_AUTH_B64: encodedAuth }), /only one Codex app-server auth secret/u);
   assert.throws(() => loadConfig({ ...productionEnvironment, CODEX_APP_SERVER_AUTH_PATH: "", CODEX_APP_SERVER_AUTH_B64: "not+base64url" }), /base64url/u);
+  assert.throws(() => loadConfig({ ...productionEnvironment, CODEX_APP_SERVER_AUTH_PATH: "", CODEX_APP_SERVER_AUTH_B64: Buffer.alloc(64 * 1024 + 1).toString("base64url") }), /64 KiB/u);
   assert.equal(loadConfig({ ...productionEnvironment, RUNTIME_INSTRUCTIONS_BOOTSTRAP_B64: "obsolete" }).runtimeInstructionsBootstrap, undefined);
   const managedDatabaseConfig = loadConfig({ ...productionEnvironment, DATABASE_URL: "", DATABASE_SSL_CA_PATH: "", DB_HOST: "mysql.internal", DB_PORT: "3306", DB_NAME: "owned", DB_USER: "owner", DB_PASSWORD: "contains:a/slash", OWNER_GOOGLE_SUBJECT: "", SETTINGS_OWNER_GOOGLE_EMAIL: "OWNER@EXAMPLE.COM" });
   assert.equal(managedDatabaseConfig.databaseUrl, "mysql://owner:contains%3Aa%2Fslash@mysql.internal:3306/owned");

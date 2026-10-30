@@ -1,0 +1,21 @@
+{
+  "candidate_id": "b",
+  "version": "v4",
+  "visual_target_hash": "8aef33ec6d4bfd92a83c74b51f9dfea21c4df67985bf72956217408cfb2e87fb",
+  "prototype_tree_hash": "a5ae48c17be5b6fc6c3858671b3e8b50a3f1499da45e8e0a981e411ced6f5e3c",
+  "preview_url": "http://127.0.0.1:4328/b/v4/",
+  "observed_at": "2026-09-13T20:12:56.193688+00:00",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/b/v4/#discussion",
+    "http://127.0.0.1:4328/b/v4/#settings"
+  ],
+  "capture_reference": "b-v4-safari-discussion-and-settings",
+  "capture_storage": "Inline CUA screenshots and AX observations in this colour-refinement turn.",
+  "evidence": "Separate existing review tab navigated to the exact v4 URL. Discussion screenshot inspected and Settings selected; original Astra/xhigh, Astra/ultra and Balanced defaults observed. Unchosen reference palette retains its prior styling; only version label changed.",
+  "findings": []
+}

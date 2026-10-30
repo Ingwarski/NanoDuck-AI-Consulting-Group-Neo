@@ -275,7 +275,7 @@ test("the authenticated discussion shows parallel specialist answers and a targe
   const directory = await mkdtemp(`${tmpdir()}/nanoduck-http-provider-`);
   const authPath = `${directory}/auth.json`;
   const codexCommand = fileURLToPath(new URL("./fixtures/fake-codex.mjs", import.meta.url));
-  await writeFile(authPath, "{}", { mode: 0o600 });
+  await writeFile(authPath, JSON.stringify({ auth_mode: "chatgpt", tokens: { access_token: "synthetic-access", refresh_token: "synthetic-refresh" } }), { mode: 0o600 });
   const child = spawn(globalThis.process.execPath, ["src/server/index.mjs"], {
     cwd: process.cwd(),
     env: {

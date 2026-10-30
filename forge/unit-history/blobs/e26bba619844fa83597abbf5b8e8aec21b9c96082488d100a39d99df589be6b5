@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>Personal AI Consulting Group · Design prototype</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to conversation</a>
+  <div class="prototype-bar">
+    <span><strong>Design preview</strong><span class="demo-description"> · Fictional discussion. No AI calls.</span></span>
+    <label><span class="sr-only">Preview state</span><select id="preview-state">
+      <option value="discussion">Discussion</option><option value="login">Sign in</option><option value="new">New conversation</option>
+      <option value="offline">Connection lost</option><option value="auth">Access expired</option><option value="quota">Quota reached</option><option value="research">Research unavailable</option>
+    </select></label>
+  </div>
+  <div class="app-shell" id="app-shell">
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <a class="brand" href="#discussion"><span class="brand-mark" aria-hidden="true">c<span>·</span></span><span>Consulting<br>Group<span class="brand-caption">YOUR PRIVATE ADVISORY</span></span></a>
+      <button class="new-button" data-action="new"><span aria-hidden="true">＋</span> New conversation</button>
+      <p class="eyebrow nav-label">Conversations</p>
+      <button class="history-item selected" data-action="example"><span class="history-dot" aria-hidden="true"></span><span>A better mobile experience<small>Product · Today</small></span></button>
+      <div class="sidebar-note"><span class="mini-mark" aria-hidden="true">↗</span><p>Room for a different<br>point of view.</p></div>
+      <button class="account-button" data-action="account"><span class="avatar owner">Y</span><span>Your space<small>Personal account</small></span><span aria-hidden="true">⋯</span></button>
+    </aside>
+    <main id="main" tabindex="-1">
+      <header class="topbar"><div><button class="icon-button mobile-menu" aria-label="Open conversations" data-action="history">☰</button><span class="workspace-label">Personal AI Consulting Group</span></div><div class="topbar-actions"><button class="text-button" data-action="export">Export</button><button class="icon-button" aria-label="Conversation options" data-action="options">⋯</button></div></header>
+      <section class="conversation-heading" id="conversation-heading">
+        <div class="overline"><span class="status-dot" aria-hidden="true"></span><span id="session-status">Reviewed · One assumption to test</span></div>
+        <h1>A better mobile experience.</h1>
+        <div class="heading-bottom"><p>Product decision · Today</p><div class="participant-stack" aria-label="Head Consultant, Product Consultant, Operations Consultant and Critic"><span class="avatar head">H</span><span class="avatar product">P</span><span class="avatar operations">O</span><span class="avatar critic">C</span></div></div>
+      </section>
+      <div class="tabs" id="view-tabs" role="tablist" aria-label="Conversation views"><button role="tab" id="tab-discussion" aria-controls="panel-discussion" aria-selected="true" data-view="discussion">Discussion <span>8</span></button><button role="tab" id="tab-outcome" aria-controls="panel-outcome" aria-selected="false" tabindex="-1" data-view="outcome">Outcome</button><button role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1" data-view="sources">Sources <span>2</span></button></div>
+      <div class="notice" id="notice" role="status" hidden></div>
+      <div class="content-grid" id="content-grid">
+        <div class="reading-column">
+          <section id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion"><div class="thread" id="thread"></div><div class="playback"><span id="playback-status">Example conversation · 10:40–10:46</span><button class="text-button" id="replay" data-action="replay">Replay discussion <span aria-hidden="true">↻</span></button></div></section>
+          <section id="panel-outcome" role="tabpanel" aria-labelledby="tab-outcome" hidden>
+            <div class="outcome-intro"><p class="eyebrow">THE RECOMMENDATION</p><h2>Test the website.<br>Keep the app decision open.</h2><p>Improve one essential member journey on mobile before committing to a separate native app. Offline access is still an assumption to test.</p></div>
+            <ol class="action-list"><li><div><span class="eyebrow">THIS WEEK · PRODUCT LEAD</span><h3>Prototype the main member journey</h3><p>From sign-in to opening a saved article, on a phone. Keep it to one complete flow.</p></div></li><li><div><span class="eyebrow">NEXT WEEK · RESEARCH LEAD</span><h3>Watch five members use it</h3><p>Record completion, help needed and where connectivity gets in their way. Five is a proposed first check, not a statistical sample.</p></div></li><li><div><span class="eyebrow">AFTER THE TEST · PRODUCT LEAD</span><h3>Decide from the friction</h3><p>Reconsider a native app if essential offline or device capabilities still prevent members from completing the task.</p></div></li></ol>
+            <div class="open-question"><p class="eyebrow">STILL OPEN</p><h3>How often do members need offline reading?</h3><p>The recommendation changes if reliable offline access is essential and the tested web experience cannot deliver it.</p></div>
+            <button class="primary" data-action="followup">Discuss the next step <span aria-hidden="true">↗</span></button>
+          </section>
+          <section id="panel-sources" role="tabpanel" aria-labelledby="tab-sources" hidden><p class="eyebrow">EVIDENCE BEHIND THE DISCUSSION</p><h2>Open the source.<br>See what it supports.</h2><p class="source-context">Reference links for this fictional example. This prototype has not performed a research run.</p><div class="sources-list" id="sources-list"></div><div class="open-question"><h3>What these sources do not tell us</h3><p>They do not show what this community's members need. That requires the proposed member test.</p></div></section>
+        </div>
+        <aside class="context-column" aria-label="Consultation context"><p class="eyebrow">AT THE TABLE</p><div class="roster"><span class="avatar head">H</span><div>Head Consultant<small>Frames the decision</small></div><span class="avatar product">P</span><div>Product Consultant<small>Member experience</small></div><span class="avatar operations">O</span><div>Operations Consultant<small>Delivery and maintenance</small></div><span class="avatar critic">C</span><div>Critic<small>Challenges assumptions</small></div></div><div class="context-note"><span class="eyebrow">THE QUESTION</span><p>Would a native app solve a member problem the website cannot?</p></div><button class="source-shortcut" data-action="sources"><span aria-hidden="true">↗</span><span>Two reference sources<small>W3C · MDN Web Docs</small></span></button></aside>
+      </div>
+      <section class="empty-state" id="empty-state" hidden><span class="empty-symbol" aria-hidden="true">✳</span><p class="eyebrow">YOUR NEXT CONVERSATION</p><h1>What do you<br>need to decide?</h1><p>Bring the situation. We’ll work through it together.</p><button class="example-link" data-action="example">Explore a sample discussion <span aria-hidden="true">↗</span></button><p class="prototype-note">Design preview: writing here saves a draft in this tab. It does not contact consultants.</p></section>
+      <div class="composer-dock"><div id="attachment-list" class="attachment-list"></div><form id="composer-form"><label class="sr-only" for="message">Your message</label><textarea id="message" rows="1" placeholder="Add context or ask a follow-up…"></textarea><div class="composer-bottom"><div><button type="button" class="icon-button" aria-label="Attach an image or PDF" data-action="attach">＋</button><span class="composer-hint">Your perspective belongs here.</span><button type="button" class="text-button" id="stop" data-action="stop" hidden>Stop</button></div><button type="submit" class="send-button" aria-label="Save message draft"><span aria-hidden="true">↑</span></button></div><input type="file" id="attachment" accept="image/png,image/jpeg,image/webp,application/pdf" multiple hidden></form><span class="composer-caption" id="draft-status">Sample only · No message will be sent</span></div>
+    </main>
+  </div>
+  <section class="login" id="login" hidden><div class="login-art"><span class="brand-mark" aria-hidden="true">c<span>·</span></span><p class="eyebrow">PERSONAL AI CONSULTING GROUP</p><h1>Better decisions<br>start with a<br>real discussion.</h1><div class="login-line" aria-hidden="true"><span>Different perspectives.</span><span>One practical next step.</span></div></div><div class="login-form"><p class="eyebrow">YOUR PRIVATE ADVISORY</p><h2>Welcome back.</h2><p>A place to think it through,<br>with a team that asks better questions.</p><button class="google-button" data-action="login"><span aria-hidden="true">G</span> Continue with Google</button><p class="privacy-note">Your conversations stay private. Content you share is processed by your selected AI providers.</p><p class="prototype-note">This button previews sign-in. No Google authentication or account connection occurs.</p></div></section>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" aria-label="Close dialog" data-action="close">×</button></div><div id="dialog-body"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

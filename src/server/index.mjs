@@ -37,9 +37,19 @@ try {
     const upgraded = upgradeRuntimeInstructionMarkdown(markdown);
     return upgraded === markdown ? undefined : parseRuntimeInstructions(upgraded);
   });
+  if (config.readyForProvider) {
+    let seed;
+    try {
+      seed = config.codexAuthPath ? await readRegularFile(config.codexAuthPath, 64 * 1024) : config.codexAuthBytes;
+      await store.seedCodexGrant(seed);
+    } catch (error) {
+      if (error?.message !== "codex_grant_invalid") throw error;
+      process.stderr.write("NanoDuck Codex bootstrap grant is invalid; any previously stored managed grant remains in use.\n");
+    } finally { seed?.fill(0); }
+  }
 } catch (error) { await store.close?.(); throw error; }
 const auth = createAuth({ config, store });
-const providers = createProviders(config);
+const providers = createProviders(config, store);
 const consultation = createConsultationService({ store, provider: providers });
 const publicDirectory = fileURLToPath(new URL("../../public/", import.meta.url));
 const clientDirectory = fileURLToPath(new URL("../client/", import.meta.url));
@@ -238,11 +248,13 @@ const close = () => shutdown ??= (async () => {
   const drained = new Promise(resolve => server.close(resolve));
   server.closeIdleConnections();
   const deadline = setTimeout(() => server.closeAllConnections(), 10_000); deadline.unref();
+  const results = [];
   try {
-    await consultation.close();
-    await drained;
-    await Promise.allSettled([...requests]);
+    results.push(...await Promise.allSettled([consultation.close(), drained, Promise.allSettled([...requests])]));
+    results.push(await providers.close().then(() => ({ status: "fulfilled" }), reason => ({ status: "rejected", reason })));
   } finally { clearTimeout(deadline); await store.close?.(); }
+  const failure = results.find(result => result.status === "rejected");
+  if (failure) throw failure.reason;
 })().catch(() => { process.exitCode = 1; });
 stopAfterLeadershipLoss = () => { void close(); };
 for (const signal of ["SIGINT", "SIGTERM"]) process.once(signal, () => void close());

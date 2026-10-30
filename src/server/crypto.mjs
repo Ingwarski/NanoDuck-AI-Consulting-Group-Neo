@@ -20,7 +20,7 @@ export function encryptText(value, key) {
 
 export function decryptText(value, key) { return decrypted(value, key).toString("utf8"); }
 
-export function encryptBytes(value, key) { return encrypted(Buffer.from(value), key); }
+export function encryptBytes(value, key) { return encrypted(value, key); }
 
 export function decryptBytes(value, key) { return decrypted(value, key); }
 

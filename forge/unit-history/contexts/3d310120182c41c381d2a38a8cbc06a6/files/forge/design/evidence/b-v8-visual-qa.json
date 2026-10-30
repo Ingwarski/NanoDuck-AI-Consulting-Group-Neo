@@ -1,0 +1,154 @@
+{
+  "candidate_id": "b",
+  "version": "v8",
+  "visual_target_hash": "edd8a54d08ab4f404793599d81326f6b5abe2812089a3a7759b3b0fdd52b3ea0",
+  "prototype_tree_hash": "39d76e81dfa174da8a79b96bb7e9212669cf5ef58afcd46efe12a9e5785870cd",
+  "preview_url": "http://127.0.0.1:4328/b/v8/",
+  "observed_at": "2026-09-13T20:43:18.496020+00:00",
+  "result": "passed",
+  "adapter": "cua_repl",
+  "target_reference": "forge/design/candidates/b/v8/index.html",
+  "source_capture_id": "b-v8-interactive-mockup",
+  "implementation_capture_id": "b-v8-safari-supplied-logo",
+  "environment": [
+    "Codex in-app browser",
+    "Safari"
+  ],
+  "scope": {
+    "journeys": [
+      "J-01",
+      "J-02",
+      "J-03",
+      "J-04",
+      "J-05",
+      "J-06",
+      "J-07"
+    ],
+    "screens": [
+      "S-01",
+      "S-02",
+      "S-03",
+      "S-04",
+      "S-05",
+      "S-06",
+      "S-07",
+      "S-08",
+      "S-09"
+    ],
+    "states": [
+      "ST-01",
+      "ST-02",
+      "ST-03",
+      "ST-04",
+      "ST-05",
+      "ST-06",
+      "ST-07",
+      "ST-08",
+      "ST-09",
+      "ST-10",
+      "ST-11",
+      "ST-12",
+      "ST-13",
+      "ST-14",
+      "ST-15",
+      "ST-16",
+      "ST-17",
+      "ST-18",
+      "ST-19",
+      "ST-20",
+      "ST-21",
+      "ST-22",
+      "ST-23",
+      "ST-24",
+      "ST-25",
+      "ST-26",
+      "ST-27",
+      "ST-28",
+      "ST-29",
+      "ST-30",
+      "ST-31",
+      "ST-32",
+      "ST-33",
+      "ST-34",
+      "ST-35",
+      "ST-36",
+      "ST-37",
+      "ST-38",
+      "ST-39",
+      "ST-40",
+      "ST-41",
+      "ST-42",
+      "ST-43",
+      "ST-44"
+    ],
+    "jobs": [
+      "JOB-001",
+      "JOB-002",
+      "JOB-003",
+      "JOB-004",
+      "JOB-005",
+      "JOB-006"
+    ],
+    "use_cases": [
+      "UC-001",
+      "UC-002",
+      "UC-003",
+      "UC-004",
+      "UC-005",
+      "UC-006",
+      "UC-007"
+    ],
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "working_language": "en",
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "fixture": "Fictional member-community mobile app versus better website discussion; eight full entries; W3C and MDN references; no fresh research timestamps."
+  },
+  "layout_observations": {
+    "viewports": [
+      320,
+      768,
+      1280
+    ],
+    "states": [
+      "ST-01",
+      "ST-10",
+      "ST-21"
+    ],
+    "count": 9,
+    "overflow": false,
+    "logo_loading": "All rendered brand images loaded with nonzero natural width."
+  },
+  "interactions_checked": [
+    "Selected sign-in, Discussion and Settings fixtures at all three actual CSS widths."
+  ],
+  "visual_observations": [
+    "Light outline and yellow-to-red head details visible in Safari navigation."
+  ],
+  "behaviour_delta": "app.js and styles.css are byte-identical to v7. HTML changes only the version label. Existing image references consume the replacement SVG.",
+  "source_logo": {
+    "path": "forge/design/evidence/nanoduck-supplied-logo.jpeg",
+    "content_hash": "4e4e83b85f1baaaa4bc1d680dce4a3df2c68e75e73edb8b1308dc751b8719629"
+  },
+  "prior_evidence": {
+    "path": "forge/design/evidence/b-v7-visual-qa.json",
+    "content_hash": "fb20abdc0982a2bb6fde632504ebc82ca4b79dd22ea89843ad4d87e2b3abbea5",
+    "scope": "Historical behavior evidence, not rerun."
+  },
+  "findings": [],
+  "limitations": [
+    "Manual vector reconstruction from the supplied 100px JPEG, not an original vector master or pixel-identical tracing.",
+    "Asset-only design revision. No backend, live authentication, recording, AI, research or deployment.",
+    "27 responsive observations cover three screens at three actual CSS widths for each candidate; the full state/interaction suite was not rerun.",
+    "No representative-user or complete accessibility/security/performance claim. Screenshots inspected inline through CUA; no exported raster capture claimed."
+  ]
+}

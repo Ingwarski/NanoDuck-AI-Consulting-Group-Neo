@@ -2,7 +2,7 @@
 
 ## Source references and execution status
 
-The current PRD, context/terms bundle, guardrails, journey, screen map, wireframes, design brief, architecture and DoD define these checks. [model-settings.md](model-settings.md) preserves the exact provider choices; [northflank-deployment.md](northflank-deployment.md) defines the active Neo seam. This reconciliation also consumes the exact authorization, source-input and supplied implementation-verification receipts under `forge/runs/combined-updates-port-20260927/`. Predecessor GoDaddy evidence is historical only.
+The current PRD, context/terms bundle, guardrails, journey, screen map, wireframes, design brief, 30 October managed-auth architecture and reconciled DoD define these checks. [model-settings.md](model-settings.md) preserves the exact provider choices; [northflank-deployment.md](northflank-deployment.md) defines the active Neo seam. This reconciliation also consumes the exact authorization, source-input and supplied implementation-verification receipts under `forge/runs/combined-updates-port-20260927/`. Predecessor GoDaddy evidence is historical only.
 
 **Definition Status: prepared. Formal per-check Execution Status: `not_run`. Release readiness: `not_evaluated`.** Visual binding remains `nanoduck-electric-a-v8-20260914`, its immutable target/tree hashes and the authorized 27 September reading/liquid-glass override. The supplied verification receipt records aggregate local and named-CI observations against implementation/test revision `7b3b4545e2b8c18f488ac667973a0c3ddf661ff3`, with named executors, environments and hashed evidence. It contains no per-QA execution records, so it remains supporting evidence and does not promote any check definition to passed.
 
@@ -35,7 +35,7 @@ All checks are required/applicable unless an explicit exception is recorded. Use
 | QA-R21 | FR-05.2; UC-005 | Exercise the referenced use-case path and verify: Saved changes apply to future runs; each active run retains the exact provider/model/reasoning, specialist-count, discussion-depth and runtime-instructions Markdown/revision snapshot used at acceptance. The independent message-sound preference applies to incoming browser feedback and never changes an active consultation’s logic. | `product_functional_requirements` · implementation |
 | QA-R22 | FR-05.3; UC-005 | Exercise the referenced use-case path and verify: Settings accepts specialist count 1/2/3/5/Auto and team-review depth 1/3/5/Auto, preserves the accepted selection and never changes a model or effort while waiting. Each fixed depth produces that many substantive team assessments unless stopped/failed; only affected specialists reply, and a final-round correction receives one focused assessment without another full round. Auto closes only on Head's supported decision within ten rounds; unresolved findings remain provisional. Separately verify Knock/Chime/Ripple/Off Preview, saved-vs-unsaved isolation, browser-block recovery and the accepted Knock asset. | `product_functional_requirements` · implementation |
 | QA-R23 | FR-05.4; UC-005 | Exercise the referenced use-case path and verify: Authenticated Usage distinguishes attributed NanoDuck attempts from independently refreshed provider-account allowance, preserves missing versus explicit zero and coverage state, and never labels tokens as subscription cost or derives allowance from conversation totals. | `product_functional_requirements` · implementation |
-| QA-R24 | FR-05.5; UC-005 | Exercise the referenced use-case path and verify: Only a genuine authorization failure for the selected provider offers contextual reauthorization; quota and outage show their actual next action. |
+| QA-R24 | FR-05.5; UC-005 | Exercise the referenced use-case path and verify: Seed a structurally valid synthetic ChatGPT grant, let the provider rotate its auth file, close the connection and open another connection; the second connection receives the rotated grant and remains ready. Repeat across application-store restart. A missing, malformed, oversized or genuinely rejected grant reports contextual `auth_required` without exposing token data; quota, timeout, provider outage and durable-write failure retain their distinct next actions and never offer misleading reauthorization. | `product_functional_requirements`, `lifecycle_and_continuity` · implementation |
 | QA-R60 | FR-05.6; UC-005 | Exercise the referenced use-case path and verify: An empty owned database receives exactly one validated document from the one-time deployment secret during migration, then can restart without that secret or a repository instruction file. Database export without the data key exposes no instruction plaintext. Settings loads the encrypted current document, rejects a missing required heading or placeholder without replacing its revision, accepts a valid edit, rejects a stale-browser save, lists saved-version metadata, retrieves a version only for the authenticated owner, and restores it by creating a fresh revision. Start a consultation, save or restore a later valid version, and verify the active run/provider still receives only the accepted Markdown/revision snapshot. Attempt to use document text to change authorization, role routing, output bounds or language/source restrictions; server invariants remain effective. | `product_functional_requirements` · implementation |
 | QA-R61 | FR-02.12, FR-03.3, FR-03.5; NFR-01.1–01.2, NFR-11.2, NFR-14.1; UC-002, UC-003 | In one chat, accept two distinct Sends containing marked bodies/attachments. Verify unique immutable `requestMessageId` and run binding; only the current message, settings, assignments, evidence, sources and private provider workspace reach its participants. Retry an ambiguous acceptance and receive the original request/run without a duplicate. Reject missing, forged, cross-chat and caller-rebound IDs atomically. Stop/restart/Continue/Retry the first request and verify the same ledger resumes, completed work is not replayed, stale results cannot commit and its workspace releases only after workers drain. Repeat with memory storage and disposable private MySQL, including transaction rollback/reconnect and legacy accepted records. An over-limit complete context fails visibly without truncation or substitution. | `product_functional_requirements`, `lifecycle_and_continuity`, `product_security_requirements` · implementation |
 | QA-R62 | FR-02.4, FR-02.5, FR-02.9, FR-02.10, FR-02.11, FR-02.12, FR-02.13, FR-02.14, FR-03.5; NFR-01.2, NFR-01.3, NFR-11.2, NFR-16.2; UC-002, UC-003 | Supply a Head plan with reused, adapted and newly named roles, independent work, a fast dependency chain and one slow unrelated sibling. Verify the role library is guidance rather than an allowlist; each specialist receives only its own role guidance, a new role remains request-local and no role can add tools, providers, permissions or data authority. Verify Head-authored task text survives exactly, ready work overlaps, the dependent starts as soon as its prerequisite commits, successful siblings remain visible when another fails, and Retry runs only missing work. Persist multiple Critic findings, link each correction to its assignment/result/order, reject forged/cross-assignment/stale transitions, and require a separate Critic assessment before fulfillment. Repetitive/blocked replies remain unresolved and final advice stays provisional. Restart between correction and assessment without replay; fixed/Auto limits and cancellation fencing remain intact. | `product_functional_requirements`, `lifecycle_and_continuity`, `product_security_requirements` · implementation |
@@ -45,7 +45,7 @@ All checks are required/applicable unless an explicit exception is recorded. Use
 | QA-R66 | FR-03.4–FR-03.5, FR-06.1, FR-08.1; NFR-01.1–NFR-01.2, NFR-02.1–NFR-02.2, NFR-11.2, NFR-14.2; UC-002–UC-005; S-02–S-07, S-09 | On long and short Discussion, Outcome, Sources and Usage panels, verify the desktop sticky vertical rail and compact mobile selector share selected state, keyboard model, focus order and correct orientation. Top/bottom arrows move only the current visible panel, hide at their respective boundary and both hide when unnecessary/off-page; recompute after scroll, resize, panel switch and dynamic content without switching panels or moving the reading position unexpectedly. At 320px and 200% text, collapse/restore the composer while preserving draft, attachments and voice state and returning focus correctly. During active work, Stop remains labelled, keyboard/touch reachable across every panel and immune to polling; Stop/failure/Retry restores input without accepting a late result. | `product_functional_requirements`, `lifecycle_and_continuity`, `approved_visual_baseline_fidelity`, `product_security_requirements` · implementation |
 | QA-R67 | FR-08.3; NFR-02.1–NFR-02.3, NFR-11.1, NFR-14.2, NFR-15.1, NFR-16.2; UC-001–UC-005; S-01–S-04, S-09 | On real Discussion, Conversations and Settings content, inspect screenshots/pixels at desktop and mobile widths. Verify content reaches beneath both curved ends; the lens uses 24px sampling bleed, an edge band no wider than 17px and displacement no greater than 15px; curved-edge pixels visibly deform while the centre remains clear and native controls remain sharp, operable and outside the decorative `aria-hidden` layer. Window/nested scroll, mutation, resize, bar resize, font readiness and visibility refresh it. Ordinary mutation retains the prior frame until one coalesced replacement with no blank frame. Changing a private field value does not change sampled pixels while changing its visible background does. Logout, lock, auth loss, hidden/disallowed state and render failure clear synchronously. Reduced-transparency/forced-colour fallbacks remain readable. Confirm scoped third-party notices without applying that license to unrelated files. | `approved_visual_baseline_fidelity` · implementation |
 | QA-R68 | NFR-15.1; UC-001, UC-002, UC-004 | Inspect the exact final Neo target diff and staged set. Verify it contains no nested reference-checkout content, input absolute path, secret, provider grant, private record, owner identifier or infrastructure replacement. Verify scoped glass licensing, artifact/dependency/diff checks on the exact revision, and the canonical Neo remote and intended branch before push. | `target_repository_integrity` · implementation |
-| QA-R69 | NFR-15.1; UC-001, UC-002, UC-004 | Only after separate activation authority and confirmation of zero active consultations, verify a current backup, scale the application to zero, select the approved build, start exactly one instance so `src/server/start.mjs` runs repeat-safe schema/instruction migration before HTTP startup, and verify health, TLS private-MySQL connectivity, Worker origin-key enforcement, Google owner authentication, settings/conversation continuity and the rollback path. Definition Status: prepared; Execution Status: `not_run`. | `runtime_activation` · implementation/activation |
+| QA-R69 | NFR-15.1; UC-001, UC-002, UC-004 | Only after separate activation authority and confirmation of zero active consultations, verify a current backup that includes the encrypted provider-grant row, scale the application to zero, replace only the Codex bootstrap secret from a fresh trusted managed login if the deployed seed is invalid, select the approved build, and start exactly one instance so `src/server/start.mjs` runs repeat-safe schema/instruction migration and grant seeding before HTTP startup. Verify health, TLS private-MySQL connectivity, Worker origin-key enforcement, Google owner authentication, settings/conversation and paused-run continuity, provider readiness, a bounded provider close/reopen that reuses the durable grant, service restart continuity and the rollback path. Definition Status: prepared; Execution Status: `not_run`. | `runtime_activation`, `lifecycle_and_continuity` · implementation/activation |
 | QA-R25 | FR-06.1; UC-004 | Exercise the referenced use-case path and verify: Clicking and keyboard-activating the saved conversation row reopens complete confirmed conversation content, owned attachments and source records; Export and Delete do not open the record. Reload the record, Conversations and Settings surfaces and verify each stays in the same tab and restores its selected surface/reading position; Discussion also restores its selected local tab and record. Inspect tab storage to confirm it contains neither draft text nor conversation content and is cleared at Logoff. On the Northflank private-MySQL route, run the same read when the driver returns JSON columns as decoded settings, run snapshot and source values; the browser receives the canonical record without `service_unavailable`. | `product_functional_requirements` · implementation |
 | QA-R26 | FR-06.2; UC-004 | Exercise the referenced use-case path and verify: Export returns a downloadable .rtf with application/rtf and no-store headers. Open it with a real rich-text reader and verify title, bold speaker/recipient names, all messages in canonical order, date/time with explicit browser time zone, paragraphs, supported Markdown emphasis/lists/headings, Ukrainian text and emoji, sources and saved image references. Confirm valid bold text has no raw Markdown delimiters. RTF control text from messages/titles must remain inert; no embedded executable objects/fields, drafts, credentials or runtime instructions appear. Test absent/invalid time zone (UTC/422), anonymous and deleted-record requests (401/404). Native-reader rendering is distinct from browser/API or full-release evidence. | `product_functional_requirements` · implementation |
 | QA-R27 | FR-06.3; UC-004 | Exercise the referenced use-case path and verify: Explicit whole-conversation deletion removes its record and owned attachments; cancellation leaves them unchanged. | `product_functional_requirements` · implementation |
@@ -73,14 +73,14 @@ All checks are required/applicable unless an explicit exception is recorded. Use
 | QA-R49 | NFR-12.1; UC-007 | Exercise the referenced use-case path and verify: Fetch public, private/metadata, redirecting and prohibited `.ru`/`.by`/`.su` or Cyrillic-equivalent targets; only permitted English/Ukrainian public evidence is returned, with no secret disclosure. | `product_security_requirements` · implementation |
 | QA-R50 | NFR-12.2; UC-002, UC-004, UC-006 | Exercise the referenced use-case path and verify: Upload valid JPEG/PNG/WebP, client-MIME mismatch, malformed/truncated signature, over-8-MiB, PDF, SVG, video, audio and archive fixtures. Only valid bounded images persist as encrypted opaque blobs; their owner-only retrieval uses fixed validated type, attachment disposition and `nosniff`. Every rejection retains the typed draft and exposes no server path. Verify browser voice creates no NanoDuck upload. | `product_security_requirements` · implementation |
 | QA-R51 | NFR-12.3; UC-002, UC-005, UC-007 | Exercise the referenced use-case path and verify: Inject requests for secrets, tools, paid fallback and external messages; no permission or provider boundary expands. For Claude Critic, assert a command-level denial of known tools, no direct research flag, and a text-only role prompt containing the current owner question and prior confirmed discussion. Return a CLI `result` containing `<invoke name="Bash">…</invoke>`; verify one natural-language retry and that neither attempt can enter events, sources or the browser. | `product_security_requirements` · implementation |
-| QA-R52 | NFR-13.1; UC-001, UC-004, UC-005 | Exercise the referenced use-case path and verify: Read database ciphertext without keys, alter it and restore with authorized separated keys; plaintext stays protected and tampering fails. | `product_security_requirements` · implementation |
+| QA-R52 | NFR-13.1; UC-001, UC-004, UC-005 | Exercise the referenced use-case path and verify: Read database ciphertext without keys, alter it and restore with authorized separated keys; plaintext stays protected and tampering fails. For the Codex grant, verify strict ChatGPT payload validation, a purpose-separated HKDF key, ciphertext/IV/tag storage with no access or refresh token plaintext, unchanged-seed idempotence after rotation, intentional different-seed replacement, leadership-only mutation and generation compare-and-swap rejection of a stale writer. Malformed refresh bytes, a failed save and a losing sibling preserve the last valid row; owner recovery export and logs contain no grant. | `product_security_requirements` · implementation |
 | QA-R53 | NFR-13.2; UC-001, UC-002, UC-004, UC-005, UC-006, UC-007 | Exercise the referenced use-case path and verify: Use valid/invalid service certificates and privileged/unrelated credentials; unsafe transfer fails while allowed service identity works. The private MySQL connection keeps certificate verification enabled: system trust succeeds without a custom CA, or exactly one bounded `DATABASE_SSL_CA_PATH` / `DATABASE_SSL_CA_B64` source supplies a valid PEM certificate. Malformed, simultaneous, unreadable or wrong-CA sources fail before data transfer; no configuration can disable verification. | `product_security_requirements` · implementation |
 | QA-R54 | NFR-14.1; UC-002, UC-004, UC-006, UC-007 | Exercise the referenced use-case path and verify: Inspect provider/search requests, URLs, caches and logs with marked private fixtures; only authorized minimized content leaves the boundary. | `product_security_requirements` · implementation |
 | QA-R55 | NFR-14.2; UC-001, UC-004, UC-006 | Exercise the referenced use-case path and verify: Cancel/fail/background voice recognition and sign out offline; browser recognition ends, client content is cleared as required and browser history cannot reveal private data. NanoDuck receives no audio. | `product_security_requirements` · implementation |
 | QA-R56 | NFR-14.3; UC-003, UC-004 | Exercise the referenced use-case path and verify: Delete one conversation, restore an isolated backup and inspect unrelated data; accepted records recover and deletion decisions remain applied. | `product_security_requirements` · implementation |
-| QA-R57 | NFR-15.1; UC-001, UC-002, UC-004 | Exercise the referenced use-case path and verify the exact authorized boundary: one Northflank service, one private MySQL addon and the dedicated Cloudflare Worker; no predecessor resource changes. Inspect the root `Dockerfile`, package/dependency inventory, runtime configuration and image contents. Verify Node.js 22 runs as the unprivileged `node` user; root `package.json` has non-empty name/version/main, valid SemVer, an existing start entry point and non-empty build/start scripts; the app reads `PORT`, binds production HTTP to `0.0.0.0`, declares every runtime import in `dependencies`, and excludes tracked `node_modules`, private records, `.git`, specifications, debug routes and local review helpers from the served/runtime artifact. On Northflank, verify `NANODUCK_RUNTIME_MODE=production`, `APP_ORIGIN` is the public Worker origin, `/healthz` startup/readiness/liveness probes pass only after idempotent owned migration and database leadership, linked `DB_*` reaches only the private certificate-verified addon, and the pinned provider packages start from the image. Verify exact 32-byte data/recovery keys retain their declared accepted encodings without derivation or alteration; exactly one configured Codex auth source, preferably `CODEX_APP_SERVER_AUTH_GZIP_B64`, becomes `auth.json` only inside a removed-after-use temporary app-server home. Confirm one application replica, autoscaling and automatic deployment disabled, then exercise stop-old → confirm zero containers → select the successful build → start one → `/healthz`; use `recreate` only after a separately verified rehearsal. Confirm `EDGE_PROXY_KEY` is a distinct protected value in both runtimes, Worker preview URLs are disabled, the registered Google callback exactly matches the public Worker origin, and neither build arguments, image layers, repository files nor logs expose credentials. | `product_security_requirements` · implementation |
+| QA-R57 | NFR-15.1; UC-001, UC-002, UC-004 | Exercise the referenced use-case path and verify the exact authorized boundary: one Northflank service, one private MySQL addon and the dedicated Cloudflare Worker; no predecessor resource changes. Inspect the root `Dockerfile`, package/dependency inventory, runtime configuration and image contents. Verify Node.js 22 runs as the unprivileged `node` user; root `package.json` has non-empty name/version/main, valid SemVer, an existing start entry point and non-empty build/start scripts; the app reads `PORT`, binds production HTTP to `0.0.0.0`, declares every runtime import in `dependencies`, and excludes tracked `node_modules`, private records, `.git`, specifications, debug routes and local review helpers from the served/runtime artifact. On Northflank, verify `NANODUCK_RUNTIME_MODE=production`, `APP_ORIGIN` is the public Worker origin, `/healthz` startup/readiness/liveness probes pass only after idempotent owned migration and database leadership, linked `DB_*` reaches only the private certificate-verified addon, and the pinned provider packages start from the image. Verify exact 32-byte data/recovery keys retain their declared accepted encodings without derivation or alteration; exactly one configured Codex bootstrap/reseed source, preferably `CODEX_APP_SERVER_AUTH_GZIP_B64`, is validated and seeds the encrypted MySQL row, while the row becomes authoritative for later connections and restarts. Verify `auth.json` plus `config.toml` exist only inside a mode-restricted removed-after-use temporary app-server home, provider shutdown writes back before store shutdown, and real preflight uses the same private-MySQL grant path rather than a disposable auth copy. Confirm one application replica, autoscaling and automatic deployment disabled, then exercise stop-old → confirm zero containers → reseed only if required → select the successful build → start one → `/healthz`; use `recreate` only after a separately verified rehearsal. Confirm `EDGE_PROXY_KEY` is a distinct protected value in both runtimes, Worker preview URLs are disabled, the registered Google callback exactly matches the public Worker origin, and neither build arguments, image layers, repository files, owner export nor logs expose credentials. | `product_security_requirements`, `lifecycle_and_continuity` · implementation |
 | QA-R58 | NFR-16.1; UC-001, UC-002, UC-003, UC-004, UC-005, UC-006, UC-007 | Exercise the referenced use-case path and verify: Produce auth/validation/recovery events and log-injection strings; protected metadata remains useful without leaking or forging content. | `product_security_requirements` · implementation |
-| QA-R59 | NFR-16.2; UC-001, UC-002, UC-003, UC-004, UC-005, UC-006, UC-007 | Exercise the referenced use-case path and verify: Fail validation/provider/research/storage/logging paths then retry; access stays denied where required and invalid partial commits never appear. Inject a provider JSON-RPC error and verify that protected logs retain only its normalized category, safe numeric code and failed operation; the browser receives the matching recovery state and never receives raw provider diagnostics, prompts or authentication material. Return two Claude tool transcripts and verify the run fails safely with the owner question retained, no raw tool material committed and no partial Head synthesis. | `product_security_requirements` · implementation |
+| QA-R59 | NFR-16.2; UC-001, UC-002, UC-003, UC-004, UC-005, UC-006, UC-007 | Exercise the referenced use-case path and verify: Fail validation/provider/research/storage/logging paths then retry; access stays denied where required and invalid partial commits never appear. Force a Codex refresh followed by transient and final grant-store failures: bounded retry may recover, but a final writeback failure cannot return ready/success, the last valid database grant remains readable, and no raw auth file, token, digest or database ciphertext reaches logs or the browser. Inject a provider JSON-RPC error and verify that protected logs retain only its normalized category, safe numeric code and failed operation; the browser receives the matching recovery state and never receives raw provider diagnostics, prompts or authentication material. Return two Claude tool transcripts and verify the run fails safely with the owner question retained, no raw tool material committed and no partial Head synthesis. | `product_security_requirements` · implementation |
 
 ## Screen and state checks
 
@@ -131,6 +131,1210 @@ Not conducted. The owner approved the design without a recorded representative-u
 The checks mapped to NFR-02.1, NFR-02.2 and NFR-02.3 must be checked against their actual source IDs, not assumed from ordinal numbers. For the selected Electric revision inspect the NanoDuck Consulting Group name, supplied outline-duck SVG in navigation/sign-in/favicon, light outline on dark surfaces and original charcoal-outline export, full mobile wordmark and its accessible navigation label. Inspect HappyPro blue controls/large heading, raspberry Critic, the warmer Head yellow and distinct Spiritual Consultant/Psychotherapist role tokens. Check every gradient stop against its actual heading surface, white Send text against blue, readable small blue accents, avatar initials and forced-colors fallback. Retain checks for an icon-only SVG microphone with accessible name, `You` role header and `I` avatar for owner entries, New placement, agent identity without colour alone and Ember message/tab formatting. For all UI runs include 320px reflow, 200% text resizing, visible/unobscured focus, native select labels/states, dialog/menu keyboard behavior, primary touch targets, color contrast, reduced motion, forced colors and long English/Ukrainian content. Record device/browser and separate assistive-technology limitations. Do not infer WCAG conformance from screenshots.
 
 Each run records check ID, candidate/version or implementation revision, source/target hashes, executor, time, fixture/state/route/viewport, evidence kind/path/hash, result and findings with P0–P3 severity and blocking/advisory rationale. Baseline fidelity requires the approved Electric A v8 target and permitted variance in the design brief. Security evidence must come from the actual trusted boundary, not hidden/disabled controls.
+
+## Acceptance Execution Contract
+
+This canonical contract allocates each applicable implementation check to a real-consumer evidence scope. Definitions remain prepared and formal executions remain `not_run` until their named evidence is recorded.
+
+```json
+{
+  "QA-H01": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H02": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H03": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H04": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H05": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H06": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H07": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H08": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H09": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-H10": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-R01": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R02": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R03": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R04": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R05": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R06": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R07": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R08": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R09": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R10": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation.mjs",
+      "src/server/codex-provider.mjs",
+      "src/server/claude-provider.mjs",
+      "src/server/prompt-contracts.mjs",
+      "test/consultation.test.mjs",
+      "test/codex-provider.test.mjs",
+      "test/claude-provider.test.mjs"
+    ]
+  },
+  "QA-R11": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/markdown.js",
+      "src/server/conversation-export.mjs",
+      "test/markdown.test.mjs",
+      "test/markdown-table-export.test.mjs"
+    ]
+  },
+  "QA-R12": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation.mjs",
+      "src/server/codex-provider.mjs",
+      "src/server/claude-provider.mjs",
+      "src/server/prompt-contracts.mjs",
+      "test/consultation.test.mjs",
+      "test/codex-provider.test.mjs",
+      "test/claude-provider.test.mjs"
+    ]
+  },
+  "QA-R13": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R14": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/app.js",
+      "src/client/refresh-state.js",
+      "public/styles.css",
+      "scripts/browser-reading-mode.mjs",
+      "scripts/browser-progress-recovery.mjs",
+      "test/refresh-state.test.mjs"
+    ]
+  },
+  "QA-R15": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R16": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation.mjs",
+      "src/server/codex-provider.mjs",
+      "src/server/claude-provider.mjs",
+      "src/server/prompt-contracts.mjs",
+      "test/consultation.test.mjs",
+      "test/codex-provider.test.mjs",
+      "test/claude-provider.test.mjs"
+    ]
+  },
+  "QA-R17": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R18": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R19": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R20": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R21": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R22": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R23": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/usage.mjs",
+      "src/server/account-usage.mjs",
+      "src/server/store.mjs",
+      "src/client/app.js",
+      "test/usage.test.mjs",
+      "test/account-usage.test.mjs"
+    ]
+  },
+  "QA-R24": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/codex-provider.mjs",
+      "src/server/config.mjs",
+      "src/server/index.mjs",
+      "src/server/preflight.mjs",
+      "src/server/providers.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/codex-provider.test.mjs",
+      "test/core.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R25": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R26": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/markdown.js",
+      "src/server/conversation-export.mjs",
+      "test/markdown.test.mjs",
+      "test/markdown-table-export.test.mjs"
+    ]
+  },
+  "QA-R27": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R28": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R29": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R30": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R31": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R32": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R33": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/app.js",
+      "src/client/refresh-state.js",
+      "public/styles.css",
+      "scripts/browser-reading-mode.mjs",
+      "scripts/browser-progress-recovery.mjs",
+      "test/refresh-state.test.mjs"
+    ]
+  },
+  "QA-R34": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R35": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/navbar-glass.js",
+      "public/styles.css",
+      "scripts/browser-navbar-glass.mjs",
+      "test/review-fixes.test.mjs"
+    ]
+  },
+  "QA-R36": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R37": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R38": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R39": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation.mjs",
+      "src/server/codex-provider.mjs",
+      "src/server/claude-provider.mjs",
+      "src/server/prompt-contracts.mjs",
+      "test/consultation.test.mjs",
+      "test/codex-provider.test.mjs",
+      "test/claude-provider.test.mjs"
+    ]
+  },
+  "QA-R40": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-R41": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-R42": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "package.json",
+      "Dockerfile",
+      "scripts/check-artifacts.mjs",
+      "scripts/browser-check.mjs",
+      "test/http.test.mjs"
+    ]
+  },
+  "QA-R43": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R44": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R45": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R46": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/markdown.js",
+      "src/server/conversation-export.mjs",
+      "test/markdown.test.mjs",
+      "test/markdown-table-export.test.mjs"
+    ]
+  },
+  "QA-R47": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/usage.mjs",
+      "src/server/account-usage.mjs",
+      "src/server/store.mjs",
+      "src/client/app.js",
+      "test/usage.test.mjs",
+      "test/account-usage.test.mjs"
+    ]
+  },
+  "QA-R48": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R49": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R50": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R51": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R52": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/codex-provider.mjs",
+      "src/server/config.mjs",
+      "src/server/index.mjs",
+      "src/server/preflight.mjs",
+      "src/server/providers.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/codex-provider.test.mjs",
+      "test/core.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R53": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R54": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R55": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/app.js",
+      "src/client/refresh-state.js",
+      "public/styles.css",
+      "scripts/browser-reading-mode.mjs",
+      "scripts/browser-progress-recovery.mjs",
+      "test/refresh-state.test.mjs"
+    ]
+  },
+  "QA-R56": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R57": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/codex-provider.mjs",
+      "src/server/config.mjs",
+      "src/server/index.mjs",
+      "src/server/preflight.mjs",
+      "src/server/providers.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/codex-provider.test.mjs",
+      "test/core.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R58": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/auth.mjs",
+      "src/server/crypto.mjs",
+      "src/server/index.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/core.test.mjs",
+      "test/http.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R59": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/codex-provider.mjs",
+      "src/server/config.mjs",
+      "src/server/index.mjs",
+      "src/server/preflight.mjs",
+      "src/server/providers.mjs",
+      "src/server/schema.sql",
+      "src/server/store.mjs",
+      "test/codex-provider.test.mjs",
+      "test/core.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-R60": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-R61": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/store.mjs",
+      "src/server/consultation.mjs",
+      "src/server/run-snapshot.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/source-persistence.test.mjs",
+      "test/consultation.test.mjs"
+    ]
+  },
+  "QA-R62": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-R63": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-R64": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/usage.mjs",
+      "src/server/account-usage.mjs",
+      "src/server/store.mjs",
+      "src/client/app.js",
+      "test/usage.test.mjs",
+      "test/account-usage.test.mjs"
+    ]
+  },
+  "QA-R65": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/markdown.js",
+      "src/server/conversation-export.mjs",
+      "test/markdown.test.mjs",
+      "test/markdown-table-export.test.mjs"
+    ]
+  },
+  "QA-R66": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/app.js",
+      "src/client/refresh-state.js",
+      "public/styles.css",
+      "scripts/browser-reading-mode.mjs",
+      "scripts/browser-progress-recovery.mjs",
+      "test/refresh-state.test.mjs"
+    ]
+  },
+  "QA-R67": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/navbar-glass.js",
+      "public/styles.css",
+      "scripts/browser-navbar-glass.mjs",
+      "test/review-fixes.test.mjs"
+    ]
+  },
+  "QA-R68": {
+    "evidence_mode": "real_consumers",
+    "level": "release",
+    "required": true,
+    "required_source_paths": [
+      "AGENTS.md",
+      "package.json",
+      "scripts/check-artifacts.mjs",
+      "forge/sdd-manifest.json"
+    ]
+  },
+  "QA-R69": {
+    "evidence_mode": "real_consumers",
+    "level": "release",
+    "required": true,
+    "required_source_paths": [
+      "docs/northflank-deployment.md",
+      "src/server/start.mjs",
+      "src/server/schema.sql",
+      "cloudflare/northflank-proxy.mjs"
+    ]
+  },
+  "QA-S01": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-S02": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/client/app.js",
+      "src/client/refresh-state.js",
+      "public/styles.css",
+      "scripts/browser-reading-mode.mjs",
+      "scripts/browser-progress-recovery.mjs",
+      "test/refresh-state.test.mjs"
+    ]
+  },
+  "QA-S03": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-S04": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-S05": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-S06": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/research-evidence.mjs",
+      "src/server/consultation-parallel.mjs",
+      "src/client/app.js",
+      "test/research-evidence.test.mjs",
+      "test/parallel-consultation.test.mjs"
+    ]
+  },
+  "QA-S07": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-S08": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  },
+  "QA-S09": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-U01": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/attachments.mjs",
+      "src/server/validation.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-U02": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/consultation-parallel.mjs",
+      "src/server/prompt-contracts.mjs",
+      "src/server/provider-context.mjs",
+      "src/server/parallel-contract.mjs",
+      "test/parallel-consultation.test.mjs",
+      "test/prompt-contracts.test.mjs"
+    ]
+  },
+  "QA-U03": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/index.mjs",
+      "src/client/app.js",
+      "public/index.html",
+      "public/styles.css",
+      "test/http.test.mjs",
+      "scripts/browser-check.mjs"
+    ]
+  },
+  "QA-U04": {
+    "evidence_mode": "real_consumers",
+    "level": "integration",
+    "required": true,
+    "required_source_paths": [
+      "src/server/conversation-export.mjs",
+      "src/server/recovery.mjs",
+      "src/server/local-state.mjs",
+      "src/server/store.mjs",
+      "test/conversation-export.test.mjs",
+      "test/mysql.integration.test.mjs"
+    ]
+  }
+}
+```
 
 ## Execution evidence and history
 

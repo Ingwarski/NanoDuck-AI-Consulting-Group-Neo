@@ -1,0 +1,37 @@
+{
+  "name": "nanoduck-ai-consulting-group-neo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/server/start.mjs",
+  "description": "Private browser consulting application for NanoDuck Consulting Group.",
+  "scripts": {
+    "build": "echo NanoDuck server has no build step.",
+    "start": "node src/server/start.mjs",
+    "dev": "NODE_ENV=development DEV_OWNER_EMAIL=owner@local.test node src/server/index.mjs",
+    "preflight": "node src/server/preflight.mjs",
+    "edge:check": "wrangler deploy --dry-run",
+    "edge:deploy": "wrangler deploy",
+    "check": "node scripts/check-artifacts.mjs && node --test test/*.test.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:browsers": "npm run test:browsers:tables && npm run test:browsers:glass && npm run test:browsers:app",
+    "test:browsers:tables": "node scripts/browser-markdown-tables.mjs",
+    "test:browsers:glass": "node scripts/browser-navbar-glass.mjs",
+    "test:browsers:app": "node scripts/browser-check.mjs",
+    "migrate": "node src/server/migrate.mjs",
+    "recovery": "node src/server/recovery-cli.mjs"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "wrangler": "4.136.1"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-code": "2.1.280",
+    "@openai/codex": "0.155.1",
+    "google-auth-library": "11.0.2",
+    "mysql2": "3.24.2"
+  }
+}

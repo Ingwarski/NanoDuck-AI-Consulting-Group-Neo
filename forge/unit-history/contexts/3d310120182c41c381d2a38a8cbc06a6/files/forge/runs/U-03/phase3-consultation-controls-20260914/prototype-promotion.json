@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "promotion_id": "u03-electric-a-v8-consultation-controls-20260914",
+  "unit_id": "U-03",
+  "run_id": "phase3-consultation-controls-20260914",
+  "candidate_id": "a",
+  "version": "v8",
+  "baseline_id": "nanoduck-electric-a-v8-20260914",
+  "visual_target_hash": "93231814431a1bbbf8a0ba07f515eefcfd63193534189898b70766ed45938cbc",
+  "prototype_source_root": "forge/design/candidates/a/v8",
+  "prototype_tree_hash": "1de020dcfe48f3feb80db0e58ba911b821825b48730d32c72d9518ad512eb0d9",
+  "development_plan_ref": "docs/development-plan.md",
+  "development_plan_hash": "d2979e269fece584415159e984a17024807843b0d259cc28c37cc3ed679f3bea",
+  "started_at": "2026-09-14T17:25:00+03:00",
+  "completed_at": "2026-09-14T17:25:00+03:00",
+  "base_commit": "b7ccd5825832aabb5d05cdc8b2ddcf3e98a4083f",
+  "head_commit": "841fea447279e031c5dc6a1d20848daf32c703db",
+  "path_mappings": [
+    {
+      "source": "forge/design/candidates/a/v8/index.html",
+      "destination": "public/index.html",
+      "strategy": "adapt",
+      "source_hash": "93231814431a1bbbf8a0ba07f515eefcfd63193534189898b70766ed45938cbc",
+      "destination_hash": "5f18f93264b767fa095f9c7364df6533d2f06431d074b8d7bc3a8899285441c4"
+    },
+    {
+      "source": "forge/design/candidates/a/v8/styles.css",
+      "destination": "public/styles.css",
+      "strategy": "adapt",
+      "source_hash": "f8fd6e8832671b05dc8b7a2a034ee41fb2aad4f085468965feaf1c34a3b57d43",
+      "destination_hash": "5b8f0f1b506c157f937f9d1f53ec11d187e0accaf66171750f7914bc6a368efc"
+    },
+    {
+      "source": "forge/design/candidates/a/v8/app.js",
+      "destination": "src/client/app.js",
+      "strategy": "reimplement",
+      "source_hash": "d7ac2287ce8496772592d42d134fc530affcb9147f0a7641655a56c6cf83775f",
+      "destination_hash": "0c847eefa25edee3e17504351567ddc5865ea0ce524e0434674081a63c05239b"
+    },
+    {
+      "source": "forge/design/candidates/a/v8/nanoduck.svg",
+      "destination": "public/nanoduck.svg",
+      "strategy": "copy",
+      "source_hash": "723d3b4201c5fc6ffa3d30a1e5ed5151f616d436919d15f3642827a16ed7021d",
+      "destination_hash": "723d3b4201c5fc6ffa3d30a1e5ed5151f616d436919d15f3642827a16ed7021d"
+    },
+    {
+      "source": "forge/design/candidates/a/v8/nanoduck-original.svg",
+      "destination": "public/nanoduck-original.svg",
+      "strategy": "copy",
+      "source_hash": "e8b786961dc9a3b4d5450d3d20c3fd25cb6b2a9e7dc3034d23202d1a6dd2f528",
+      "destination_hash": "e8b786961dc9a3b4d5450d3d20c3fd25cb6b2a9e7dc3034d23202d1a6dd2f528"
+    }
+  ],
+  "changed_paths": [
+    "public/index.html",
+    "src/client/app.js"
+  ],
+  "patch_hash": "882d957bc3a2cf4cd76aed8259b144cf42c451b7699a6e04a8a684ea8d667c7e",
+  "adaptations": [
+    "Replaced the former Pace selector with independent Number of specialists and Discussion depth selectors in the approved Settings surface.",
+    "Kept the selected Electric composition, navigation, corrected SVGs, message hierarchy and accessible native controls.",
+    "Clarified that Head Consultant and Critic are excluded from specialist count, and that Auto discussion depth is capped at 10 complete exchanges."
+  ],
+  "variances": [
+    "The approved candidate’s historical pace selector is replaced by owner-requested behavior controls within the existing Settings layout.",
+    "No live-provider, GoDaddy-target, responsive or assistive-technology release acceptance is claimed by this local receipt."
+  ],
+  "qa_ids": [
+    "QA-R20", "QA-R21", "QA-R22", "QA-R35", "QA-R38", "QA-R40", "QA-R41", "QA-R42",
+    "QA-S04", "QA-H02", "QA-H04", "QA-H05", "QA-U03"
+  ],
+  "visual_evidence": [
+    {
+      "kind": "visual",
+      "path": "forge/runs/U-03/phase3-consultation-controls-20260914/visual-evidence.json",
+      "content_hash": "9e0d6f1e5785f8f26a0e1a6dab0a15b49c50ef321123be694fbd89a0be2a790a"
+    }
+  ],
+  "verification_status": "blocked",
+  "blockers": [
+    "U-01 current provider/catalog, browser-audio and target-host capability evidence is not yet available.",
+    "Formal responsive, assistive-technology and representative-owner QA remains prepared/not_run; this receipt does not claim release acceptance."
+  ]
+}

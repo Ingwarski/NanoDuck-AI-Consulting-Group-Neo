@@ -5,7 +5,93 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { createCodexProvider } from "../src/server/codex-provider.mjs";
+import { createMemoryStore } from "../src/server/store.mjs";
 import { testRuntimeInstructions as initialRuntimeInstructions } from "./fixtures/runtime-instructions.mjs";
+
+const syntheticGrant = refreshToken => Buffer.from(JSON.stringify({ auth_mode: "chatgpt", tokens: { access_token: "synthetic-access", refresh_token: refreshToken } }));
+
+test("a refreshed managed grant is saved before its private app-server home is removed", async () => {
+  const store = createMemoryStore();
+  await store.seedCodexGrant(syntheticGrant("synthetic-initial"));
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try {
+    assert.equal((await provider.inspect()).status, "ready");
+    const current = await store.codexGrant();
+    assert.equal(JSON.parse(current.bytes.toString()).tokens.refresh_token, "synthetic-rotated");
+    assert.equal(current.generation, 2); current.bytes.fill(0);
+    assert.equal((await provider.inspect()).status, "ready");
+    const unchanged = await store.codexGrant();
+    assert.equal(unchanged.generation, 2); unchanged.bytes.fill(0);
+  } finally { await provider.close(); }
+});
+
+test("parallel managed-grant writers keep the first valid rotation and disable the stale loser", async () => {
+  const store = createMemoryStore();
+  await store.seedCodexGrant(syntheticGrant("synthetic-initial"));
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try {
+    assert.deepEqual((await Promise.all([provider.inspect(), provider.inspect()])).map(value => value.status), ["ready", "ready"]);
+    const current = await store.codexGrant();
+    assert.equal(current.generation, 2);
+    assert.equal(JSON.parse(current.bytes.toString()).tokens.refresh_token, "synthetic-rotated"); current.bytes.fill(0);
+  } finally { await provider.close(); }
+});
+
+test("a divergent concurrent rotation fails instead of continuing with an unpersisted grant", async () => {
+  const store = createMemoryStore();
+  await store.seedCodexGrant(syntheticGrant("synthetic-divergent"));
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try {
+    const statuses = (await Promise.all([provider.inspect(), provider.inspect()])).map(value => value.status).sort();
+    assert.deepEqual(statuses, ["ready", "unavailable"]);
+    const current = await store.codexGrant();
+    assert.match(JSON.parse(current.bytes.toString()).tokens.refresh_token, /^synthetic-rotated-\d+$/u); current.bytes.fill(0);
+  } finally { await provider.close(); }
+});
+
+test("a failed grant write-back cannot report Codex ready", async () => {
+  const store = { codexGrant: async () => ({ bytes: syntheticGrant("synthetic-initial"), generation: 1 }), saveCodexGrant: async () => { throw new Error("database_unavailable"); } };
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try { assert.equal((await provider.inspect()).status, "unavailable"); }
+  finally { await provider.close(); }
+});
+
+test("connection close retries a rotated grant after an earlier write-back exhausted retries", async () => {
+  let attempts = 0; let saved;
+  const store = {
+    codexGrant: async () => ({ bytes: syntheticGrant("synthetic-initial"), generation: 1 }),
+    saveCodexGrant: async bytes => {
+      attempts += 1;
+      if (attempts <= 3) throw new Error("database_unavailable");
+      saved = Buffer.from(bytes); return 2;
+    }
+  };
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try {
+    assert.equal((await provider.inspect()).status, "unavailable");
+    assert.equal(attempts, 4);
+    assert.equal(JSON.parse(saved.toString()).tokens.refresh_token, "synthetic-rotated"); saved.fill(0);
+  } finally { await provider.close(); }
+});
+
+test("a durable-store provider without a grant reports authentication required", async () => {
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, createMemoryStore());
+  try { assert.equal((await provider.inspect()).status, "auth_required"); }
+  finally { await provider.close(); }
+});
+
+test("a malformed stored grant requires authentication while malformed refresh output fails unavailable", async () => {
+  const invalidStore = { codexGrant: async () => { throw new Error("codex_grant_invalid"); } };
+  const invalidProvider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, invalidStore);
+  try { assert.equal((await invalidProvider.inspect()).status, "auth_required"); }
+  finally { await invalidProvider.close(); }
+
+  const store = createMemoryStore();
+  await store.seedCodexGrant(syntheticGrant("synthetic-malformed-refresh"));
+  const provider = createCodexProvider({ readyForProvider: true, codexCommand: process.execPath, codexCommandArgs: [fileURLToPath(new URL("./fixtures/rotating-auth-codex.mjs", import.meta.url))] }, undefined, store);
+  try { assert.equal((await provider.inspect()).status, "unavailable"); }
+  finally { await provider.close(); }
+});
 
 test("Codex allows a progressing answer past its idle budget, but bounds silence and total duration", async () => {
   for (const [suffix, expected] of [["", { ok: true, body: "A bounded answer.", sources: [] }], [" wrong turn", { ok: false, code: "provider_idle_timeout" }], [" never completes", { ok: false, code: "provider_timeout" }]]) {

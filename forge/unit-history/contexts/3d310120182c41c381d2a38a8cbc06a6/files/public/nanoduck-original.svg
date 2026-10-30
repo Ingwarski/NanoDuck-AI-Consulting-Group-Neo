@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 14 90 84" role="img" aria-labelledby="title"><title id="title">NanoDuck Consulting Group</title>
+<g fill="none" stroke="#424242" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"><path d="M14.5 60v1.5a30.25 30.25 0 0 0 60.5 0V41.5h6.5"/><path d="M14.5 45v1.5A4.5 4.5 0 0 0 19 51h26.5M45.5 42.5V60"/></g>
+<g fill="#424242"><circle cx="14.5" cy="60" r="2.5"/><circle cx="14.5" cy="45" r="2.5"/><circle cx="45.5" cy="42.5" r="2.5"/><circle cx="45.5" cy="60" r="2.5"/><circle cx="81.5" cy="41.5" r="2.5"/></g>
+<g fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"><path stroke="#e3c640" d="M45.5 34C45.7 28.3 50.1 23.9 56.5 23.5"/><path stroke="#da6849" d="M64.5 23.5C70 24.1 74.5 28.6 75.2 35H84a3.5 3.5 0 0 0 3.5-3.5V30"/></g>
+<g fill="#e3c640"><circle cx="45.5" cy="34" r="2.5"/><circle cx="56.5" cy="23.5" r="2.5"/></g><g fill="#da6849"><circle cx="64.5" cy="23.5" r="2.5"/><circle cx="87.5" cy="30" r="2.5"/></g>
+</svg>

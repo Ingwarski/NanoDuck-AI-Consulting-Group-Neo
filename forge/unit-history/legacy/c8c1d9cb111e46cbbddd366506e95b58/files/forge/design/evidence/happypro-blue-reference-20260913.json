@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-09-13T20:03:34.020806+00:00",
+  "source_url": "https://happypro.academy/",
+  "resolved_browser_url": "https://happypro.academy/uk/",
+  "stylesheet_url": "https://happypro.academy/styles.css?v=20260907-register-menu-link-v1",
+  "stylesheet_sha256": "f2dc1c20f4a5ec341adfc587df9107a850f6464e6a49ecbd2c2219c9b7f6dae3",
+  "access": "User-requested public design reference; live CUA browser DOM/computed-style inspection and direct HTTP stylesheet read",
+  "observed_tokens": {
+    "button_blue": "#2e6fdc",
+    "button_blue_hover": "#1f5fc5",
+    "headline_light": "#dceeff",
+    "headline_mid": "#8bb8f4",
+    "headline_gradient": "linear-gradient(135deg, #dceeff 0%, #8bb8f4 32%, #2e6fdc 66%, #1f5fc5 100%)",
+    "site_raspberry": "#c0265b"
+  },
+  "application": "Exact blue for filled controls and structural accents; exact source gradient for large headings on black; source light-blue stop for small accent text. Critic uses a lighter raspberry chosen for readable role labels on the dark consulting surface. Head yellow, Product violet and Operations turquoise are this revision, not claimed as HappyPro brand tokens.",
+  "limitations": [
+    "Only the requested visual reference was inspected; no website changes, account access or private data read.",
+    "Search-engine rendering was cached and not used to determine current colours.",
+    "No full site clone, external font/media import or runtime reference dependency."
+  ]
+}

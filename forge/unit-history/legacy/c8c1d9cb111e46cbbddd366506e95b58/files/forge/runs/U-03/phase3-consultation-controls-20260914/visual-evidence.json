@@ -1,0 +1,25 @@
+{
+  "run_id": "phase3-consultation-controls-20260914",
+  "observed_at": "2026-09-14T17:25:00+03:00",
+  "executor": "Codex local browser walkthrough",
+  "source_revision": "working tree after b7ccd58",
+  "surface": {
+    "browser": "Codex In-app Browser",
+    "url": "http://127.0.0.1:4319/",
+    "route": "Settings",
+    "local_only": true
+  },
+  "observations": [
+    "Mobile hamburger navigation opened Settings without exposing a New destination in the menu.",
+    "Settings showed gpt-6-astra and xhigh/ultra selectors separately for Head and Critic.",
+    "Number of specialists showed 1, 2, 3, 5 and Auto — Head decides, with Head Consultant and Critic explicitly excluded.",
+    "Discussion depth showed 1, 3, 5 and Auto — until consensus, with a complete Critic challenge and specialist reply defined as one exchange and Auto capped at 10.",
+    "Selecting both Auto controls and saving produced the visible confirmation: Settings saved for future consultations."
+  ],
+  "source_hashes": {
+    "public/index.html": "5f18f93264b767fa095f9c7364df6533d2f06431d074b8d7bc3a8899285441c4",
+    "src/client/app.js": "0c847eefa25edee3e17504351567ddc5865ea0ce524e0434674081a63c05239b"
+  },
+  "result": "passed",
+  "limits": "This is local UI evidence only. It does not claim live provider execution, production deployment, or GoDaddy data operations."
+}

@@ -1,12 +1,12 @@
 # Development plan
 
-27 September 2026 · Status: **authorized combined implementation and tests present at revision `7b3b4545e2b8c18f488ac667973a0c3ddf661ff3`; repository finalization in progress; runtime activation not run**. Scope remains this repository's one Northflank application service, one private TLS-verified MySQL addon, existing Google owner authentication and dedicated `nanoduck-neo` Cloudflare Worker. Preserve provider connections, private data and active consultations. Activation requires separate authority and the zero-active-run gate; release readiness is `not_evaluated`.
+30 October 2026 · Status: **the combined implementation remains present at revision `7b3b4545e2b8c18f488ac667973a0c3ddf661ff3`; the owner has now authorized the managed Codex sign-in repair; repository finalization and runtime activation remain incomplete**. Scope remains this repository's one Northflank application service, one private TLS-verified MySQL addon, existing Google owner authentication and dedicated `nanoduck-neo` Cloudflare Worker. Preserve provider connections, private data and all consultations. Runtime activation remains bound to the zero-active-run, backup and scale-to-zero gate; release readiness is `not_evaluated`.
 
 ## Source References
 
 [Product idea](product-idea.md) supplies current intent; [PRD](prd.md) supplies all 67 distinct FR/NFR clauses, UC-001–UC-007 and AC-001–AC-010. [Context](project-context.md) and [terms](canonical-terms.md) are applied: single owner, browser-first use, literal Settings, separate AI roles and established vocabulary constrain local UI/API decisions. No context conflicts remain. [Guardrails](guardrails.md) supply authority and phase boundaries. [Journey](user-journey.md), [screen map](screen-map.md) and [wireframes](wireframes.md) supply all jobs, transitions, 9 surfaces and 44 states.
 
-[Design brief](design-brief.md#approved-visual-baseline) is the visual authority: frozen Electric A v8 (`nanoduck-electric-a-v8-20260914`) plus the authorized 27 September reading/liquid-glass production override. [Architecture](architecture.md), [DoD](dod-evals.md) and [QA checklist](qa-checklist.md) have been reconciled in that order. This plan consumes all eight DoD gates, 92 prepared QA definitions, H1–H10 and the representative-owner tasks. [Model settings](model-settings.md) preserves Codex CLI 0.155.1, Claude Code 2.1.280 and the selected tuples; [northflank-deployment.md](northflank-deployment.md) defines the Neo seam. Historical predecessor-host evidence cannot pass it.
+[Design brief](design-brief.md#approved-visual-baseline) is the visual authority: frozen Electric A v8 (`nanoduck-electric-a-v8-20260914`) plus the authorized 27 September reading/liquid-glass production override. [Architecture](architecture.md), [DoD](dod-evals.md) and [QA checklist](qa-checklist.md) have been reconciled in that order for the 30 October managed-auth repair. This plan consumes all eight DoD gates, 92 prepared QA definitions, H1–H10 and the representative-owner tasks. [Model settings](model-settings.md) preserves Codex CLI 0.155.1, Claude Code 2.1.280 and the selected tuples; [northflank-deployment.md](northflank-deployment.md) defines the Neo seam. Historical predecessor-host evidence cannot pass it.
 
 The exact authorization is `forge/runs/combined-updates-port-20260927/implementation-prompt.json`; `source-input.json` records the logical combined-update input without its machine path; `verification.json` records supplied local implementation observations and limits. Those receipts authorize and describe repository work, not activation. Exact consumed hashes are recorded by the orchestrator in the manifest.
 
@@ -42,9 +42,11 @@ U-01–U-08 are retained as the original approved implementation history. Their 
 
 **Work:** Use the 14 September content-free saved/effective settings read: Head/specialists Codex gpt-6-astra xhigh, Critic Codex gpt-6-astra xhigh and a legacy Balanced preset. Inactive Claude preferences remain unknown and must not be inferred. Preserve the recorded model/effort values; use replacement defaults of 2 specialists and 1 Critic ↔ specialist exchange. Never substitute, downgrade, buy credits or enable a paid fallback. Verify catalog/usage/renewal capabilities only for the selected route; do not probe unused Claude. Exercise a short allowed subscription call and restricted research capability after authorization. Verify standard and WebKit browser recognition constructors in Safari and Chrome and a real Ukrainian `uk-UA` result, with no NanoDuck audio endpoint or subscription transcription adapter. Inspect only the authorized Neo boundary: the Northflank Node/container and provider-subprocess runtime, Sandbox capacity and idle behavior, private-MySQL TLS and persistence, one-replica lifecycle, streaming, environment and protected logs, plus the dedicated Cloudflare Worker ingress. Keep automatic deployment and autoscaling disabled. Any activation must use stop-old → confirm zero containers → select the successful build → start one → verify `/healthz`, and must never interrupt an active consultation or reset data. Resolve upload/research limits, the owner-only JPEG/PNG/WebP byte/type policy, session concurrency/federated termination, separated key handling with exact existing 32-byte key encodings or the exact same-name `.env` envelope accepted by architecture, backup retention/RPO/RTO and operator procedures through architecture before dependent release tests. Use isolated fixtures and keep secrets/content out of Git.
 
-**Acceptance:** A dated capability matrix identifies actual supported and unavailable tuples, formats and host mechanisms, with source/runtime evidence. Choose SSE or the already permitted incremental polling using measured host behavior. No missing voice or security capability is labelled optional. An incompatible essential capability returns to architecture/product ownership; it does not authorize another host/provider or weakened requirement.
+**30 October managed-auth amendment:** Add the repeat-safe `nanoduck_provider_grants` table and leadership-gated encrypted store API. Validate ChatGPT auth payloads, derive a purpose-separated grant key, seed from the configured Northflank value only when the row is empty or intentionally reseeded, and use monotonic generation compare-and-swap for refreshes. Adapt the current Neo Codex provider without removing request workspaces, process-tree cancellation, account usage or research behavior: materialize the database grant into a private temporary home, force the file credential store, persist a changed valid file after every refresh-capable call and once more during close, disable a stale losing writer, fail closed on final writeback error, and delete/clear all temporary material. Pass the store through provider startup/shutdown, seed after database leadership, close providers before the store, make real preflight use the same private-MySQL lifecycle, and prevent real benchmark paths from discarding rotations. Keep the deployment secret as bootstrap/reseed only and preserve every conversation, setting, instruction, provider choice and paused run.
 
-**Verification:** QA-R20–QA-R24, QA-R28–QA-R32, QA-R38–QA-R39, QA-R43–QA-R44, QA-R49–QA-R50, QA-R52–QA-R53, QA-R56–QA-R58. Capability observations are prerequisites, not complete passes for these checks. Tests remain not_run. Evidence lives under `forge/runs/U-01/{run_id}/` and records actual revision, sources, executor, time and scope.
+**Acceptance:** A dated capability matrix identifies actual supported and unavailable tuples, formats and host mechanisms, with source/runtime evidence. Choose SSE or the already permitted incremental polling using measured host behavior. No missing voice or security capability is labelled optional. An incompatible essential capability returns to architecture/product ownership; it does not authorize another host/provider or weakened requirement. For managed auth, a synthetic rotation survives connection cleanup and store restart; ciphertext contains no token plaintext; an unchanged seed cannot roll back the rotated row; a stale sibling cannot overwrite the winner; invalid refresh data preserves the last valid row; a final writeback failure cannot report ready/success; and missing or genuinely rejected grants map to `auth_required` without leaking authentication material.
+
+**Verification:** The current corrective allocation is QA-R24, QA-R52, QA-R57 and QA-R59. Preserve the earlier capability references to QA-R20–QA-R23, QA-R28–QA-R32, QA-R38–QA-R39, QA-R43–QA-R44, QA-R49–QA-R50, QA-R53 and QA-R56–QA-R58 as historical planning context. Run focused grant/provider/config/preflight tests, real-MySQL integration when available, the full supported check suite and final target/diff inspection. Hosted continuity remains a U-17 seam. Evidence lives under `forge/runs/U-01/{run_id}/` and records actual revision, sources, executor, time and scope.
 
 **Risk/stop condition:** Browser recognition service or device incompatibility. Stop only the affected voice branch before release; typed input and other independent UI work remain available.
 
@@ -214,7 +216,7 @@ U-01–U-08 are retained as the original approved implementation history. Their 
 
 ### U-16 — Finalize the exact Neo target revision
 
-**Owner/layer:** repository integrator. **Depends on:** U-09–U-15 and the reconciled SDD chain. **Status:** in progress; QA-R68 remains prepared/not_run until the exact final staged revision is inspected.
+**Owner/layer:** repository integrator. **Depends on:** the U-01 managed-auth amendment, U-09–U-15 and the reconciled SDD chain. **Status:** pending the managed-auth implementation; QA-R68 remains prepared/not_run until the exact final staged revision is inspected.
 
 **Source trace:** NFR-15.1; UC-001, UC-002, UC-004; QA-R68; `target_repository_integrity`.
 
@@ -226,7 +228,7 @@ U-01–U-08 are retained as the original approved implementation history. Their 
 
 **Source trace:** NFR-15.1; UC-001, UC-002, UC-004; QA-R69; `runtime_activation`.
 
-**Work/acceptance:** verify a current private-MySQL backup or provider snapshot; scale the existing Northflank application service to zero; confirm zero containers; select the approved build while scale remains zero; start exactly one instance so `src/server/start.mjs` runs repeat-safe schema/instruction migrations against the preserved private TLS MySQL before HTTP startup; verify `/healthz`, database connectivity, Worker origin-key denial/direct access, Google owner authentication, selected settings/provider continuity, saved conversations and rollback. Do not replace the database, auth, provider grants or `nanoduck-neo` Worker, and do not touch predecessor resources. Any active consultation, ambiguous resource, failed migration/health/continuity check or missing rollback blocks activation.
+**Work/acceptance:** verify a current private-MySQL backup or provider snapshot that includes the encrypted grant row; scale the existing Northflank application service to zero; confirm zero containers; if the deployed Codex seed is invalid, replace only its Northflank bootstrap secret from a fresh trusted managed login; select the approved build while scale remains zero; start exactly one instance so `src/server/start.mjs` runs repeat-safe schema/instruction/grant migration against the preserved private TLS MySQL before HTTP startup. Verify `/healthz`, database connectivity, Worker origin-key denial/direct access, Google owner authentication, selected settings/provider continuity, saved conversations and paused-run continuity. Open and close a bounded provider connection and restart the single service once through the approved zero-instance sequence to prove the rotated database grant survives temporary-home cleanup and process replacement. Preserve rollback. Do not replace the database, Google authentication, provider connection, `nanoduck-neo` Worker or any predecessor resource. Any active consultation, ambiguous resource, failed migration/health/grant/continuity check or missing rollback blocks activation.
 
 ## Current implementation evidence
 
@@ -234,9 +236,1612 @@ The supplied `forge/runs/combined-updates-port-20260927/verification.json` binds
 
 The receipt names the local and CI executors/environments and retains hashes for exact-revision evidence, but it has no per-QA result records; it remains supporting evidence rather than a formal pass for QA-R61–QA-R69 or any whole gate. WebKit is not native Safari; disposable CI MySQL is not the existing private Northflank database; the container job is not a hosted start; and `textutil` is not a GUI reader. No live provider/account/public-search probe, representative-owner/H1–H10/assistive-technology session, private Northflank MySQL TLS/backup-restore check, Northflank/Cloudflare deployment, scale action, restart, secret change or consultation interruption occurred. Formal release readiness remains `not_evaluated`.
 
+## Unit Contribution Index
+
+This index records additional trace links that are load-bearing for the current executable unit contract and were implicit in the earlier narrative:
+
+| Unit | Implemented obligation(s) |
+|---|---|
+| U-01 | FR-05.5, NFR-13.1, NFR-15.1, NFR-16.2 |
+| U-03 | ST-01, ST-02, ST-03, ST-04 |
+| U-05 | FR-04.2 |
+| U-08 | NFR-02.1, NFR-02.2 |
+| U-10 | FR-02.12 |
+
+## Unit Execution Contract
+
+This canonical contract preserves the seventeen established unit IDs and assigns every applicable implementation check exactly once. Migration archived prior aggregate execution as historical evidence; no unit is inferred complete. A unit remains incomplete until its scoped work, integration, required checks and acceptance evidence meet the referenced DoD and QA requirements. `AGENTS.md` governs execution behavior.
+
+```json
+{
+  "acceptance": {
+    "QA-H01": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H02": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H03": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H04": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H05": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H06": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H07": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H08": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H09": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-H10": {
+      "obligation_ids": [],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-R01": {
+      "obligation_ids": [
+        "FR-01.1"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R02": {
+      "obligation_ids": [
+        "FR-01.2"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R03": {
+      "obligation_ids": [
+        "FR-02.1"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R04": {
+      "obligation_ids": [
+        "FR-02.2"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R05": {
+      "obligation_ids": [
+        "FR-02.3"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R06": {
+      "obligation_ids": [
+        "FR-02.4"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R07": {
+      "obligation_ids": [
+        "FR-02.5"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R08": {
+      "obligation_ids": [
+        "FR-02.6"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R09": {
+      "obligation_ids": [
+        "FR-02.7"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R10": {
+      "obligation_ids": [
+        "FR-02.8"
+      ],
+      "owner_unit": "U-04",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03"
+      ]
+    },
+    "QA-R11": {
+      "obligation_ids": [
+        "FR-03.1"
+      ],
+      "owner_unit": "U-13",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-07"
+      ]
+    },
+    "QA-R12": {
+      "obligation_ids": [
+        "FR-03.2"
+      ],
+      "owner_unit": "U-04",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03"
+      ]
+    },
+    "QA-R13": {
+      "obligation_ids": [
+        "FR-03.3"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R14": {
+      "obligation_ids": [
+        "FR-03.4"
+      ],
+      "owner_unit": "U-14",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ]
+    },
+    "QA-R15": {
+      "obligation_ids": [
+        "FR-03.5"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R16": {
+      "obligation_ids": [
+        "FR-03.6"
+      ],
+      "owner_unit": "U-04",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03"
+      ]
+    },
+    "QA-R17": {
+      "obligation_ids": [
+        "FR-04.1"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R18": {
+      "obligation_ids": [
+        "FR-04.2"
+      ],
+      "owner_unit": "U-05",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R19": {
+      "obligation_ids": [
+        "FR-04.3"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R20": {
+      "obligation_ids": [
+        "FR-05.1"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-R21": {
+      "obligation_ids": [
+        "FR-05.2"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-R22": {
+      "obligation_ids": [
+        "FR-05.3"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-R23": {
+      "obligation_ids": [
+        "FR-05.4"
+      ],
+      "owner_unit": "U-12",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10",
+        "U-11"
+      ]
+    },
+    "QA-R24": {
+      "obligation_ids": [
+        "FR-05.5"
+      ],
+      "owner_unit": "U-01",
+      "prerequisite_checks": [],
+      "prerequisite_units": []
+    },
+    "QA-R25": {
+      "obligation_ids": [
+        "FR-06.1"
+      ],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    },
+    "QA-R26": {
+      "obligation_ids": [
+        "FR-06.2"
+      ],
+      "owner_unit": "U-13",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-07"
+      ]
+    },
+    "QA-R27": {
+      "obligation_ids": [
+        "FR-06.3"
+      ],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    },
+    "QA-R28": {
+      "obligation_ids": [
+        "FR-07.1"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R29": {
+      "obligation_ids": [
+        "FR-07.2"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R30": {
+      "obligation_ids": [
+        "FR-07.3"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R31": {
+      "obligation_ids": [
+        "FR-07.4"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R32": {
+      "obligation_ids": [
+        "FR-07.5"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R33": {
+      "obligation_ids": [
+        "FR-08.1"
+      ],
+      "owner_unit": "U-14",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ]
+    },
+    "QA-R34": {
+      "obligation_ids": [
+        "FR-08.2"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-R35": {
+      "obligation_ids": [
+        "FR-08.3"
+      ],
+      "owner_unit": "U-15",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-14"
+      ]
+    },
+    "QA-R36": {
+      "obligation_ids": [
+        "NFR-01.1"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R37": {
+      "obligation_ids": [
+        "NFR-01.2"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R38": {
+      "obligation_ids": [
+        "NFR-01.3"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R39": {
+      "obligation_ids": [
+        "NFR-01.4"
+      ],
+      "owner_unit": "U-04",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03"
+      ]
+    },
+    "QA-R40": {
+      "obligation_ids": [
+        "NFR-02.1"
+      ],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-R41": {
+      "obligation_ids": [
+        "NFR-02.2"
+      ],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-R42": {
+      "obligation_ids": [
+        "NFR-02.3"
+      ],
+      "owner_unit": "U-08",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ]
+    },
+    "QA-R43": {
+      "obligation_ids": [
+        "NFR-10.1"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R44": {
+      "obligation_ids": [
+        "NFR-10.2"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R45": {
+      "obligation_ids": [
+        "NFR-10.3"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R46": {
+      "obligation_ids": [
+        "NFR-11.1"
+      ],
+      "owner_unit": "U-13",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-07"
+      ]
+    },
+    "QA-R47": {
+      "obligation_ids": [
+        "NFR-11.2"
+      ],
+      "owner_unit": "U-12",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10",
+        "U-11"
+      ]
+    },
+    "QA-R48": {
+      "obligation_ids": [
+        "NFR-11.3"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R49": {
+      "obligation_ids": [
+        "NFR-12.1"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R50": {
+      "obligation_ids": [
+        "NFR-12.2"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-R51": {
+      "obligation_ids": [
+        "NFR-12.3"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R52": {
+      "obligation_ids": [
+        "NFR-13.1"
+      ],
+      "owner_unit": "U-01",
+      "prerequisite_checks": [],
+      "prerequisite_units": []
+    },
+    "QA-R53": {
+      "obligation_ids": [
+        "NFR-13.2"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R54": {
+      "obligation_ids": [
+        "NFR-14.1"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R55": {
+      "obligation_ids": [
+        "NFR-14.2"
+      ],
+      "owner_unit": "U-14",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ]
+    },
+    "QA-R56": {
+      "obligation_ids": [
+        "NFR-14.3"
+      ],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    },
+    "QA-R57": {
+      "obligation_ids": [
+        "NFR-15.1"
+      ],
+      "owner_unit": "U-01",
+      "prerequisite_checks": [],
+      "prerequisite_units": []
+    },
+    "QA-R58": {
+      "obligation_ids": [
+        "NFR-16.1"
+      ],
+      "owner_unit": "U-02",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01"
+      ]
+    },
+    "QA-R59": {
+      "obligation_ids": [
+        "NFR-16.2"
+      ],
+      "owner_unit": "U-01",
+      "prerequisite_checks": [],
+      "prerequisite_units": []
+    },
+    "QA-R60": {
+      "obligation_ids": [
+        "FR-05.6"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-R61": {
+      "obligation_ids": [
+        "FR-02.12",
+        "FR-03.3",
+        "FR-03.5"
+      ],
+      "owner_unit": "U-09",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ]
+    },
+    "QA-R62": {
+      "obligation_ids": [
+        "FR-02.10",
+        "FR-02.11",
+        "FR-02.12",
+        "FR-02.13",
+        "FR-02.14",
+        "FR-02.4",
+        "FR-02.5",
+        "FR-02.9",
+        "FR-03.5"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-R63": {
+      "obligation_ids": [
+        "FR-04.1"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-R64": {
+      "obligation_ids": [
+        "FR-02.15",
+        "FR-05.4"
+      ],
+      "owner_unit": "U-12",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10",
+        "U-11"
+      ]
+    },
+    "QA-R65": {
+      "obligation_ids": [
+        "FR-06.2"
+      ],
+      "owner_unit": "U-13",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-07"
+      ]
+    },
+    "QA-R66": {
+      "obligation_ids": [
+        "FR-03.4"
+      ],
+      "owner_unit": "U-14",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ]
+    },
+    "QA-R67": {
+      "obligation_ids": [
+        "FR-08.3"
+      ],
+      "owner_unit": "U-15",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-03",
+        "U-14"
+      ]
+    },
+    "QA-R68": {
+      "obligation_ids": [
+        "NFR-15.1"
+      ],
+      "owner_unit": "U-16",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-09",
+        "U-10",
+        "U-11",
+        "U-12",
+        "U-13",
+        "U-14",
+        "U-15"
+      ]
+    },
+    "QA-R69": {
+      "obligation_ids": [
+        "NFR-15.1"
+      ],
+      "owner_unit": "U-17",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-16"
+      ]
+    },
+    "QA-S01": {
+      "obligation_ids": [
+        "ST-01",
+        "ST-02",
+        "ST-03",
+        "ST-04"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-S02": {
+      "obligation_ids": [
+        "ST-05",
+        "ST-06",
+        "ST-07",
+        "ST-08",
+        "ST-09",
+        "ST-10",
+        "ST-11",
+        "ST-12",
+        "ST-13",
+        "ST-14",
+        "ST-15",
+        "ST-16",
+        "ST-17"
+      ],
+      "owner_unit": "U-14",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ]
+    },
+    "QA-S03": {
+      "obligation_ids": [
+        "ST-18",
+        "ST-19",
+        "ST-20"
+      ],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    },
+    "QA-S04": {
+      "obligation_ids": [
+        "ST-21",
+        "ST-22",
+        "ST-23",
+        "ST-24",
+        "ST-25"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-S05": {
+      "obligation_ids": [
+        "ST-26",
+        "ST-27",
+        "ST-28",
+        "ST-29",
+        "ST-30",
+        "ST-31",
+        "ST-32",
+        "ST-33"
+      ],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-S06": {
+      "obligation_ids": [
+        "ST-34",
+        "ST-35",
+        "ST-36"
+      ],
+      "owner_unit": "U-11",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09",
+        "U-10"
+      ]
+    },
+    "QA-S07": {
+      "obligation_ids": [
+        "ST-37",
+        "ST-38"
+      ],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-S08": {
+      "obligation_ids": [
+        "ST-39",
+        "ST-40",
+        "ST-41",
+        "ST-42"
+      ],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    },
+    "QA-S09": {
+      "obligation_ids": [
+        "ST-43",
+        "ST-44"
+      ],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-U01": {
+      "obligation_ids": [],
+      "owner_unit": "U-06",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ]
+    },
+    "QA-U02": {
+      "obligation_ids": [],
+      "owner_unit": "U-10",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-09"
+      ]
+    },
+    "QA-U03": {
+      "obligation_ids": [],
+      "owner_unit": "U-03",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-01",
+        "U-02"
+      ]
+    },
+    "QA-U04": {
+      "obligation_ids": [],
+      "owner_unit": "U-07",
+      "prerequisite_checks": [],
+      "prerequisite_units": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ]
+    }
+  },
+  "definition_ref": {
+    "heading": "## Unit Execution Contract",
+    "path": "docs/development-plan.md"
+  },
+  "order": [
+    "U-01",
+    "U-02",
+    "U-03",
+    "U-04",
+    "U-05",
+    "U-06",
+    "U-07",
+    "U-08",
+    "U-09",
+    "U-10",
+    "U-11",
+    "U-12",
+    "U-13",
+    "U-14",
+    "U-15",
+    "U-16",
+    "U-17"
+  ],
+  "policy": "strict_sequential",
+  "units": {
+    "U-01": {
+      "construction_dependencies": [],
+      "implementation_paths": [
+        "src/server/codex-provider.mjs",
+        "src/server/config.mjs",
+        "src/server/index.mjs",
+        "src/server/preflight.mjs",
+        "src/server/providers.mjs",
+        "src/server/schema.sql",
+        "src/server/store.mjs",
+        "test/codex-provider.test.mjs",
+        "test/core.test.mjs",
+        "test/mysql.integration.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R24",
+        "QA-R52",
+        "QA-R57",
+        "QA-R59"
+      ],
+      "scope": "Verify and repair the preserved runtime and managed Codex provider capability, including durable encrypted grant rotation."
+    },
+    "U-02": {
+      "construction_dependencies": [
+        "U-01"
+      ],
+      "implementation_paths": [
+        "src/server/auth.mjs",
+        "src/server/crypto.mjs",
+        "src/server/index.mjs",
+        "src/server/schema.sql",
+        "src/server/store.mjs",
+        "test/core.test.mjs",
+        "test/http.test.mjs",
+        "test/mysql.integration.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R01",
+        "QA-R02",
+        "QA-R43",
+        "QA-R44",
+        "QA-R45",
+        "QA-R48",
+        "QA-R53",
+        "QA-R58"
+      ],
+      "scope": "Private application, owner session and durable encrypted data foundation."
+    },
+    "U-03": {
+      "construction_dependencies": [
+        "U-01",
+        "U-02"
+      ],
+      "implementation_paths": [
+        "src/server/index.mjs",
+        "src/client/app.js",
+        "public/index.html",
+        "public/styles.css",
+        "test/http.test.mjs",
+        "scripts/browser-check.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R20",
+        "QA-R21",
+        "QA-R22",
+        "QA-R34",
+        "QA-R60",
+        "QA-S01",
+        "QA-S04",
+        "QA-S09",
+        "QA-U03"
+      ],
+      "scope": "Approved presentation, settings and future-run configuration."
+    },
+    "U-04": {
+      "construction_dependencies": [
+        "U-01",
+        "U-02",
+        "U-03"
+      ],
+      "implementation_paths": [
+        "src/server/consultation.mjs",
+        "src/server/codex-provider.mjs",
+        "src/server/claude-provider.mjs",
+        "src/server/prompt-contracts.mjs",
+        "test/consultation.test.mjs",
+        "test/codex-provider.test.mjs",
+        "test/claude-provider.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R10",
+        "QA-R12",
+        "QA-R16",
+        "QA-R39"
+      ],
+      "scope": "Real discussion, provider control and recovery behavior."
+    },
+    "U-05": {
+      "construction_dependencies": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ],
+      "implementation_paths": [
+        "src/server/research-evidence.mjs",
+        "src/server/consultation.mjs",
+        "src/client/app.js",
+        "test/research-evidence.test.mjs",
+        "test/consultation.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R18"
+      ],
+      "scope": "Live research and inspectable source flow."
+    },
+    "U-06": {
+      "construction_dependencies": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04"
+      ],
+      "implementation_paths": [
+        "src/server/attachments.mjs",
+        "src/server/validation.mjs",
+        "src/client/app.js",
+        "public/index.html",
+        "test/http.test.mjs",
+        "scripts/browser-check.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R04",
+        "QA-R28",
+        "QA-R29",
+        "QA-R30",
+        "QA-R31",
+        "QA-R32",
+        "QA-R50",
+        "QA-S05",
+        "QA-U01"
+      ],
+      "scope": "Browser voice and safe owned attachments."
+    },
+    "U-07": {
+      "construction_dependencies": [
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06"
+      ],
+      "implementation_paths": [
+        "src/server/conversation-export.mjs",
+        "src/server/recovery.mjs",
+        "src/server/local-state.mjs",
+        "src/server/store.mjs",
+        "test/conversation-export.test.mjs",
+        "test/mysql.integration.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R25",
+        "QA-R27",
+        "QA-R56",
+        "QA-S03",
+        "QA-S08",
+        "QA-U04"
+      ],
+      "scope": "Record ownership, export, deletion and restore."
+    },
+    "U-08": {
+      "construction_dependencies": [
+        "U-01",
+        "U-02",
+        "U-03",
+        "U-04",
+        "U-05",
+        "U-06",
+        "U-07"
+      ],
+      "implementation_paths": [
+        "package.json",
+        "Dockerfile",
+        "scripts/check-artifacts.mjs",
+        "scripts/browser-check.mjs",
+        "test/http.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-H01",
+        "QA-H02",
+        "QA-H03",
+        "QA-H04",
+        "QA-H05",
+        "QA-H06",
+        "QA-H07",
+        "QA-H08",
+        "QA-H09",
+        "QA-H10",
+        "QA-R40",
+        "QA-R41",
+        "QA-R42"
+      ],
+      "scope": "Integrated application verification and scoped release preparation."
+    },
+    "U-09": {
+      "construction_dependencies": [
+        "U-02",
+        "U-04",
+        "U-08"
+      ],
+      "implementation_paths": [
+        "src/server/store.mjs",
+        "src/server/consultation.mjs",
+        "src/server/run-snapshot.mjs",
+        "src/server/parallel-contract.mjs",
+        "test/source-persistence.test.mjs",
+        "test/consultation.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R03",
+        "QA-R13",
+        "QA-R15",
+        "QA-R36",
+        "QA-R37",
+        "QA-R61"
+      ],
+      "scope": "Immutable accepted-request binding and private-MySQL recovery."
+    },
+    "U-10": {
+      "construction_dependencies": [
+        "U-09"
+      ],
+      "implementation_paths": [
+        "src/server/consultation-parallel.mjs",
+        "src/server/prompt-contracts.mjs",
+        "src/server/provider-context.mjs",
+        "src/server/parallel-contract.mjs",
+        "test/parallel-consultation.test.mjs",
+        "test/prompt-contracts.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R05",
+        "QA-R06",
+        "QA-R07",
+        "QA-R08",
+        "QA-R09",
+        "QA-R38",
+        "QA-R62",
+        "QA-S07",
+        "QA-U02"
+      ],
+      "scope": "Head-authored parallel work and Critic fulfillment."
+    },
+    "U-11": {
+      "construction_dependencies": [
+        "U-09",
+        "U-10"
+      ],
+      "implementation_paths": [
+        "src/server/research-evidence.mjs",
+        "src/server/consultation-parallel.mjs",
+        "src/client/app.js",
+        "test/research-evidence.test.mjs",
+        "test/parallel-consultation.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R17",
+        "QA-R19",
+        "QA-R49",
+        "QA-R51",
+        "QA-R54",
+        "QA-R63",
+        "QA-S06"
+      ],
+      "scope": "Request-scoped research and durable evidence."
+    },
+    "U-12": {
+      "construction_dependencies": [
+        "U-09",
+        "U-10",
+        "U-11"
+      ],
+      "implementation_paths": [
+        "src/server/usage.mjs",
+        "src/server/account-usage.mjs",
+        "src/server/store.mjs",
+        "src/client/app.js",
+        "test/usage.test.mjs",
+        "test/account-usage.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R23",
+        "QA-R47",
+        "QA-R64"
+      ],
+      "scope": "Provider usage, account allowance and activity reconciliation."
+    },
+    "U-13": {
+      "construction_dependencies": [
+        "U-03",
+        "U-07"
+      ],
+      "implementation_paths": [
+        "src/client/markdown.js",
+        "src/server/conversation-export.mjs",
+        "test/markdown.test.mjs",
+        "test/markdown-table-export.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R11",
+        "QA-R26",
+        "QA-R46",
+        "QA-R65"
+      ],
+      "scope": "Semantic Markdown tables and native RTF table export."
+    },
+    "U-14": {
+      "construction_dependencies": [
+        "U-09",
+        "U-12",
+        "U-13"
+      ],
+      "implementation_paths": [
+        "src/client/app.js",
+        "src/client/refresh-state.js",
+        "public/styles.css",
+        "scripts/browser-reading-mode.mjs",
+        "scripts/browser-progress-recovery.mjs",
+        "test/refresh-state.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R14",
+        "QA-R33",
+        "QA-R55",
+        "QA-R66",
+        "QA-S02"
+      ],
+      "scope": "Four-view reading workspace and safe active controls."
+    },
+    "U-15": {
+      "construction_dependencies": [
+        "U-03",
+        "U-14"
+      ],
+      "implementation_paths": [
+        "src/client/navbar-glass.js",
+        "public/styles.css",
+        "scripts/browser-navbar-glass.mjs",
+        "test/review-fixes.test.mjs"
+      ],
+      "kind": "integration",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R35",
+        "QA-R67"
+      ],
+      "scope": "Final scoped liquid-glass override."
+    },
+    "U-16": {
+      "construction_dependencies": [
+        "U-01",
+        "U-09",
+        "U-10",
+        "U-11",
+        "U-12",
+        "U-13",
+        "U-14",
+        "U-15"
+      ],
+      "implementation_paths": [
+        "AGENTS.md",
+        "package.json",
+        "scripts/check-artifacts.mjs",
+        "forge/sdd-manifest.json"
+      ],
+      "kind": "release",
+      "owner": "authorized implementation operator",
+      "required_check_ids": [
+        "QA-R68"
+      ],
+      "scope": "Exact Neo target integration, inspection, commit and push."
+    },
+    "U-17": {
+      "construction_dependencies": [
+        "U-16"
+      ],
+      "implementation_paths": [
+        "docs/northflank-deployment.md",
+        "src/server/start.mjs",
+        "src/server/schema.sql",
+        "cloudflare/northflank-proxy.mjs"
+      ],
+      "kind": "release",
+      "owner": "authorized Neo operator",
+      "required_check_ids": [
+        "QA-R69"
+      ],
+      "scope": "Safe activation of the approved revision on the existing Neo runtime."
+    }
+  }
+}
+```
+
 ## Dependency Order
 
-Preserved base: U-01 → U-02 → U-03 → U-04 → U-05/U-06 → U-07 → U-08. Combined port: U-08 → U-09 → U-10 → U-11 → U-12; U-13 depends on U-03/U-07 and may proceed beside U-09–U-12; U-14 depends on U-09/U-12/U-13; U-15 depends on U-03/U-14; U-16 waits for U-09–U-15 and final SDD reconciliation. U-17 is a separate operational successor to U-16 and never runs from repository completion alone.
+Preserved base: U-01 → U-02 → U-03 → U-04 → U-05/U-06 → U-07 → U-08. The 30 October repair revalidates U-01 before repository finalization. Combined port: U-08 → U-09 → U-10 → U-11 → U-12; U-13 depends on U-03/U-07 and may proceed beside U-09–U-12; U-14 depends on U-09/U-12/U-13; U-15 depends on U-03/U-14; U-16 waits for the U-01 amendment, U-09–U-15 and final SDD reconciliation. U-17 is a separate operational successor to U-16 and never runs from repository completion alone.
 
 A unit's implemented code and its evidence status are separate. Open real-MySQL/provider/browser/human/hosted seams block only the corresponding claims, while an active consultation blocks all activation. No calendar duration is invented.
 
@@ -258,6 +1863,7 @@ These are the actual Neo seams. Producers own compatibility; consumers reject mi
 | C-10 safe inputs, U-06 → U-09/U-14/U-07 | Owned bounded image references and editable unsent browser transcript; no NanoDuck audio. | QA-R04, QA-R28–QA-R32, QA-R50, QA-R55, QA-U01. |
 | C-11 records/restore, U-07 → U-13/U-14/U-17 | Complete confirmed record, sources/attachments, deletion tombstone, safe export and isolated restore. | QA-R25–QA-R27, QA-R52, QA-R56, QA-U04. |
 | C-12 repository/activation, U-16 → U-17 | Exact approved commit/image/config/schema/instruction migration, preserved Northflank/private-MySQL/Google/Worker identity and rollback. | QA-R57, QA-R68, QA-R69; `target_repository_integrity`, `runtime_activation`. |
+| C-13 managed Codex grant, U-01 → U-03/U-04/U-12/U-17 | Validated encrypted database bytes, bootstrap fingerprint, generation and compare-and-swap; temporary `auth.json`/`config.toml` are private materializations only. Provider close writes before store close; missing/invalid grants remain truthful. | QA-R24, QA-R52, QA-R57, QA-R59, QA-R69; functional, security and lifecycle gates. |
 
 ## Clause coverage
 
@@ -295,7 +1901,7 @@ Every current PRD clause maps to implementation unit(s) and exact QA definitions
 | FR-05.2 | U-03 | QA-R21 |
 | FR-05.3 | U-03/U-10 | QA-R22, QA-R62 |
 | FR-05.4 | U-12 | QA-R23, QA-R64 |
-| FR-05.5 | U-03 | QA-R24 |
+| FR-05.5 | U-01/U-03 | QA-R24 |
 | FR-05.6 | U-03 | QA-R60 |
 | FR-06.1 | U-07/U-14 | QA-R25, QA-R66 |
 | FR-06.2 | U-13 | QA-R26, QA-R65 |
@@ -324,14 +1930,14 @@ Every current PRD clause maps to implementation unit(s) and exact QA definitions
 | NFR-12.1 | U-11 | QA-R49, QA-R63 |
 | NFR-12.2 | U-06 | QA-R50 |
 | NFR-12.3 | U-10/U-11 | QA-R51, QA-R63 |
-| NFR-13.1 | U-02 | QA-R52 |
+| NFR-13.1 | U-01/U-02 | QA-R52 |
 | NFR-13.2 | U-02/U-17 | QA-R53 |
 | NFR-14.1 | U-09/U-11/U-12/U-13 | QA-R54, QA-R61, QA-R63, QA-R64, QA-R65 |
 | NFR-14.2 | U-06/U-12/U-14/U-15 | QA-R55, QA-R64, QA-R66, QA-R67 |
 | NFR-14.3 | U-07 | QA-R56 |
-| NFR-15.1 | U-08/U-16/U-17 | QA-R57, QA-R68, QA-R69 |
+| NFR-15.1 | U-01/U-08/U-16/U-17 | QA-R57, QA-R68, QA-R69 |
 | NFR-16.1 | U-02/U-11/U-12 | QA-R58, QA-R63, QA-R64 |
-| NFR-16.2 | U-09/U-10/U-11/U-12/U-15 | QA-R59, QA-R62, QA-R63, QA-R64, QA-R67 |
+| NFR-16.2 | U-01/U-09/U-10/U-11/U-12/U-15 | QA-R59, QA-R62, QA-R63, QA-R64, QA-R67 |
 
 ## Surface and state coverage
 
@@ -385,6 +1991,6 @@ Runtime activation is a separate operator decision. It additionally requires exa
 
 ## Handoff and implementation boundary
 
-The combined implementation was already authorized by `forge/runs/combined-updates-port-20260927/implementation-prompt.json`; U-09–U-15 are present in the target working tree. The remaining repository handoff is U-16: final SDD/trace reconciliation, exact-revision checks, diff/staging audit, commit and push to the canonical Neo branch. Formal release readiness remains `not_evaluated`.
+The combined implementation was authorized by `forge/runs/combined-updates-port-20260927/implementation-prompt.json`; U-09–U-15 are present in the target working tree. The owner's 30 October request separately authorizes the U-01 managed-auth correction in this canonical Neo repository. After that correction and its current checks, U-16 performs final SDD/trace reconciliation, exact-revision checks, diff/staging audit, commit and push to the canonical Neo branch. Formal release readiness remains `not_evaluated`.
 
-No current receipt authorizes U-17. Activation may occur only after separate authority and the zero-active-run, backup, scale-to-zero, select-approved-build, start-one-with-repeat-safe-startup-migration, health/continuity/rollback sequence. It must preserve the current Northflank service, private MySQL, Google owner authentication, selected provider connections and `nanoduck-neo` Worker and must not interrupt active consultations or touch predecessor resources.
+The 30 October request asks for the live OAuth problem to be solved, but sensitive grant transmission remains a final interactive action. U-17 may proceed only after the zero-active-run, backup, scale-to-zero, reseed-if-needed, select-approved-build, start-one-with-repeat-safe-startup-migration and health/grant/continuity/rollback sequence is ready, and after any required login or sensitive-data confirmation at the action boundary. It must preserve the current Northflank service, private MySQL, Google owner authentication, selected provider connection and `nanoduck-neo` Worker and must not interrupt consultations or touch predecessor resources.

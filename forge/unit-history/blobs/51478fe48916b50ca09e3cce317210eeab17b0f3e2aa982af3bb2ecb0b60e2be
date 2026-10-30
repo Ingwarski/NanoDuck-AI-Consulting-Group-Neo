@@ -1,0 +1,20 @@
+{
+  "candidate_id": "b",
+  "version": "v7",
+  "visual_target_hash": "c4a8ab01d4750ef911c63781554f1ecb6a6c532dfa0610d89e0c6868f121c26a",
+  "prototype_tree_hash": "015667095db7ad5dd5883521b9b3d9fa1e65b5968ebc4dd7df6e1ae665966d5c",
+  "preview_url": "http://127.0.0.1:4328/b/v7/",
+  "observed_at": "2026-09-13T20:37:42.256830+00:00",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/b/v7/#discussion"
+  ],
+  "capture_reference": "b-v7-safari-supplied-logo",
+  "capture_storage": "Inline CUA screenshot and AX observations in this turn.",
+  "evidence": "Existing Safari tab navigated using pasted exact v7 URL. Actual URL verified in AX; discussion screenshot shows supplied thin-outline duck in navigation and tab favicon.",
+  "findings": []
+}

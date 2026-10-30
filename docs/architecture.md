@@ -1,12 +1,12 @@
 # NanoDuck Neo architecture
 
-27 September 2026 · Northflank reconciliation · Electric A v8 with the authorized scoped reading and liquid-glass override
+30 October 2026 · Northflank managed-auth reconciliation · Electric A v8 with the authorized scoped reading and liquid-glass override
 
 ## Source references
 
-This architecture consumes the current product intent and full structural SDD chain: [product idea](product-idea.md), [PRD](prd.md), [project context](project-context.md), [canonical terms](canonical-terms.md), [guardrails](guardrails.md), [user journey](user-journey.md), [screen map](screen-map.md), [wireframes](wireframes.md) and [design brief](design-brief.md). It also consumes the exact [model-settings record](model-settings.md), [Northflank deployment contract](northflank-deployment.md), the 27 September implementation/source receipts under `forge/runs/combined-updates-port-20260927/` and their verification record.
+This architecture consumes the current product intent and full structural SDD chain: [product idea](product-idea.md), [PRD](prd.md), [project context](project-context.md), [canonical terms](canonical-terms.md), [guardrails](guardrails.md), [user journey](user-journey.md), [screen map](screen-map.md), [wireframes](wireframes.md) and [design brief](design-brief.md). It also consumes the exact [model-settings record](model-settings.md), [Northflank deployment contract](northflank-deployment.md), the 27 September implementation/source receipts under `forge/runs/combined-updates-port-20260927/` and their verification record. The 30 October reconciliation additionally inspects the current managed-auth, store, migration, startup, preflight and provider-lifecycle seams in `src/server/`, together with the source-backed failure that a refreshed temporary Codex grant was discarded between connections.
 
-The implementation observations below were made in this Neo checkout on 27 September 2026. The principal source hashes were:
+The principal baseline hashes come from the 27 September reconciliation; the managed-auth implementation observations were refreshed in this Neo checkout on 30 October 2026, before the corrective implementation:
 
 | Source group | Bound source and SHA-256 |
 |---|---|
@@ -15,6 +15,7 @@ The implementation observations below were made in this Neo checkout on 27 Septe
 | Hosting and settings | `docs/model-settings.md` — `04eba2e9d28702a3632ce9434a591fb30fecfd794c9f895ed484ca94aa7f99fc`; `docs/northflank-deployment.md` — `218dc41b7e29a85319399ce4ca785b1b915d9744203ae651ed584d8592ecd4c1` |
 | Authorization and source | Current hashes for `forge/runs/combined-updates-port-20260927/implementation-prompt.json`, `source-input.json` and `verification.json` are bound in this owner's manifest record; evaluated implementation/test revision `7b3b4545e2b8c18f488ac667973a0c3ddf661ff3` |
 | Request and ledger implementation | `src/server/store.mjs` — `16e3d12ce8bebcf7d5ad82612d79cdbf11aedeee365fa44bdcd5216b192d076b`; `consultation-parallel.mjs` — `cb4cecd5befa81eefd582cd71a4f22cc4958752e02441587e353b73ff964e544`; `parallel-contract.mjs` — `367d9c650068ed15501831d6939481983b76d319f1bde28c5a88b9e09400a464` |
+| Managed-auth lifecycle before correction | `src/server/codex-provider.mjs` — `527449619afd21a21959abc114af337ae452a8bb9297ef5ded68f025a0bfa5a9`; `providers.mjs` — `fe48bc59ef1217ade5f8cd4e6b593a7c0c27b142e69b70a86dd92ff0ee167e8e`; `index.mjs` — `0a219221fc6afba15e6822a60996a1d8ec4e7cb7f3f3af928901e88c9eb99e19`; `preflight.mjs` — `9278b4d5c281f26a97896917c33511df48fc0a9380e1d580cd3da4ed39576f67` |
 | Evidence and accounting | `src/server/research-evidence.mjs` — `cca923c81f5f93902255031af867e66905fb7b4f096acf6ad352458842bed219`; `usage.mjs` — `2364ef288973c396390804eef31198690b9dbe2ef6ef474ce0c40424c2bd442b`; `account-usage.mjs` — `c1c765f6f0529a6dbd9b9ef1dc3aa9649c15e6f5988755ddc5d6d189fc3b4500` |
 | Reading and glass | `src/server/conversation-export.mjs` — `56a746b317f2d846b771ce28230ebdba7a3d3469c5b92a954957e5a22528feeb`; `src/client/markdown.js` — `c2bd541ac502e0ab5aee4df34e2752e4f46acaf67001ed3cffd581ffdc970ab6`; `src/client/navbar-glass.js` — `835803504452ae8382b621c4f8ffac6d19d76b3c540aef48c945a3ea1f9f3c6e`; `public/styles.css` — `8679edef6f16ee66ade649119fc236067a8e0bfaf1642e5551748c131a2f7120` |
 | Runtime topology | `Dockerfile` — `9076bee0cee654d9b95889c31dd0aef73e6dad27a95860a6999ed6194583d10a`; `cloudflare/northflank-proxy.mjs` — `a8fd6e371777d853fc2c64fa90fdb6a28f147404c4ca9f01d3aedb744c7bfda6`; `src/server/schema.sql` — `65fc0294e107e38636fb4742539316c6049583b1e2226e42b7bf040e0ed71f8a` |
@@ -47,7 +48,7 @@ The Worker is a narrow ingress component, not another application tier or data s
 3. **Commit facts, then resume.** Provider work is provisional until a generation-fenced, transition-validated transaction commits both ledger state and any visible messages.
 4. **Parallelism follows explicit dependencies.** Head authors the assignments and dependency graph. The coordinator starts every ready independent worker concurrently and rechecks readiness after each completion.
 5. **Research and accounting remain inspectable.** Public evidence has stable request-local references, and usage distinguishes reported zero from unavailable data without estimating missing counts.
-6. **Provider state is ephemeral and least-privileged.** Each active request gets isolated context and temporary workspace state; credentials stay server-side and workspaces are released at terminal, stopped or failed execution.
+6. **Provider execution state is ephemeral and least-privileged.** Each active request gets isolated context and temporary workspace state; the validated Codex managed-auth grant is durably encrypted in MySQL, is materialized only into a private temporary home, and is removed with that home. Request workspaces are released at terminal, stopped or failed execution.
 7. **Presentation cannot weaken privacy.** Client generations fence stale asynchronous results, logout/lock clears private memory synchronously and decorative glass neither reads private control values nor persists or transmits pixels.
 8. **Activation preserves live state.** Schema and packaged-instruction updates are repeat-safe. A Northflank revision becomes active only through the zero-instance sequence after there are no active consultation executions.
 
@@ -58,7 +59,7 @@ The Worker is a narrow ingress component, not another application tier or data s
 | HTTP, auth and ingress | `src/server/index.mjs`, `auth.mjs`, `config.mjs`, `cloudflare/northflank-proxy.mjs`. Enforce Worker origin key, Google owner session, consent, CSRF, no-store/security headers, private-route authorization and bounded request parsing. Covers UC-001 and NFR-10.1–10.3, NFR-11.3, NFR-13.2. |
 | Accepted request and durable store | `src/server/store.mjs`, `run-snapshot.mjs`, `schema.sql`. Atomically bind client idempotency key → owner message → run; encrypt run snapshots and private content; fence Stop/Continue by generation; serialize owner mutations. Covers UC-002/UC-003/UC-004 and FR-02.9, NFR-01.1–01.4, NFR-11.2, NFR-14.3. |
 | Parallel coordinator | `consultation.mjs`, `consultation-parallel.mjs`, `parallel-contract.mjs`, `turn-deadline.mjs`. Build Head plan, schedule ready assignments, validate ledger transitions, run Critic rounds/orders/assessments and commit one final Head synthesis. Covers FR-02.3–02.12 and FR-03.1–03.6. |
-| Provider context and subprocesses | `provider-context.mjs`, `providers.mjs`, `codex-provider.mjs`, `claude-provider.mjs`, `child-process.mjs`, `private-files.mjs`. Construct request-only prompts, record prompt/prefix sizes, create private temporary homes/workspaces, enforce tool/network policies and remove them after use. Covers FR-02.9, FR-02.13, NFR-12.3, NFR-14.1. |
+| Provider context, grants and subprocesses | `provider-context.mjs`, `providers.mjs`, `codex-provider.mjs`, `claude-provider.mjs`, `store.mjs`, `child-process.mjs`, `private-files.mjs`. Construct request-only prompts, record prompt/prefix sizes, load and atomically persist the encrypted Codex managed-auth grant, create private temporary homes/workspaces, enforce tool/network policies and remove temporary material after use. Covers FR-02.9, FR-02.13, NFR-12.3, NFR-13.1, NFR-14.1. |
 | Research evidence | `research-evidence.mjs`, `consultation-parallel.mjs`, provider source extractors and `validation.mjs`. Sanitize public queries, scope research records to one request/assignment set, issue stable `S-*` references, validate every cited reference and persist resolved source metadata. Covers UC-007 and FR-04.1–04.4. |
 | Usage and allowance | `usage.mjs`, `account-usage.mjs`, provider adapters, encrypted `nanoduck_usage` records and `GET /api/usage` / `GET /api/account-usage`. Reconcile provider reports, attribute attempts and expose privacy-safe summaries. Covers FR-02.14, FR-05.4–05.7, NFR-16.1. |
 | Reading, tables and export | `src/client/markdown.js`, `app.js`, `refresh-state.js`, `src/server/conversation-export.mjs`, `public/index.html`, `public/styles.css`. Build safe semantic tables, native RTF table rows/cells, four-view reading state, current-panel arrows, composer continuity and truthful Usage. Covers FR-02.15, FR-06.1–06.3, FR-08.1–08.3. |
@@ -96,7 +97,11 @@ Stop increments the generation, aborts provider processes and prevents late comm
 
 `buildProviderContext` places general policy before an explicit request scope and the one accepted owner message. It then supplies only request-local evidence, the output contract, current assignment and confirmed discussion. `WORKING_CONTEXT.md` is excluded. `promptBytes` and `prefixBytes` are recorded as allowlisted diagnostics; they do not contain the prompt itself.
 
-Codex uses one ephemeral app-server thread per call, read-only sandboxing and all tools disabled except live public web search for an explicit public-research call. Each connection gets a private temporary `CODEX_HOME` containing the provisioned managed-auth file, then deletes it. Calls in one active run share only a private request workspace keyed by run ID. Claude uses `--no-session-persistence`, one turn, no tools/MCP/slash commands, `dontAsk`, a text-only system contract and a private request workspace. Its temporary context file is mode-restricted and removed after each call. Both provider scopes are deleted when the execution finishes, stops or fails; Continue recreates an empty workspace and reconstructs only the same durable request context.
+Codex uses one ephemeral app-server thread per call, read-only sandboxing and all tools disabled except live public web search for an explicit public-research call. Each connection reads the current encrypted `codex` grant from MySQL, writes it to a mode-restricted private `CODEX_HOME/auth.json`, writes a private `config.toml` that selects the file credential store, and deletes the whole home on close. The configured `CODEX_APP_SERVER_AUTH_*` value is only a bootstrap or intentional scale-zero reseed: an unchanged deployment seed never rolls a refreshed database grant back. Calls in one active run share only a private request workspace keyed by run ID.
+
+After initialization and every app-server operation that may refresh authentication, the connection reads the private auth file, rejects malformed, oversized or non-ChatGPT payloads, and persists a changed valid value with a generation compare-and-swap. Writes are serialized; a stale concurrent connection that loses the compare-and-swap reads the winner and permanently stops writing, so it cannot overwrite a newer refresh. A transient storage error is retried within a bound, while a final writeback error fails the provider operation closed. Invalid refresh bytes never replace the last known valid grant. Provider shutdown performs one final writeback before the store closes, and temporary buffers are cleared after use.
+
+Claude uses `--no-session-persistence`, one turn, no tools/MCP/slash commands, `dontAsk`, a text-only system contract and a private request workspace. Its temporary context file is mode-restricted and removed after each call. Both provider scopes are deleted when the execution finishes, stops or fails; Continue recreates an empty workspace and reconstructs only the same durable request context.
 
 The application pins `@openai/codex@0.155.1` and `@anthropic-ai/claude-code@2.1.280`. Preserved active defaults remain Codex `gpt-6-astra` / `xhigh` for Head, specialists and Critic, with two specialists and one review round. `gpt-6-sol` is an explicit additional Codex choice. Claude remains absent until selected; its Settings vocabulary is Opus 5 (`claude-opus-5`) or the additional Opus 5.5 (`claude-opus-5-5`) with Low, Medium, High, Extra or Max, where only the CLI boundary maps Extra to `xhigh`. There is no API-key/PAYG path, Fast Mode, automatic credit use, model substitution or provider fallback. Settings changes affect future accepted runs only.
 
@@ -130,6 +135,7 @@ MySQL tables remain the authority:
 | `nanoduck_conversations`, `nanoduck_messages`, `nanoduck_runs`, `nanoduck_requests` | Durable record, encrypted bodies/snapshots, ordered messages and client-request/message/run binding. |
 | `nanoduck_usage` | Clear routing indexes plus encrypted allowlisted usage/attribution payload. |
 | `nanoduck_attachments` | Authenticated owner JPEG/PNG/WebP only, maximum 8 MiB, encrypted opaque bytes and fixed safe download type. |
+| `nanoduck_provider_grants` | One encrypted Codex managed-auth payload with dedicated HKDF-derived key, seed fingerprint, monotonic generation and update time. The row contains no plaintext token and changes only under the current database leader. |
 
 Deletion stops work, tombstones the conversation, deletes messages, request bindings, usage and attachments, and invalidates the run generation. Recovery snapshots are separately encrypted, size-bounded and preserve tombstones so deleted records are not resurrected. Voice audio never enters NanoDuck; the browser recognition service returns text that remains an editable draft until explicit Send.
 
@@ -150,7 +156,7 @@ The liquid-glass canvas is decorative and `aria-hidden`. It reconstructs only pe
 | Cloudflare Worker `nanoduck-neo` | Streams browser traffic; overwrites the shared origin-key header; rewrites only same-application redirects; no cache. | Missing/mismatched key yields 404 at NanoDuck. Direct Northflank access remains unusable except health. |
 | Google OIDC | Standard code flow, state/nonce and configured sole-owner subject/email; redirect uses the Worker origin. | Authentication fails closed; it grants app access, not provider entitlement. |
 | Private Northflank MySQL | TLS-verified application identity; application and migration advisory locks; encrypted private payloads. | Startup fails on connection/TLS/leadership/migration error; leadership loss closes the service. |
-| Codex app-server | Managed subscription auth, exact selected tuple, request-local prompt and optional public search. | Categorized failure preserves committed work and offers Continue/Retry; no automatic model/provider fallback. |
+| Codex app-server | Managed subscription auth loaded from the encrypted MySQL grant, exact selected tuple, request-local prompt and optional public search. | Missing/invalid grants report `auth_required`; refresh writeback fails closed; generation conflicts preserve the winning grant. Categorized consultation failure preserves committed work and offers Continue/Retry; no automatic model/provider fallback. |
 | Claude Code | Optional managed OAuth token, exact selected tuple, text-only Critic prompt, no tools or research. | Unavailable branch remains unavailable; malformed/tool-trace output gets one bounded replacement before failure. |
 | Browser speech recognition | Browser-selected English/Ukrainian recognition; NanoDuck receives only chosen text. | Cancel/background/error aborts recognition and preserves the typed draft. |
 
@@ -162,7 +168,7 @@ Northflank builds the root `Dockerfile` on Node.js 22, runs as unprivileged `nod
 - either `DATABASE_URL` or the complete `DB_HOST` / `DB_PORT` / `DB_NAME` / `DB_USER` / `DB_PASSWORD` set, with at most one of `DATABASE_SSL_CA_B64` or `DATABASE_SSL_CA_PATH`; certificate verification stays enabled;
 - distinct `DATA_ENCRYPTION_KEY`, `RECOVERY_ENCRYPTION_KEY` and `SESSION_SIGNING_KEY`; `SESSION_ABSOLUTE_SECONDS` is at most 86,400 and `MAX_ATTACHMENT_BYTES` at most 8 MiB;
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and either `OWNER_GOOGLE_SUBJECT` or `OWNER_GOOGLE_EMAIL`;
-- exactly one Codex credential source, preferably `CODEX_APP_SERVER_AUTH_GZIP_B64` on Northflank; optional `CLAUDE_CODE_OAUTH_TOKEN` and `CLAUDE_CODE_MODEL_CANDIDATES`.
+- exactly one Codex bootstrap/reseed source, preferably `CODEX_APP_SERVER_AUTH_GZIP_B64` on Northflank; the validated value seeds an empty grant row or intentionally replaces a different seed while the service is at zero instances, after which the encrypted database row is authoritative. Optional `CLAUDE_CODE_OAUTH_TOKEN` and `CLAUDE_CODE_MODEL_CANDIDATES` remain separate.
 
 The Worker binds `PUBLIC_ORIGIN`, `UPSTREAM_ORIGIN` and secret `EDGE_PROXY_KEY`; preview URLs stay disabled. Secret values never belong in Git, build arguments, image layers, client responses or logs.
 
@@ -179,7 +185,7 @@ The Worker binds `PUBLIC_ORIGIN`, `UPSTREAM_ORIGIN` and secret `EDGE_PROXY_KEY`;
 | NFR-12.1 | Only sanitized English/Ukrainian public queries reach Codex live search; URL/address/redirect validation rejects local, metadata, private and prohibited hosts. |
 | NFR-12.2 | Streaming 8 MiB limit and binary JPEG/PNG/WebP signature check precede encrypted opaque persistence; browser voice sends no audio to NanoDuck. |
 | NFR-12.3 | Request-scoped trusted prompts, Codex tool deny-by-default, Claude full tool denial, no provider-native subagents and no automatic external action constrain AI authority. |
-| NFR-13.1 | Authenticated encryption protects messages, run ledger, instructions, usage and attachments; recovery uses a distinct key and tombstone-aware validation. |
+| NFR-13.1 | Authenticated encryption protects messages, run ledger, instructions, usage, attachments and the managed Codex grant. Grant encryption uses a purpose-separated HKDF key and generation compare-and-swap; recovery uses a distinct key and tombstone-aware validation. |
 | NFR-13.2 | Browser/Worker HTTPS, verified private-MySQL TLS and private provider credential files protect transport and service identity. |
 | NFR-14.1 | Data classification, request-minimal provider prompts, sanitized public research and allowlisted telemetry prevent unrelated private transfer. |
 | NFR-14.2 | No-store responses, page-memory drafts, client-generation fencing, synchronous logout/lock cleanup, no voice audio and private-value-excluding glass control client privacy. |
@@ -190,18 +196,19 @@ The Worker binds `PUBLIC_ORIGIN`, `UPSTREAM_ORIGIN` and secret `EDGE_PROXY_KEY`;
 
 ## Runtime, migration and operations
 
-`src/server/start.mjs` runs the owned migration before starting the application. Schema additions use `CREATE TABLE IF NOT EXISTS`. Legacy plaintext instruction storage is converted only after complete encrypted fields exist. Packaged instruction-document changes append a new encrypted `parallel_protocol_migration` version only when the current value exactly matches a retired default; owner edits remain current. Runtime prompt upgrades create reviewable encrypted history and are content-hash idempotent. Legacy run snapshots are sealed in bounded repeat-safe batches. No migration deletes conversations, provider settings or active-run history.
+`src/server/start.mjs` runs the owned migration before starting the application. Schema additions use `CREATE TABLE IF NOT EXISTS`, including the additive provider-grant table. Legacy plaintext instruction storage is converted only after complete encrypted fields exist. Packaged instruction-document changes append a new encrypted `parallel_protocol_migration` version only when the current value exactly matches a retired default; owner edits remain current. Runtime prompt upgrades create reviewable encrypted history and are content-hash idempotent. Legacy run snapshots are sealed in bounded repeat-safe batches. No migration deletes conversations, provider settings, provider grants or active-run history.
 
 The migration process obtains the database advisory lock. The running store then acquires the same database-scoped leadership lock for its lifetime and heartbeats ownership; failure to acquire prevents startup, and loss of ownership shuts the service down. Northflank therefore remains exactly one replica with autoscaling and automatic deployment disabled.
 
 No deployment, scale action, provider probe, secret change or consultation interruption is authorized by the 27 September implementation receipt. For a separately authorized activation:
 
 1. verify zero active provider executions and confirm that no recoverable consultation will be interrupted;
-2. take and verify a current private-MySQL backup or provider snapshot;
+2. take and verify a current private-MySQL backup or provider snapshot, which includes the encrypted provider-grant row; owner recovery exports continue to exclude provider credentials;
 3. scale the service to zero and wait for all containers to stop;
-4. select/deploy the approved build while scale remains zero;
-5. start exactly one instance, letting repeat-safe migrations run before HTTP startup;
-6. verify `/healthz`, private-MySQL TLS, Worker origin-key enforcement, Google owner authentication, saved conversations/settings and safe continuation.
+4. if the existing bootstrap grant is already invalid, replace only the Northflank Codex bootstrap secret with a fresh trusted ChatGPT managed-auth file while scale remains zero;
+5. select/deploy the approved build while scale remains zero;
+6. start exactly one instance, letting repeat-safe migrations and grant seeding run before HTTP startup;
+7. verify `/healthz`, private-MySQL TLS, Worker origin-key enforcement, Google owner authentication, saved conversations/settings, provider readiness and safe continuation; then close and reopen a bounded provider connection to prove the grant survives temporary-home cleanup.
 
 Do not use replacement-first Restart, restart-dependents or Pause/Resume for activation. Rollback follows the same zero-instance discipline and must be schema-compatible. The Worker free request allowance and Sandbox memory remain operational measurements; they are not inferred from local tests.
 
@@ -213,6 +220,7 @@ Do not use replacement-first Restart, restart-dependents or Pause/Resume for act
 | Transactional request binding | FR-02.9 and current store. Rejected implicit latest-chat context and rebinding. | Fresh Send is independent; ambiguous transport retry is idempotent; Continue/Retry stays request-bound. |
 | Encrypted monotonic ledger | FR-02.10–02.12 and parallel contract. Rejected transcript inference and generic sequential steps. | Parallel recovery can reuse committed siblings and validate Critic lineage without rewriting history. |
 | Request-scoped provider workspaces | FR-02.13 and provider adapters. Rejected shared homes/history and persistent provider threads. | Enables prefix economy inside one request while preventing cross-request memory; cleanup is mandatory. |
+| Encrypted database-backed Codex grant | FR-05.5, NFR-13.1 and the observed discarded-refresh failure. Rejected a static secret as the per-connection authority and rejected a shared persistent container home. | The Northflank secret is bootstrap/reseed only; valid refresh rotation survives connection and container restarts, stale writers cannot roll it back, and temporary credential files are still removed. |
 | Shared request-local evidence ledger | FR-04.1–04.4. Rejected uncited prose, cross-request cache and repeated equivalent search. | Stable references and reuse/fresh state remain inspectable; unresolved evidence stays visible. |
 | Provider-reported usage with attribution | FR-02.14 and FR-05.4–05.7. Rejected estimates and treating missing as zero. | Preserves truthful provider/model/request/participant/activity accounting and separate account allowance. |
 | Semantic table pipeline | FR-02.15 and native export contract. Rejected flattened text tables. | Browser and RTF retain table relationships with safe overflow and escaping. |
@@ -225,6 +233,8 @@ Do not use replacement-first Restart, restart-dependents or Pause/Resume for act
 |---|---|
 | Sandbox CPU/memory may be tight while parallel provider CLIs run. | Bound ready work to the selected team, preserve deadlines and measure hosted peak memory during a real consultation. No hosted capacity result is claimed. |
 | Provider entitlement or allowance may differ from historical evidence. | Inspect the exact selected tuple content-free before activation; preserve unavailable choices and never substitute. |
+| The currently deployed bootstrap refresh token may already be invalid. | During the zero-instance activation window, reseed from a fresh trusted local ChatGPT login. Never place the grant in Git, Cloudflare, logs or client-visible responses. |
+| A process can stop after Codex rotates its file but before database writeback. | Persist after initialization and each refresh-capable operation, retry bounded transient failures, write once more during provider shutdown and fail the operation closed when the durable grant cannot be updated. The last known valid database grant remains intact on malformed output. |
 | A crash can occur after provider completion but before durable commit. | Resume only from committed ledger state; a repeated provider call is possible, but duplicate message/transition commits are rejected. |
 | MySQL upgrade or rollback could conflict with a running leader. | Scale to zero, verify backup, run repeat-safe migration under advisory lock and start one replica. Real private-MySQL integration/restore evidence remains required. |
 | Account and usage telemetry can be partial. | Persist source/coverage/status, display missing separately from zero and retain stale allowance labels. |

@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-18T01:17:00.589Z",
+  "executor": "Codex via native Chrome cua_repl accessibility actions",
+  "environment": "Isolated local development server; in-memory fixture state; provider commands disabled; no live database or provider grants.",
+  "url": "http://127.0.0.1:4318/",
+  "task": "Open local development workspace, open Settings, activate Preview sound with Knock selected.",
+  "observations": [
+    {
+      "surface": "Settings",
+      "observed": "Incoming messages selector displayed Knock — tuk-tuk-tuk."
+    },
+    {
+      "surface": "Preview sound",
+      "observed": "Playing the knock preview."
+    },
+    {
+      "surface": "Chrome window and tab",
+      "observed": "Audio playing"
+    }
+  ],
+  "result": "passed_browser_playback",
+  "code_path": "Settings preview and incoming-agent alerts both invoke playNotificationSound; the shared soundUrl selects /sounds/table-taps-250ms-v5.wav.",
+  "cleanup": "Temporary browser tab closed and its isolated server stopped.",
+  "limitations": [
+    "Browser playback acceptance is separate from physical speaker audibility.",
+    "No new live consultation or Safari run.",
+    "No hosted deployment."
+  ]
+}

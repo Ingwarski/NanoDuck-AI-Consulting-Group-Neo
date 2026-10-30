@@ -1,0 +1,21 @@
+{
+  "candidate_id": "a",
+  "version": "v4",
+  "visual_target_hash": "8c53c498a24752b3148128cb6222ae876cd80c590022549b15312020e4e4b0e5",
+  "prototype_tree_hash": "10fc6db7ab1ab3606467102841d19fdab8aa2e64b5cc5ddc3478854870c8950d",
+  "preview_url": "http://127.0.0.1:4328/a/v4/",
+  "observed_at": "2026-09-13T20:12:56.193688+00:00",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/a/v4/#discussion",
+    "http://127.0.0.1:4328/a/v4/#settings"
+  ],
+  "capture_reference": "a-v4-safari-discussion-and-settings",
+  "capture_storage": "Inline CUA screenshots and AX observations in this colour-refinement turn.",
+  "evidence": "Separate existing review tab navigated to the exact v4 URL. Discussion screenshot inspected and Settings selected; original Astra/xhigh, Astra/ultra and Balanced defaults observed. Heading gradient, blue controls, yellow Head, violet Product, turquoise Operations and raspberry Critic inspected by scrolling the actual discussion; Settings screenshot inspected.",
+  "findings": []
+}

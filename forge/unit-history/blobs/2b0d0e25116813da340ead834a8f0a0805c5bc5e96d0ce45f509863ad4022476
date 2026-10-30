@@ -1,0 +1,159 @@
+{
+  "candidate_id": "a",
+  "version": "v3",
+  "visual_target_hash": "b063662c6e8d386859aa32f85b9ccbaaa501db101f0975a3721970625b227a90",
+  "prototype_tree_hash": "79e97187d023e7bb2c65c3833e379c165edda2da1c5216774c447d0777f62a56",
+  "preview_url": "http://127.0.0.1:4328/a/v3/",
+  "observed_at": "2026-09-13T19:18:04.641864+00:00",
+  "result": "passed",
+  "adapter": "cua_repl",
+  "target_reference": "forge/design/candidates/a/v3/index.html",
+  "source_capture_id": "a-v3-combined-interactive-mockup",
+  "implementation_capture_id": "electric-v3-safari-discussion-and-settings",
+  "capture_storage": "Inline browser screenshot observations; immutable HTML/CSS/JS target. No production implementation capture.",
+  "environment": [
+    "Codex in-app browser responsive and interaction checks",
+    "Native Safari visible desktop review"
+  ],
+  "scope": {
+    "journeys": [
+      "J-01",
+      "J-02",
+      "J-03",
+      "J-04",
+      "J-05",
+      "J-06",
+      "J-07"
+    ],
+    "screens": [
+      "S-01",
+      "S-02",
+      "S-03",
+      "S-04",
+      "S-05",
+      "S-06",
+      "S-07",
+      "S-08",
+      "S-09"
+    ],
+    "states": [
+      "ST-01",
+      "ST-02",
+      "ST-03",
+      "ST-04",
+      "ST-05",
+      "ST-06",
+      "ST-07",
+      "ST-08",
+      "ST-09",
+      "ST-10",
+      "ST-11",
+      "ST-12",
+      "ST-13",
+      "ST-14",
+      "ST-15",
+      "ST-16",
+      "ST-17",
+      "ST-18",
+      "ST-19",
+      "ST-20",
+      "ST-21",
+      "ST-22",
+      "ST-23",
+      "ST-24",
+      "ST-25",
+      "ST-26",
+      "ST-27",
+      "ST-28",
+      "ST-29",
+      "ST-30",
+      "ST-31",
+      "ST-32",
+      "ST-33",
+      "ST-34",
+      "ST-35",
+      "ST-36",
+      "ST-37",
+      "ST-38",
+      "ST-39",
+      "ST-40",
+      "ST-41",
+      "ST-42",
+      "ST-43",
+      "ST-44"
+    ],
+    "jobs": [
+      "JOB-001",
+      "JOB-002",
+      "JOB-003",
+      "JOB-004",
+      "JOB-005",
+      "JOB-006"
+    ],
+    "use_cases": [
+      "UC-001",
+      "UC-002",
+      "UC-003",
+      "UC-004",
+      "UC-005",
+      "UC-006",
+      "UC-007"
+    ],
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "working_language": "en",
+    "viewports": [
+      320,
+      390,
+      430,
+      768,
+      1280,
+      1440
+    ],
+    "fixture": "Fictional member-community mobile app versus better website discussion; eight full entries; W3C and MDN references; no fresh research timestamps."
+  },
+  "theme": "Black combined Ember/Cobalt layout",
+  "palette": "Electric",
+  "layout_observations": {
+    "all_44_states_at_320px": "Final files: scrollWidth equals innerWidth for all 44 state fixtures in this palette; dialogs closed between fixtures.",
+    "discussion_and_settings_at_six_widths": "Final files: no page overflow at 320,390,430,768,1280,1440px; 168 state/layout observations across all three candidates.",
+    "normal_app_surface": "Inspection and locale controls hidden unless ?inspect=1; palette controls belong to the comparison page only.",
+    "send": "Explicit orange fill rgb(255,179,107) with dark text rgb(21,17,20); Electric measured 101.8359375 by 48px at 390px, visible in each Safari screenshot.",
+    "message_structure": "Ember avatar, role/time/recipient header, readable neutral body, quoted Critic challenge; Cobalt centered thread and composer geometry.",
+    "agent_text_contrast_minimum": 7.07,
+    "contrast_scope": "Role text tokens against #18191f calculated from final CSS; not a full accessibility conformance result.",
+    "session": "24-hour fixed app-session intent displayed; actual authentication and expiry behavior not implemented or timed.",
+    "comparison": "Three current iframe routes and colour swatches inspected; comparison reflow checked at 320 and 1440px."
+  },
+  "interactions_checked": [
+    "Electric mobile hamburger opens with Discussion, Conversations and Settings only; selecting Settings closes it.",
+    "Electric workspace New and Conversations New conversation both navigate to the empty composer.",
+    "Electric unsupported GPT-5.5/ultra selection clears reasoning and disables Save; explicitly choosing high permits save for the next sample while active example settings remain unchanged.",
+    "Electric icon-only Voice input opens sample explanation; Start recording, Stop, Use transcript appends to a typed draft and returns focus to message without sending.",
+    "Electric visible Send adds the draft to the sample only and reports no service submission.",
+    "Electric keyboard ArrowRight moves selected tab and focus from Discussion to Outcome; Solar Outcome and Sources clicked and inspected.",
+    "Electric simulated consent is initially unchecked with Open workspace disabled; explicit checking enables entry.",
+    "Electric offline, provider authorization, usage limit, research and system error states retain the exact typed draft.",
+    "Electric English and Ukrainian discussion fixtures inspected; all 44 state fixtures rendered in each palette.",
+    "Settings defaults and 24-hour intended-session wording verified independently in all three Safari tabs."
+  ],
+  "console_result": "No warning/error entries in final in-app-browser walkthrough.",
+  "findings": [
+    {
+      "id": "HYBRID-VIS-01",
+      "severity": "P2",
+      "release_effect": "blocking",
+      "status": "closed",
+      "description": "Safari native model selects ignored the intended comfortable control height.",
+      "resolution": "Retained native select semantics with explicit appearance and CSS chevrons. Final Safari Settings screenshots inspected for all three candidates; final Chromium select height 46.796875px."
+    }
+  ],
+  "limitations": [
+    "Design simulation only: no authentication, elapsed-time session test, provider execution, research, microphone capture, transcription service, persistence, database or GoDaddy operation.",
+    "The interactive regression sequence was exercised on Electric shared behavior; state rendering and responsive layout were exercised on all three palettes. No production suite pass is inferred.",
+    "No representative-user session, VoiceOver audit, physical mobile keyboard test, Firefox/Edge run, forced-colors rendering test, full Ukrainian interface localization, performance or production security result.",
+    "Normal screenshots and live UI were inspected. A tall full-page capture had stitching duplication; it is not used as layout evidence. No raster export is claimed."
+  ]
+}

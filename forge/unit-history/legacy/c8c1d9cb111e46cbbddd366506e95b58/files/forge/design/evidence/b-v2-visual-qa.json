@@ -1,0 +1,47 @@
+{
+  "candidate_id": "b",
+  "version": "v2",
+  "visual_target_hash": "31ed8e8dce5ca3967fc2283812b0cfc1fda246522c9c800113f14445e63e7791",
+  "prototype_tree_hash": "273a00720e355e96a2d7457051cd7495e7b19ac7de50062bf486962aab5ac85d",
+  "preview_url": "http://127.0.0.1:4328/b/v2/",
+  "observed_at": "2026-09-13T14:54:56.994732+00:00",
+  "result": "passed",
+  "adapter": "Codex CUA in-app browser plus exact render-tree comparison",
+  "target_reference": "forge/design/candidates/b/v2/index.html",
+  "scope": {
+    "current_observations": [
+      "New v2 Discussion URL rendered",
+      "Settings navigation clicked; Head Astra/xhigh, Critic Codex Astra/ultra and Balanced selected",
+      "No warning/error console entries",
+      "Current comparison links and embeds all three v2 routes; inline screenshot inspected"
+    ],
+    "observation_window": "2026-09-13T14:52:17Z through current comparison capture",
+    "fixture": "Unchanged fictional v1 discussion",
+    "environment": "Codex in-app browser; normal viewport"
+  },
+  "source_capture_id": "b-v2-immutable-interactive-mockup",
+  "implementation_capture_id": "v2-comparison-inline-CUA-screenshot",
+  "capture_storage": "Inline CUA tool screenshot, not an exported raster or production implementation capture",
+  "reused_evidence": {
+    "path": "forge/design/evidence/b-v1-visual-qa.json",
+    "content_hash": "6222ca43aada1038ee6b0cd9b5481f13fa1874976bf98d0a5e60e29e04ce0437",
+    "basis": {
+      "source_root": "forge/design/candidates/b/v1",
+      "source_tree_hash": "273a00720e355e96a2d7457051cd7495e7b19ac7de50062bf486962aab5ac85d",
+      "result": "exact_byte_equality",
+      "verified_at": "2026-09-13T14:49:05.830888+00:00"
+    },
+    "claim_limit": "Original v1 observations retain their original executor, time and scope; no repeated full v2 walkthrough is claimed."
+  },
+  "heuristic_review": {
+    "path": "forge/design/evidence/heuristic-review.json",
+    "content_hash": "f1bc387aba24fc70dd0d17bf9f117f9b5b5cfe39a5e8e45f0aec76b1456b6150",
+    "scope": "Original v1 review reused only for unchanged rendering; no representative-user or formal QA pass inferred"
+  },
+  "findings": [],
+  "limitations": [
+    "The Mac is locked: separate visible Safari review of the v2 URLs has not occurred.",
+    "No production behavior or explicit-Critic routing is proved by scripted discussion.",
+    "All limitations in the original v1 visual evidence remain applicable."
+  ]
+}

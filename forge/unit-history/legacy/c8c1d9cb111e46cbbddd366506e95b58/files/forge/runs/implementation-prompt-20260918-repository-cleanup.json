@@ -1,0 +1,16 @@
+{
+  "event": "implementation_prompt",
+  "role": "user",
+  "intent": "start_production_implementation",
+  "repair_intent": "execute_repository_documentation_and_history_cleanup",
+  "message": "Do it now. Make sure this process doesn't break working code.",
+  "message_scope": "Verbatim concluding instruction; the authorized target is removal of obsolete transport documentation and repository history.",
+  "recorded_at": "2026-09-18T12:54:32.331612+00:00",
+  "received_at": "2026-09-18T12:54:32.331612+00:00",
+  "time_basis": "Recorded from the active user request; exact delivery timestamp unavailable.",
+  "development_plan_hash": "7df47715ab0bfe0f4c2019e81e318266b8abe1f3c9c221fbf95cb8c391a01da4",
+  "approved_baseline_id": "nanoduck-electric-a-v8-20260914",
+  "product_scope_hash": "4fc3dfb32ddea9a879bbcda9b069505a6c48fb5b8e3176af2c6fd8f28aa31abc",
+  "prompt_id": "impl-repository-cleanup-20260918",
+  "scope": "Documentation, provenance and Git history maintenance only. Preserve executable application, tests, dependency manifests, assets, current product behavior and approved visual baseline. No feature implementation, database operation or host configuration change is authorized by this receipt."
+}

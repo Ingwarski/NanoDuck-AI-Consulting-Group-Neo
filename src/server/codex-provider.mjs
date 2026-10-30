@@ -3,8 +3,10 @@ import { sourceKey } from "./research-evidence.mjs";
 import { buildProviderContext, consultationBaseInstructions } from "./provider-context.mjs";
 import { beginUsage, codexTokens, codexResponseTokens, sumTokenUsage } from "./usage.mjs";
 import { ensurePrivateDirectory, ensurePrivateFile } from "./private-files.mjs";
+import { readRegularFile } from "./read-regular-file.mjs";
 import { spawnIsolatedProcess, signalProcessTree } from "./child-process.mjs";
 import { copyFile, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { createInterface } from "node:readline";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -64,12 +66,22 @@ const providerFailureDetails = error => {
     request: error.requestMethod
   });
   const code = ["cancelled", "provider_timeout", "provider_idle_timeout", "app_server_timeout", "app_server_closed"].includes(error?.message) ? error.message : "provider_error";
-  return Object.freeze({ code, category: ["cancelled", "provider_timeout", "provider_idle_timeout"].includes(code) ? code : "provider_unavailable" });
+  return Object.freeze({ code, category: ["cancelled", "provider_timeout", "provider_idle_timeout"].includes(code) ? code : ["codex_grant_missing", "codex_grant_stored_invalid"].includes(error?.message) ? "auth_required" : "provider_unavailable" });
 };
 const providerFailureCategory = error => providerFailureDetails(error).category;
 const providerStatus = error => {
   const category = providerFailureCategory(error);
   return ["auth_required", "quota_blocked", "incompatible"].includes(category) ? category : "unavailable";
+};
+const grantDigest = bytes => createHash("sha256").update(bytes).digest();
+const serialized = () => {
+  let tail = Promise.resolve();
+  const run = task => {
+    const current = tail.then(task);
+    tail = current.catch(() => {});
+    return current;
+  };
+  return run;
 };
 
 class AppServerConnection {
@@ -113,42 +125,107 @@ class AppServerConnection {
   async close() {
     this.closing ??= (async () => {
       this.reader.close();
-      await signalProcessTree(this.child, "SIGTERM");
-      await waitFor(this.exited, 1_000, "close_timeout").catch(async () => {
-        await signalProcessTree(this.child, "SIGKILL");
-        await waitFor(this.exited, 5_000, "process_exit_timeout");
-      });
+      let processError;
+      try {
+        await signalProcessTree(this.child, "SIGTERM");
+        await waitFor(this.exited, 1_000, "close_timeout").catch(async () => {
+          await signalProcessTree(this.child, "SIGKILL");
+          await waitFor(this.exited, 5_000, "process_exit_timeout");
+        });
+      } catch (error) { processError = error; }
       await this.cleanup();
+      if (processError) throw processError;
     })();
     return this.closing;
   }
 }
 
-async function startConnection(config, signal, requestWorkspace) {
+async function startConnection(config, signal, requestWorkspace, store, persistSerialized = task => task()) {
   if (signal?.aborted) throw new Error("cancelled");
-  const directory = await mkdtemp(join(tmpdir(), "nanoduck-codex-"));
-  ensurePrivateDirectory(directory);
+  const managedGrant = typeof store?.codexGrant === "function";
+  let grant;
+  try { grant = managedGrant ? await store.codexGrant() : undefined; }
+  catch (error) {
+    if (error?.message === "codex_grant_invalid") throw new Error("codex_grant_stored_invalid", { cause: error });
+    throw error;
+  }
+  if (managedGrant && !grant) throw new Error("codex_grant_missing");
+  let directory;
   let connection;
+  let savedDigest;
   try {
+    directory = await mkdtemp(join(tmpdir(), "nanoduck-codex-"));
+    ensurePrivateDirectory(directory);
     const codexHome = join(directory, "codex-home"); await mkdir(codexHome, { mode: 0o700 });
+    ensurePrivateDirectory(codexHome);
+    const configDestination = join(codexHome, "config.toml");
+    await writeFile(configDestination, 'cli_auth_credentials_store = "file"\n', { mode: 0o600 });
+    ensurePrivateFile(configDestination);
     const authDestination = join(codexHome, "auth.json");
-    if (config.codexAuthPath) await copyFile(config.codexAuthPath, authDestination);
+    if (grant) await writeFile(authDestination, grant.bytes, { mode: 0o600 });
+    else if (config.codexAuthPath) await copyFile(config.codexAuthPath, authDestination);
     else if (config.codexAuthBytes) await writeFile(authDestination, config.codexAuthBytes, { mode: 0o600 });
-    if (config.codexAuthPath || config.codexAuthBytes) ensurePrivateFile(authDestination);
+    if (grant || config.codexAuthPath || config.codexAuthBytes) ensurePrivateFile(authDestination);
+    savedDigest = grant ? grantDigest(grant.bytes) : undefined;
+    let savedGeneration = grant?.generation;
+    let pendingPersist = Promise.resolve(); let grantWriteDisabled = false;
+    const persistGrant = () => {
+      const current = pendingPersist.then(async () => {
+        if (!grant || grantWriteDisabled) return;
+        const bytes = await readRegularFile(authDestination, 64 * 1024);
+        const currentDigest = grantDigest(bytes);
+        try {
+          if (currentDigest.equals(savedDigest)) return;
+          for (let attempt = 0; ; attempt += 1) {
+            try { savedGeneration = await persistSerialized(() => store.saveCodexGrant(bytes, savedGeneration)); break; }
+            catch (error) {
+              if (error?.message === "codex_grant_conflict") {
+                const latest = await store.codexGrant();
+                if (!latest) { grantWriteDisabled = true; throw error; }
+                const latestDigest = grantDigest(latest.bytes);
+                try {
+                  if (!currentDigest.equals(latestDigest)) { grantWriteDisabled = true; throw error; }
+                  savedGeneration = latest.generation;
+                  savedDigest?.fill(0); savedDigest = Buffer.from(latestDigest);
+                  return;
+                } finally { latestDigest.fill(0); latest.bytes.fill(0); }
+              }
+              if (attempt >= 2 || error?.message === "codex_grant_invalid") throw error;
+              await new Promise(resolve => setTimeout(resolve, 100 * (attempt + 1)));
+            }
+          }
+          savedDigest?.fill(0); savedDigest = Buffer.from(currentDigest);
+        } finally { currentDigest.fill(0); bytes.fill(0); }
+      });
+      pendingPersist = current.catch(() => {});
+      return current;
+    };
     if (signal?.aborted) throw new Error("cancelled");
     const child = spawnIsolatedProcess(config.codexCommand, [...(config.codexCommandArgs ?? []), "app-server", "--stdio"], {
       cwd: requestWorkspace ?? directory,
       env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", HOME: requestWorkspace ?? directory, TMPDIR: directory, TEMP: directory, TMP: directory, USERPROFILE: requestWorkspace ?? directory, ...(process.platform === "win32" ? { SystemRoot: process.env.SystemRoot, WINDIR: process.env.WINDIR } : {}), CODEX_HOME: codexHome, NO_COLOR: "1" },
       stdio: ["pipe", "pipe", "ignore"]
     });
-    connection = new AppServerConnection(child, requestWorkspace ?? directory, () => rm(directory, { recursive: true, force: true }));
+    connection = new AppServerConnection(child, requestWorkspace ?? directory, async () => {
+      let persistenceError; let cleanupError;
+      try { await persistGrant(); } catch (error) { persistenceError = error; }
+      finally { savedDigest?.fill(0); savedDigest = undefined; }
+      try { await rm(directory, { recursive: true, force: true }); } catch (error) { cleanupError = error; }
+      if (persistenceError && cleanupError) throw new AggregateError([persistenceError, cleanupError], "codex_grant_persist_and_cleanup_failed");
+      if (persistenceError) throw persistenceError;
+      if (cleanupError) throw cleanupError;
+    });
+    connection.persistGrant = persistGrant;
     await waitFor(connection.request("initialize", { clientInfo: { name: "nanoduck-consulting-group", title: "NanoDuck Consulting Group", version: "0.1.0" }, capabilities: { experimentalApi: true } }), 20_000, "app_server_timeout", signal);
-    connection.notify("initialized", {}); return connection;
+    connection.notify("initialized", {});
+    await connection.persistGrant();
+    if (signal?.aborted) throw new Error("cancelled");
+    return connection;
   } catch (error) {
     if (connection) await connection.close();
-    else await rm(directory, { recursive: true, force: true });
+    else if (directory) await rm(directory, { recursive: true, force: true });
     throw error;
-  }
+  } finally { grant?.bytes.fill(0); if (!connection) savedDigest?.fill(0); }
 }
 
 const bodyFrom = value => {
@@ -213,7 +290,22 @@ async function supportedCatalog(connection) {
   return supported.length ? Object.freeze(supported) : undefined;
 }
 
-export function createCodexProvider(config, deadlineOptions = undefined) {
+export function createCodexProvider(config, deadlineOptions = undefined, store = undefined) {
+  const persistSerialized = serialized();
+  const activeConnections = new Set();
+  const shutdown = new AbortController();
+  let activeOperations = 0;
+  const idleWaiters = new Set();
+  const track = async operation => {
+    activeOperations += 1;
+    try { return await operation(); }
+    finally {
+      activeOperations -= 1;
+      if (!activeOperations) { for (const resolve of idleWaiters) resolve(); idleWaiters.clear(); }
+    }
+  };
+  const waitForOperations = () => activeOperations ? new Promise(resolve => idleWaiters.add(resolve)) : Promise.resolve();
+  let closing;
   const requestWorkspaces = new Map();
   const requestWorkspace = async scope => {
     if (!scope) return undefined;
@@ -230,38 +322,63 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
     requestWorkspaces.delete(scope);
     await rm(await pending, { recursive: true, force: true });
   };
-  const inspect = async () => {
-    if (!config.readyForProvider) return Object.freeze({ status: "unavailable", models: Object.freeze([]) });
-    let connection;
+  const close = () => closing ??= (async () => {
+    shutdown.abort();
+    const connections = await Promise.allSettled([...activeConnections].map(connection => connection.close()));
+    await waitForOperations();
+    activeConnections.clear();
+    const workspaces = await Promise.allSettled([...requestWorkspaces.keys()].map(scope => releaseScope(scope)));
+    const failure = [...connections, ...workspaces].find(result => result.status === "rejected");
+    if (failure) throw failure.reason;
+  })();
+  const inspectOperation = async () => {
+    if (shutdown.signal.aborted || !config.readyForProvider) return Object.freeze({ status: "unavailable", models: Object.freeze([]) });
     try {
-      connection = await startConnection(config);
-      const account = await connection.request("account/read", { refreshToken: false });
-      if (!record(account) || !record(account.account) || account.account.type !== "chatgpt") return Object.freeze({ status: "auth_required", models: Object.freeze([]) });
-      const [models, limits] = await Promise.all([supportedCatalog(connection), connection.request("account/rateLimits/read", {})]);
-      if (!models) return Object.freeze({ status: "incompatible", models: Object.freeze([]) });
-      const quotaBlocked = record(limits) && record(limits.rateLimits) && limits.rateLimits.rateLimitReachedType !== null && limits.rateLimits.rateLimitReachedType !== undefined;
-      return Object.freeze({ status: quotaBlocked ? "quota_blocked" : "ready", models });
-    } catch (error) {
-      return Object.freeze({ status: providerStatus(error), models: Object.freeze([]) });
-    } finally {
-      await connection?.close().catch(() => {});
-    }
+      let connection;
+      try {
+        connection = await startConnection(config, shutdown.signal, undefined, store, persistSerialized);
+        activeConnections.add(connection);
+        const account = await connection.request("account/read", { refreshToken: false });
+        await connection.persistGrant();
+        if (!record(account) || !record(account.account) || account.account.type !== "chatgpt") return Object.freeze({ status: "auth_required", models: Object.freeze([]) });
+        const models = await supportedCatalog(connection);
+        await connection.persistGrant();
+        const limits = await connection.request("account/rateLimits/read", {});
+        await connection.persistGrant();
+        if (!models) return Object.freeze({ status: "incompatible", models: Object.freeze([]) });
+        const quotaBlocked = record(limits) && record(limits.rateLimits) && limits.rateLimits.rateLimitReachedType !== null && limits.rateLimits.rateLimitReachedType !== undefined;
+        return Object.freeze({ status: quotaBlocked ? "quota_blocked" : "ready", models });
+      } finally {
+        try { await connection?.close(); }
+        finally { activeConnections.delete(connection); }
+      }
+    } catch (error) { return Object.freeze({ status: providerStatus(error), models: Object.freeze([]) }); }
   };
-  const accountUsage = async () => {
-    if (!config.readyForProvider) throw new Error("provider_unavailable");
+  const accountUsageOperation = async () => {
+    if (shutdown.signal.aborted || !config.readyForProvider) throw new Error("provider_unavailable");
     let connection;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10_000);
+    const runSignal = AbortSignal.any([controller.signal, shutdown.signal]);
     try {
-      connection = await startConnection(config, controller.signal);
-      const account = await waitFor(connection.request("account/read", { refreshToken: false }), 10_000, "app_server_timeout", controller.signal);
+      connection = await startConnection(config, runSignal, undefined, store, persistSerialized);
+      activeConnections.add(connection);
+      const account = await waitFor(connection.request("account/read", { refreshToken: false }), 10_000, "app_server_timeout", runSignal);
+      await connection.persistGrant();
       if (account?.account?.type !== "chatgpt") throw new Error("auth_required");
-      return codexAllowance(await waitFor(connection.request("account/rateLimits/read", {}), 10_000, "app_server_timeout", controller.signal));
-    } finally { clearTimeout(timer); await connection?.close().catch(() => {}); }
+      const limits = await waitFor(connection.request("account/rateLimits/read", {}), 10_000, "app_server_timeout", runSignal);
+      await connection.persistGrant();
+      return codexAllowance(limits);
+    } finally {
+      clearTimeout(timer);
+      try { await connection?.close(); }
+      finally { activeConnections.delete(connection); }
+    }
   };
-  const invoke = async ({ assignment, model, effort, evidence, research, outputKind = "discussion", maximumCharacters = undefined, runtimeInstructions, signal, onUsage, contextScope }) => {
-    if (!config.readyForProvider) return { ok: false, code: "provider_unavailable" };
+  const invokeOperation = async ({ assignment, model, effort, evidence, research, outputKind = "discussion", maximumCharacters = undefined, runtimeInstructions, signal, onUsage, contextScope }) => {
+    if (shutdown.signal.aborted || !config.readyForProvider) return { ok: false, code: "provider_unavailable" };
     if (!runtimeInstructions) throw new RuntimeInstructionError("Provider invocation is missing its runtime-instructions contract.");
+    const runSignal = signal ? AbortSignal.any([signal, shutdown.signal]) : shutdown.signal;
     let connection; let threadId; let unsubscribe = () => {}; let deadline;
     let startedAt; let lastProgressAt; let progressCount = 0;
     let usageEmittedAt = 0; let webSearchCount = 0; let finishUsage; let expectedUsageTurn; let usageStatus = "failed"; const usageByTurn = new Map(); const responseUsageByTurn = new Map(); const researchStepsByTurn = new Map();
@@ -269,9 +386,11 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
       if (Buffer.byteLength(assignment, "utf8") > maxPromptBytes) return { ok: false, code: "context_too_large" };
       const { prompt, prefixBytes, promptBytes } = buildProviderContext({ assignment, model, effort, evidence, research, outputKind, runtimeInstructions, contextScope });
       if (promptBytes > maxPromptBytes) return { ok: false, code: "context_too_large" };
-      connection = await startConnection(config, signal, await requestWorkspace(contextScope));
-      if (signal?.aborted) throw new Error("cancelled");
+      connection = await startConnection(config, runSignal, await requestWorkspace(contextScope), store, persistSerialized);
+      activeConnections.add(connection);
+      if (runSignal.aborted) throw new Error("cancelled");
       const started = await connection.request("thread/start", { experimentalRawEvents: true, model, baseInstructions: consultationBaseInstructions, ephemeral: true, cwd: connection.workspace, sandbox: "read-only", approvalPolicy: "never", environments: [], config: { web_search: research ? "live" : "disabled", features: { shell_tool: false, unified_exec: false, view_image: false, shell_snapshot: false, apps: false, plugins: false, hooks: false, memories: false, browser_use: false, browser_use_external: false, browser_use_full_cdp_access: false, computer_use: false, image_generation: false, workspace_dependencies: false, code_mode: false, code_mode_host: false, multi_agent: false, multi_agent_v2: false, skill_search: false, tool_suggest: false, request_permissions_tool: false } } });
+      await connection.persistGrant();
       if (!record(started) || !record(started.thread) || typeof started.thread.id !== "string") return { ok: false, code: "provider_unavailable" };
       threadId = started.thread.id;
       let resolveTurn; const turnDone = new Promise(resolve => { resolveTurn = resolve; });
@@ -325,9 +444,10 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
         completedTurns.set(completed.id, completed);
         if (completed.id === expectedTurnId) resolveTurn(completed);
       });
-      if (signal?.aborted) throw new Error("cancelled");
+      if (runSignal.aborted) throw new Error("cancelled");
       finishUsage = await beginUsage(onUsage, "codex", model, { stage: outputKind, effort, effortSource: "request", promptBytes, prefixBytes });
-      const turn = await waitFor(connection.request("turn/start", { threadId, input: [{ type: "text", text: prompt, text_elements: [] }], model, approvalPolicy: "never", sandboxPolicy: { type: "readOnly", networkAccess: research }, environments: [], effort }), 20_000, "app_server_timeout", signal);
+      const turn = await waitFor(connection.request("turn/start", { threadId, input: [{ type: "text", text: prompt, text_elements: [] }], model, approvalPolicy: "never", sandboxPolicy: { type: "readOnly", networkAccess: research }, environments: [], effort }), 20_000, "app_server_timeout", runSignal);
+      await connection.persistGrant();
       const startedTurn = record(turn) && record(turn.turn) ? turn.turn : undefined;
       if (!record(startedTurn) || typeof startedTurn.id !== "string") throw new Error("provider_error");
       expectedTurnId = startedTurn.id; expectedUsageTurn = expectedTurnId;
@@ -338,7 +458,7 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
       // stream; thread/read(includeTurns:true) is rejected by the pinned app server.
       const resolvedTurn = terminalTurn(startedTurn) ?? completedTurns.get(expectedTurnId) ?? await waitFor(
         Promise.race([turnDone, deadline.promise, connection.closed.then(error => { throw error; })]),
-        undefined, "provider_timeout", signal
+        undefined, "provider_timeout", runSignal
       );
       usageStatus = resolvedTurn.status === "completed" ? "completed" : "failed";
       if (resolvedTurn.status !== "completed") throw new AppServerRequestError("turn/completed", resolvedTurn.error);
@@ -347,6 +467,7 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
       const searchIds = new Set([...(completedSearches.get(expectedTurnId) ?? []), ...(resolvedTurn.items ?? []).filter(item => item?.type === "webSearch" && typeof item.id === "string").map(item => item.id)]);
       for (const item of resolvedTurn.items ?? []) if (item?.type === "webSearch" && typeof item.id === "string") recordSearch(expectedTurnId, item);
       webSearchCount = searchIds.size;
+      await connection.persistGrant();
       providerLog("nanoduck.provider.turn_completed", { outputKind, completionSource, durationMs: Date.now() - startedAt, webSearchCount: searchIds.size });
       unsubscribe();
       const output = typeof resultBody === "string" ? sourcesFrom(resultBody) : undefined;
@@ -356,7 +477,7 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
       return output?.body ? { ok: true, body: output.body, sources: output.sources } : output ? { ok: false, code: output.failureReason === "prohibited_language" ? "language_policy" : output.failureReason === "no_usable_content" ? "output_policy" : "provider_unavailable" } : { ok: false, code: "provider_unavailable" };
     } catch (error) {
       const details = providerFailureDetails(error);
-      const code = signal?.aborted || error.message === "cancelled" ? "cancelled" : details.category;
+      const code = runSignal.aborted || error.message === "cancelled" ? "cancelled" : details.category;
       providerLog("nanoduck.provider.turn_failed", { outputKind, ...details, ...(startedAt ? { durationMs: Date.now() - startedAt, idleMs: Date.now() - lastProgressAt, progressCount } : {}) });
       return { ok: false, code };
     } finally {
@@ -368,11 +489,25 @@ export function createCodexProvider(config, deadlineOptions = undefined) {
       // cumulative usage. Reconcile them, never add the two representations.
       const verified = upstream && (!normalized || ["input", "output", "total"].every(field => upstream[field] === normalized[field]));
       const tokens = verified ? upstream : normalized;
-      await finishUsage?.(signal?.aborted ? "cancelled" : usageStatus, tokens ? [{ model, tokens }] : [], { usageSource: verified ? "upstream_responses" : "codex_normalized", usageCoverage: verified ? (normalized ? "reconciled" : "partial") : "normalized", responseCount: responses.length, webSearchCount: expectedUsageTurn ? researchStepsByTurn.get(expectedUsageTurn)?.size ?? 0 : null, ...(research ? { researchSteps: [...(researchStepsByTurn.get(expectedUsageTurn)?.values() ?? [])].map(({ fingerprint, ...step }) => step) } : {}) });
       unsubscribe();
-      if (connection && threadId && !signal?.aborted) await connection.request("thread/unsubscribe", { threadId }, 1_000).catch(() => {});
-      await connection?.close().catch(() => {});
+      if (connection && threadId && !runSignal.aborted) await connection.request("thread/unsubscribe", { threadId }, 1_000).catch(() => {});
+      let finalizationError;
+      try { await connection?.close(); }
+      catch (error) { finalizationError = new Error("codex_grant_persist_failed", { cause: error }); usageStatus = "failed"; }
+      finally { activeConnections.delete(connection); }
+      await finishUsage?.(runSignal.aborted ? "cancelled" : usageStatus, tokens ? [{ model, tokens }] : [], { usageSource: verified ? "upstream_responses" : "codex_normalized", usageCoverage: verified ? (normalized ? "reconciled" : "partial") : "normalized", responseCount: responses.length, webSearchCount: expectedUsageTurn ? researchStepsByTurn.get(expectedUsageTurn)?.size ?? 0 : null, ...(research ? { researchSteps: [...(researchStepsByTurn.get(expectedUsageTurn)?.values() ?? [])].map(({ fingerprint, ...step }) => step) } : {}) });
+      if (finalizationError) throw finalizationError;
     }
   };
-  return Object.freeze({ inspect, accountUsage, invoke, releaseScope, id: () => randomId() });
+  const inspect = () => track(inspectOperation);
+  const accountUsage = () => track(accountUsageOperation);
+  const invoke = input => track(async () => {
+    try { return await invokeOperation(input); }
+    catch (error) {
+      const details = providerFailureDetails(error);
+      providerLog("nanoduck.provider.turn_failed", { outputKind: input.outputKind ?? "discussion", ...details });
+      return { ok: false, code: error?.message === "cancelled" ? "cancelled" : details.category };
+    }
+  });
+  return Object.freeze({ inspect, accountUsage, invoke, releaseScope, close, id: () => randomId() });
 }

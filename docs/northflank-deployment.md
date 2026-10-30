@@ -56,11 +56,13 @@ Use `.env.example` as the name inventory. Required production values are:
 - private MySQL `DATABASE_URL` or the complete `DB_HOST`/`DB_PORT`/`DB_NAME`/`DB_USER`/`DB_PASSWORD` set, plus exactly one of `DATABASE_SSL_CA_B64` or `DATABASE_SSL_CA_PATH` when its CA is not in the system trust store
 - separate `DATA_ENCRYPTION_KEY`, `RECOVERY_ENCRYPTION_KEY` and `SESSION_SIGNING_KEY`
 - `OWNER_GOOGLE_SUBJECT` or `OWNER_GOOGLE_EMAIL`, plus `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
-- exactly one Codex credential source; `CODEX_APP_SERVER_AUTH_GZIP_B64` is preferred on Northflank
+- exactly one Codex bootstrap/reseed source; `CODEX_APP_SERVER_AUTH_GZIP_B64` is preferred on Northflank. The application validates it under database leadership, stores the grant with purpose-separated encryption in MySQL and keeps later refresh rotations there. An unchanged deployment value cannot roll the current database grant back.
 
 `CLAUDE_CODE_OAUTH_TOKEN` and `CLAUDE_CODE_MODEL_CANDIDATES` are optional. Omitting the token keeps Claude unavailable without preventing the Codex-backed application from starting. Keep every credential in Northflank runtime secrets, never build arguments, image layers, repository files or logs.
 
 Register `${APP_ORIGIN}/auth/google/callback` as the exact authorized redirect URI in the Google OAuth client.
+
+For a later credential reseed, first take a current private-MySQL backup, scale the application to zero and confirm that no container or consultation is active. Change only the Codex bootstrap secret, then select the intended build and start exactly one instance. Ordinary restarts must reuse the encrypted database grant and do not require replacing the secret.
 
 ## Release verification
 

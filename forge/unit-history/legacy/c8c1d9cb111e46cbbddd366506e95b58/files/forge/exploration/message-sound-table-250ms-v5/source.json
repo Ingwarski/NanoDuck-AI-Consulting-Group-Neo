@@ -1,0 +1,65 @@
+{
+  "status": "listening_candidate_not_production",
+  "applied_to_app": false,
+  "source_page": "https://freesound.org/people/giddster/sounds/414460/",
+  "source_download": "https://cdn.freesound.org/previews/414/414460_1738686-hq.mp3",
+  "title": "Dropping ping pong ball on table",
+  "creator": "giddster",
+  "license": "CC0",
+  "source_sha256": "380fec20b4e6a289af202a5e64a9769c92ea0dcf06e471b4e610a0a82c652aa7",
+  "edit": "Equal-RMS 50/50 blend of the sharper v3 and woody v4 impacts. Add two low-pass-filtered early reflections at 28 ms (12%) and 47 ms (4.5%), no feedback. Keep three main taps exactly 250 ms apart.",
+  "measurements": {
+    "sample_rate": 48000,
+    "channels": 1,
+    "duration_seconds": 0.65,
+    "blend": "50/50 after matching the RMS of the two 45 ms source windows",
+    "direct_impact_ms": 45,
+    "impact_with_reflections_ms": 92.0,
+    "onset_interval_ms": 250,
+    "reflection_low_pass_hz": 4000,
+    "reflections": [
+      {
+        "delay_ms": 28,
+        "gain": 0.12
+      },
+      {
+        "delay_ms": 47,
+        "gain": 0.045
+      }
+    ],
+    "feedback": 0,
+    "peak_fraction": 0.96,
+    "clipped_samples": 0,
+    "pitch": "unchanged; no resampling"
+  },
+  "preview_sha256": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4",
+  "script_sha256": "a9f947960fc1ac70d4172d0dc08275236bd95e8eeeef950960beb8413fb63b2e",
+  "pcm_verification": {
+    "peak_intervals_ms": [
+      250.0,
+      250.0
+    ],
+    "clipped_samples": 0,
+    "silence_after_each_92_ms_tap": true,
+    "identical_three_taps": true,
+    "spectral_centroid_hz": {
+      "sharp_v3": 4633.613947183975,
+      "woody_v4": 1310.636733560575,
+      "blended_v5": 2590.9288713570268
+    }
+  },
+  "supersedes_preview": "forge/exploration/message-sound-table-250ms-v4/preview.wav",
+  "owner_feedback_on_previous": "something in between with a tiny echo",
+  "deployment": "not_performed",
+  "owner_timbre_verdict": "Pending listening; objective measurements do not establish subjective acceptance.",
+  "derived_from": [
+    {
+      "path": "forge/exploration/message-sound-table-250ms-v3/preview.wav",
+      "sha256": "433bfd84f11cba34941526d970f222b10e154a68af26594e50e34e2aa1e8459c"
+    },
+    {
+      "path": "forge/exploration/message-sound-table-250ms-v4/preview.wav",
+      "sha256": "7415b7d2e927dbf11d063ca616c0cfdaa1cfea55d8e7e245b65611a36ddac331"
+    }
+  ]
+}

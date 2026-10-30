@@ -1,0 +1,81 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-18T00:36:06.166Z",
+  "unit": "U-04",
+  "scope": "Accept valid Ukrainian shared vocabulary and resume failed consultations at the next missing contribution without replay or premature Head synthesis.",
+  "implementation_prompt": {
+    "path": "forge/runs/implementation-prompt-20260918-r20-ukrainian-policy-recovery.json",
+    "content_hash": "fbdf778ac70eab9ef0b9203e4d0c47e2c4755ae8eb435595f5878ee08dc76c56"
+  },
+  "implementation_files": {
+    "src/client/app.js": "235157830fc742ad4784ca3bee8ef00e572b788f8e9b6612273b5360df953b6f",
+    "src/server/validation.mjs": "54663bca65fbba070c19a1176968835b95dd0b90ffb44f3140147f9db06e9653",
+    "src/server/store.mjs": "4ff546243ea43306cd5b424e080d25be64e86dece102260acca51eaadca845cb",
+    "src/server/consultation.mjs": "ed754ba21d10991b7fb0af7ade03aa2fe7078850aaea45bbae6d649b644021f7",
+    "test/core.test.mjs": "0b2e424fd4c19eb9b1d897932418bbb377bbf1ef0d5802ef159d2a506c0f8fcf",
+    "test/consultation.test.mjs": "443cab205fd5b7093df101b81dc23a3e342fe1e087a1ec6721fe88daa21583a7",
+    "test/codex-provider.test.mjs": "279004a4b2afd8e99989949581e90754db44e43d76663fdd072fcf1f8b070362",
+    "test/claude-provider.test.mjs": "b2152039c3954bcf58005ea179ed0cf7bd574271663bc468d0aa4869555c9174",
+    "test/http.test.mjs": "3c45c00a633d9057af28cd373183da0935a4771cae4e6eebc3adba021193c12f",
+    "test/fixtures/fake-codex.mjs": "ddb3b4fd9f1e07f30df8006f7e74db7edabb55a29536e1f9274f07b0ce672c66"
+  },
+  "diagnosis": {
+    "hosted_observation": {
+      "method": "Read-only native Safari accessibility inspection through mcp__cua_repl",
+      "scope": "Latest owner-selected hosted discussion; private question and message bodies are omitted.",
+      "sequence": "The third Critic challenge was confirmed; the following specialist reply did not commit. A language-policy System notice followed and no Retry/Continue action was available.",
+      "limitation": "Rejected provider drafts are ephemeral. The exact text that triggered this particular hosted rejection cannot be recovered from the saved transcript."
+    },
+    "reproduced_defects": [
+      "The common Ukrainian word які was explicitly blacklisted and rejected valid Ukrainian owner messages, provider prose and source metadata.",
+      "Failed runs could not be continued in the UI or either store.",
+      "A saved System notice was counted as an agent step during coordinator reconstruction, preventing safe recovery."
+    ]
+  },
+  "verification": {
+    "automated": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 129,
+      "failed": 0
+    },
+    "regression": {
+      "before_fix": "The new shared-Ukrainian-word and failed-specialist-resume tests failed against the original implementation.",
+      "after_fix": "They pass together with both provider adapter cases, HTTP failed-run retry and MySQL lock/generation/snapshot cases."
+    },
+    "browser": {
+      "tool": "mcp__cua_repl.js",
+      "browser": "Existing Google Chrome, native app control",
+      "environment": "Isolated in-memory development workspace at http://127.0.0.1:4318/; both provider commands deliberately unavailable; no credentials or database configured.",
+      "observed": [
+        "Failed run displays Retry and the compact paused status.",
+        "Clicking Retry changes the state to active thinking with Stop, preserves the accepted owner message, then returns to Retry when the deliberately unavailable provider fails again.",
+        "Pasted Ukrainian fixture Які умови вступу? is accepted into the record and reaches the provider step rather than input-policy rejection."
+      ],
+      "result": "passed for local visible retry and valid Ukrainian input",
+      "limitation": "Actual successful completion is covered by the injected-provider coordinator regression, not by this deliberately unavailable-provider browser session. Local Safari sign-in did not advance, so Safari recovery verification is not claimed."
+    },
+    "excluded": [
+      "GoDaddy deployment or hosted fix verification",
+      "Live provider invocation",
+      "Real MySQL concurrency integration",
+      "Full cross-browser release gates"
+    ]
+  },
+  "sdd": {
+    "owner_checks": {
+      "path": "forge/runs/U-04/r20-ukrainian-policy-recovery-20260918/owner-checks.json",
+      "content_hash": "348df82c37db361e6efc889a9806a10228e8969d379ed0e25fda5d0ae922384a"
+    },
+    "formal_audit": {
+      "result": "passed",
+      "path": "forge/runs/U-04/r20-ukrainian-policy-recovery-20260918/audit.json",
+      "content_hash": "f0405688296e343ea0b161a7fd8a753d36f6ba617cd5d8007c237932c923bd4d"
+    },
+    "implementation_gate": {
+      "result": "passed",
+      "path": "forge/runs/U-04/r20-ukrainian-policy-recovery-20260918/implementation-check.json",
+      "content_hash": "2f644544caed99de87ed22b4e3403ecf15699c1e0f3e4c824698cb6a2052a215"
+    }
+  }
+}

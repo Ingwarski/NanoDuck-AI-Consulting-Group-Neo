@@ -14,6 +14,16 @@ CREATE TABLE IF NOT EXISTS nanoduck_settings (
   settings_json JSON NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS nanoduck_provider_grants (
+  provider_id VARCHAR(32) PRIMARY KEY,
+  ciphertext MEDIUMBLOB NOT NULL,
+  iv VARCHAR(64) NOT NULL,
+  tag VARCHAR(64) NOT NULL,
+  seed_fingerprint CHAR(64) NOT NULL,
+  generation BIGINT UNSIGNED NOT NULL,
+  updated_at VARCHAR(40) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS nanoduck_runtime_instructions (
   owner_id VARCHAR(32) PRIMARY KEY,
   ciphertext MEDIUMTEXT NOT NULL,

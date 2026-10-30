@@ -1,0 +1,20 @@
+{
+  "candidate_id": "b",
+  "version": "v5",
+  "visual_target_hash": "e0a8a236bcc506967f95f38390badfa828a0fbd86afee26c5cf5d7af8c757bf6",
+  "prototype_tree_hash": "08be33d7253fd30be67af2db01403df642a8a594b06573872d23eafcca9c8370",
+  "preview_url": "http://127.0.0.1:4328/b/v5/",
+  "observed_at": "2026-09-13T20:27:31.414953+00:00",
+  "result": "passed",
+  "browser_kind": "external_default",
+  "browser_name": "Safari",
+  "adapter": "cua_repl native app",
+  "visible": true,
+  "routes_observed": [
+    "http://127.0.0.1:4328/b/v5/#discussion"
+  ],
+  "capture_reference": "b-v5-safari-brand-review",
+  "capture_storage": "Inline CUA screenshots and AX observations in this turn.",
+  "evidence": "Existing Safari review tab navigated using pasted exact v5 URL; title, URL and NanoDuck navigation label verified in AX. Branded discussion screenshot inspected. Retained unchosen reference palette.",
+  "findings": []
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "evidence_id": "u03-ultra-pace-local-browser-20260914",
+  "kind": "visual",
+  "observed_at": "2026-09-14T17:01:14+03:00",
+  "executor": "Codex local browser verification",
+  "environment": "local Node development server on port 4318, memory store and development owner; no live provider credential or GoDaddy target",
+  "route": "http://127.0.0.1:4318/",
+  "observed_states": [
+    "The Electric Settings surface retains the Head/specialist and Critic model and reasoning selectors, plus the fixed 24-hour session boundary.",
+    "The Pace selector visibly offers Fast, Balanced, Thorough and Ultra, with explanatory copy mapping them to 1, 2, 3 and 5 specialists.",
+    "Ultra was selected and saved successfully; the interface confirmed that the setting applies to future consultations."
+  ],
+  "finding": "No visual blocker was observed in the checked local Settings state. Automated coverage verifies the five distinct specialist turns; responsive, assistive-technology and live-provider checks remain outside this evidence."
+}

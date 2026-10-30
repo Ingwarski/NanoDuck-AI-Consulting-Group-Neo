@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-09-18T01:15:29.469Z",
+  "request_path": "/sounds/table-taps-250ms-v5.wav",
+  "status": 200,
+  "content_type": "audio/wav",
+  "content_hash": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4",
+  "accepted_preview_hash": "5b05430aee3fc5b4462deef39a0d2209905a13f464524f547f36d894e7097eb4",
+  "byte_identical": true,
+  "served_client_uses_versioned_url": true
+}

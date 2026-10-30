@@ -1,0 +1,56 @@
+{
+  "receipt_version": 1,
+  "recorded_at": "2026-09-18T00:18:41.183Z",
+  "unit": "U-03",
+  "scope": "Replace the synthesized Knock with three original recorded Nokia taps spaced 140 ms apart, retaining pitch and using the same asset for preview and incoming messages.",
+  "implementation_prompt": {
+    "path": "forge/runs/implementation-prompt-20260918-r19-quick-knock.json",
+    "content_hash": "e07be62fc0a298a4a39be9787a5ee6d8e39d36dde2dbeb46284eb2576aed9629"
+  },
+  "source": {
+    "path": "forge/runs/U-03/r19-quick-knock-20260918/audio-source.json",
+    "content_hash": "0f40d3875708b27d5f5535d1ffa5cde92c12af813d4c0bd655bab9a3baaa811e"
+  },
+  "implementation_files": {
+    "src/client/app.js": "9d6d48959ca8fd4587ca7251c6b71a41352af880ffc08f29c681b2d2dda47434",
+    "src/server/index.mjs": "f88413ed8a4d4c6bdc6864700f9e1112d4466ec711a7ea1873f77db1123c3d55",
+    "test/http.test.mjs": "dd70ead0c51936dc2ca302da532be99a739e9cdee6bdc36584c39ee9801e6c17",
+    "public/sounds/nokia-three-knocks-quick.wav": "c593d959457a011f63f85cedcc2c42efe503b0b13fa1d0a44f3aab1746c9268a"
+  },
+  "verification": {
+    "automated": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 119
+    },
+    "waveform": {
+      "tap_onsets_seconds": [
+        0.02,
+        0.16,
+        0.3
+      ],
+      "tap_spacing_ms": 140,
+      "duration_seconds": 0.8849886621315193,
+      "clipped_samples": 0,
+      "pitch": "unchanged sample rate and recorded transient samples"
+    },
+    "browser": {
+      "environment": "Existing Chrome tab, isolated local memory-store fixture at http://127.0.0.1:4317/",
+      "actions": [
+        "Open local development workspace",
+        "Open Settings",
+        "Click Preview sound with Knock selected"
+      ],
+      "observed": "Playing the knock preview.",
+      "result": "HTML audio play promise accepted; this does not establish perceived timbre or physical audibility"
+    },
+    "owner_listening": "pending",
+    "safari": "not_run",
+    "excluded": [
+      "GoDaddy deployment",
+      "live providers",
+      "production database",
+      "full release gates"
+    ]
+  }
+}

@@ -10,6 +10,10 @@ async function files(dir) {
     if (['.git', 'node_modules', 'review-session', '.local', 'output'].includes(entry.name)) continue;
     const path = join(dir, entry.name);
     if (entry.isDirectory()) {
+      // SDD v2 history contains immutable source snapshots whose links remain
+      // relative to their original repository locations. Validate the live
+      // sources, not snapshot copies, as publishable application artifacts.
+      if (path === join(root, 'forge', 'unit-history')) continue;
       // A source/reference checkout may sit beside the target while a port is
       // reviewed. It is a separate repository and must never inflate or alter
       // this repository's artifact evidence.
