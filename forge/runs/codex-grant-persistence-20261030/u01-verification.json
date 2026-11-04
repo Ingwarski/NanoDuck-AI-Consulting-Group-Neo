@@ -1,0 +1,138 @@
+{
+  "branch": "codex/combined-updates-port",
+  "ci": {
+    "application_checks": {
+      "failed": 0,
+      "managed_grant_subtest": "the encrypted Codex grant retains rotations, ignores an unchanged seed identity and rejects stale writes",
+      "mysql_service": "mysql:8.4",
+      "passed": 233,
+      "skipped": 0,
+      "tests": 233
+    },
+    "conclusion": "success",
+    "container": {
+      "built": true,
+      "claude_code": "2.1.280",
+      "codex_cli": "0.155.1",
+      "non_root_verified": true,
+      "runtime_verified": true
+    },
+    "jobs": [
+      {
+        "conclusion": "success",
+        "job_id": 124091871243,
+        "name": "container",
+        "status": "completed",
+        "url": "https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo/actions/runs/41064388100/job/124091871243"
+      },
+      {
+        "conclusion": "success",
+        "job_id": 124091871905,
+        "name": "checks",
+        "status": "completed",
+        "url": "https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo/actions/runs/41064388100/job/124091871905"
+      }
+    ],
+    "started_at": "2026-10-30T13:34:32Z",
+    "status": "completed",
+    "updated_at": "2026-10-30T13:35:41Z",
+    "url": "https://github.com/Ingwarski/NanoDuck-AI-Consulting-Group-Neo/actions/runs/41064388100",
+    "workflow": "Application checks",
+    "workflow_run_id": 41064388100
+  },
+  "coverage": [
+    "strict managed ChatGPT grant validation and bounded input",
+    "purpose-separated encrypted MySQL storage and tamper rejection",
+    "unchanged-seed idempotence, intentional reseed and restart continuity",
+    "leader-connection fencing and generation compare-and-swap",
+    "identical and divergent refresh races",
+    "final writeback failure and truthful authentication state",
+    "production image build and non-root runtime"
+  ],
+  "event": "u01_managed_codex_grant_verification",
+  "limitations": [
+    "Live account-wide subscription usage and reset time remain unavailable in the application; readiness is not entitlement or paid-credit authorization.",
+    "No model turn or owner consultation was started for verification. Live forced token expiry/refresh and a destructive backup restore were not performed; rotated-grant failure and restart cases are covered by the recorded synthetic and MySQL CI checks.",
+    "The broader Northflank security-incident rotations of database, Google, edge, session, data and recovery secrets remain a separate coordinated operation. Encryption keys were preserved to retain readable private data.",
+    "This operational receipt does not mark the aggregate SDD QA checks or full release acceptance complete."
+  ],
+  "hosted": {
+    "observed_at": "2026-11-04T10:36:03Z",
+    "scope": {
+      "project": "nanoduck-neo",
+      "service": "nanoduck-web",
+      "addon": "nanoduck-mysql",
+      "worker": "nanoduck-neo",
+      "public_origin": "https://nanoduck-neo.kyivteam-6d0.workers.dev",
+      "predecessor_resources_changed": false
+    },
+    "revision": "8c969dfe86c53c8771e86a8b81c57971c1607bb3",
+    "northflank_build_id": "joyous-metal-4257",
+    "bootstrap": {
+      "source": "CODEX_APP_SERVER_AUTH_GZIP_B64",
+      "replacement_entered_and_submitted_by": "owner",
+      "corrected_encoding_validated_at_startup": true,
+      "initial_attempt": "The first saved value failed gzip decoding before database migration; service was returned to zero and the complete value was replaced before retry.",
+      "task_clipboard_cleared_after_save": true,
+      "secret_values_recorded": false
+    },
+    "backups": [
+      { "name": "pre-oauth-grant-activation-20261103", "status": "completed", "type": "disk", "duration_seconds": 55, "purpose": "pre-activation recovery" },
+      { "name": "oauth-durable-grant-20261104", "status": "completed", "type": "disk", "duration_seconds": 44, "purpose": "recovery including the seeded encrypted provider-grant row before restart" }
+    ],
+    "activation": {
+      "zero_active_runs_verified_with_read_only_tls_mysql_query": true,
+      "zero_replicas_verified_before_build_selection_and_credential_change": true,
+      "selected_successful_build_at_zero": true,
+      "final_replicas": 1,
+      "continuous_deployment": false,
+      "health_checks_passing": "3/3",
+      "restart_sequence": "scale to zero; verify 0/0 and public health 503; start exactly one; verify public health 200",
+      "first_healthy_pod": "nanoduck-web-58bb8b65bd-nvv8m",
+      "replacement_healthy_pod": "nanoduck-web-7bf7b78947-m7dtp",
+      "replacement_restarts": 0,
+      "rollback_build_retained": "little-river-4427"
+    },
+    "live_checks": {
+      "public_health": { "http_status": 200, "body": { "status": "alive", "store": "mysql" } },
+      "direct_origin_root_http_status": 404,
+      "mysql_tls_certificate_verified": true,
+      "google_owner_sign_in": "passed in real in-app browser",
+      "owner_session_after_restart": "preserved",
+      "codex_settings_inspection": "ready before and after separate connection inspections and application process replacement",
+      "connection_lifecycle_basis": "Each Settings load invokes providers.inspect; inspectOperation creates its own app-server connection, persists the grant and closes/removes the temporary home in finally. Separate Settings visits and post-restart reload all reported ready.",
+      "saved_settings_after_restart": { "head_model": "gpt-6-astra", "head_reasoning": "xhigh", "critic_provider": "codex", "critic_model": "gpt-6-astra", "critic_reasoning": "xhigh", "specialist_count": 2, "discussion_depth": 1, "notification_sound": "knock" },
+      "before_and_after_restart": { "active_runs": 0, "encrypted_grant_rows": 1, "grant_generation": 1, "conversations": 2, "run_status_counts": { "failed": 1, "complete": 1 }, "remaining_temporary_codex_homes": 0 },
+      "private_conversation_content_recorded": false,
+      "existing_failed_run_resumed": false,
+      "model_turn_started": false
+    }
+  },
+  "local": {
+    "browser_application_checks": {
+      "chromium": "passed",
+      "firefox": "passed",
+      "webkit": "passed"
+    },
+    "independent_review": {
+      "focused_tests": "69/69",
+      "git_diff_check": "passed",
+      "leadership_tests": "5/5",
+      "result": "no material issues"
+    },
+    "npm_check": {
+      "failed": 0,
+      "passed": 229,
+      "skipped": 4,
+      "skipped_reason": "NANODUCK_MYSQL_TEST_URL was not configured locally",
+      "tests": 233
+    },
+    "sdd_audit": "passed"
+  },
+  "recorded_at": "2026-10-30T13:36:53.135969Z",
+  "updated_at": "2026-11-04T10:36:03Z",
+  "revision": "8c969dfe86c53c8771e86a8b81c57971c1607bb3",
+  "run_id": "u01-codex-grant-persistence-20261030",
+  "unit_id": "U-01",
+  "version": 2
+}
